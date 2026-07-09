@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TraceLite.ai - Traceable Agent Evaluation</title>
-  <meta name="description" content="TraceLite.ai is an agent evaluation lab for trace replay, benchmark cases, and reproducible harness evidence." />
-  <meta property="og:title" content="TraceLite.ai - Traceable Agent Evaluation" />
+  <title>TraceLite AI - Traceable Agent Evaluation</title>
+  <meta name="description" content="TraceLite AI is an agent evaluation lab for trace replay, benchmark cases, and reproducible harness evidence." />
+  <meta property="og:title" content="TraceLite AI - Traceable Agent Evaluation" />
   <meta property="og:description" content="Trace, replay, and verify agent behavior before it reaches production." />
   <meta property="og:url" content="https://tracelite.ai" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://tracelite.ai/assets/tracelite-hero.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preload" href="assets/tracelite-hero.png" as="image" />
   <style>
     :root {
@@ -90,41 +93,16 @@
       min-width: 0;
     }
 
-    .mark {
-      position: relative;
-      width: 23px;
-      height: 23px;
-      flex: none;
-      border: 1px solid var(--ink);
-      border-radius: 6px;
-      background: #fffaf1;
+    .brand-mark {
+      display: block;
+      width: 31px;
+      height: 31px;
+      object-fit: contain;
     }
 
-    .mark::before,
-    .mark::after {
-      content: "";
-      position: absolute;
-      background: var(--ink);
-      border-radius: 999px;
-    }
-
-    .mark::before {
-      width: 11px;
-      height: 2px;
-      left: 5px;
-      top: 6px;
-    }
-
-    .mark::after {
-      width: 2px;
-      height: 11px;
-      right: 6px;
-      bottom: 5px;
-    }
-
-    .brand strong {
-      font-size: 15px;
-      font-weight: 720;
+    .brand-name {
+      font-size: 16px;
+      font-weight: 760;
       letter-spacing: 0;
       white-space: nowrap;
     }
@@ -237,6 +215,27 @@
       line-height: 1.02;
       font-weight: 650;
       letter-spacing: 0;
+    }
+
+    .logo-heading {
+      line-height: 1;
+    }
+
+    .hero-logo {
+      width: min(545px, 100%);
+      height: auto;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .lead {
@@ -742,6 +741,12 @@
       font-weight: 720;
     }
 
+    .footer-logo {
+      display: block;
+      width: 190px;
+      height: auto;
+    }
+
     .footer p {
       margin-top: 12px;
       max-width: 520px;
@@ -814,6 +819,11 @@
         width: calc(100% - 28px);
       }
 
+      .brand-mark {
+        width: 29px;
+        height: 29px;
+      }
+
       .hero-content,
       .section-title,
       .thesis-copy,
@@ -832,6 +842,10 @@
 
       h1 {
         font-size: 36px;
+      }
+
+      .hero-logo {
+        width: min(292px, 100%);
       }
 
       .hero-meta {
@@ -870,9 +884,9 @@
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="TraceLite.ai home">
-        <span class="mark" aria-hidden="true"></span>
-        <strong>TraceLite.ai</strong>
+      <a class="brand" href="#top" aria-label="TraceLite AI home">
+        <img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true" />
+        <span class="brand-name">TraceLite AI</span>
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#ship">What we ship</a>
@@ -880,7 +894,7 @@
         <a href="#workflow">Workflow</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="github-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer" aria-label="TraceLite.ai on GitHub">
+      <a class="github-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer" aria-label="TraceLite AI on GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 .5C5.73.5.63 5.6.63 11.88c0 5.03 3.26 9.29 7.79 10.79.57.1.78-.25.78-.55v-2.13c-3.17.69-3.84-1.36-3.84-1.36-.52-1.31-1.27-1.66-1.27-1.66-1.03-.71.08-.7.08-.7 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.31.94.1-.73.4-1.23.72-1.51-2.53-.29-5.19-1.27-5.19-5.64 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.17.91-.25 1.88-.38 2.85-.38s1.94.13 2.85.38c2.17-1.48 3.12-1.17 3.12-1.17.63 1.57.23 2.73.12 3.02.73.8 1.17 1.82 1.17 3.07 0 4.38-2.66 5.34-5.2 5.63.41.35.77 1.04.77 2.1v3.14c0 .3.2.66.78.55a11.39 11.39 0 0 0 7.78-10.78C23.38 5.6 18.28.5 12 .5Z" />
         </svg>
@@ -893,13 +907,16 @@
       <img class="hero-art" src="assets/tracelite-hero.png" alt="" aria-hidden="true" />
       <div class="wrap hero-content">
         <span class="eyebrow">Agent evaluation lab</span>
-        <h1 id="hero-title">TraceLite.ai</h1>
+        <h1 class="logo-heading" id="hero-title">
+          <img class="hero-logo" src="assets/logo-transparent.png" alt="" aria-hidden="true" />
+          <span class="sr-only">TraceLite AI</span>
+        </h1>
         <p class="lead">Traceable evaluation infrastructure for AI agents. Capture real trajectories, replay failures, and turn benchmark runs into evidence your team can inspect.</p>
         <div class="hero-actions">
           <a class="pill pill-primary" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">View GitHub repo</a>
           <a class="pill pill-ghost" href="#ship">Explore the system</a>
         </div>
-        <div class="hero-meta" aria-label="TraceLite.ai focus areas">
+        <div class="hero-meta" aria-label="TraceLite AI focus areas">
           <div class="metric">
             <strong>Trace</strong>
             <span>Full agent trajectory capture</span>
@@ -922,7 +939,7 @@
           <div class="section-title">
             <span class="eyebrow">What we ship</span>
             <h2>Evaluation pieces for agents that need to be trusted, not just demoed.</h2>
-            <p>TraceLite.ai is built around reproducible runs: the task, the tools, the agent actions, the final artifact, and the verifier all stay connected.</p>
+            <p>TraceLite AI is built around reproducible runs: the task, the tools, the agent actions, the final artifact, and the verifier all stay connected.</p>
           </div>
           <a class="tiny-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">GitHub -&gt;</a>
         </div>
@@ -1089,7 +1106,7 @@
         <div class="cta-box">
           <div>
             <h2>Build evaluation around evidence.</h2>
-            <p>Use the repository as the public home for TraceLite.ai while the benchmark cases and runtime pieces mature.</p>
+            <p>Use the repository as the public home for TraceLite AI while the benchmark cases and runtime pieces mature.</p>
           </div>
           <a class="pill pill-primary" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Open GitHub</a>
         </div>
@@ -1101,8 +1118,7 @@
     <div class="wrap footer-inner">
       <div>
         <a class="footer-brand" href="#top">
-          <span class="mark" aria-hidden="true"></span>
-          <span>TraceLite.ai</span>
+          <img class="footer-logo" src="assets/logo-transparent.png" alt="TraceLite AI" />
         </a>
         <p>Traceable evaluation infrastructure for agent systems. Built for reproducible cases, replayable failures, and inspectable evidence.</p>
       </div>
