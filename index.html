@@ -1,845 +1,1118 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Provance Lab · HarnessBench</title>
-<meta name="description" content="Provance Lab — 让每一个 Agent，在落地前就值得信赖。把模糊的工程直觉，变成可复现、可归因的工程证据。" />
-<style>
-  :root{
-    /* minimalist light palette */
-    --bg:#FFFFFF;
-    --bg-soft:#FAFAFA;
-    --panel:#FFFFFF;
-    --ink:#0E1116;
-    --ink-soft:#41474F;
-    --muted:#8A909C;
-    --line:#ECECEE;
-    --line-2:#E2E2E5;
-    --accent:#5B5BD6;
-    --accent-soft:#F1F1FB;
-    --radius:14px;
-    --shadow:0 1px 2px rgba(16,17,22,.04);
-    --shadow-hover:0 6px 24px rgba(16,17,22,.07);
-    --font:"Inter","Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-    --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
-  .grad{color:var(--accent)}
-  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .eyebrow::before{content:"";width:18px;height:1px;background:var(--ink);opacity:.45}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TraceLite.ai - Traceable Agent Evaluation</title>
+  <meta name="description" content="TraceLite.ai is an agent evaluation lab for trace replay, benchmark cases, and reproducible harness evidence." />
+  <meta property="og:title" content="TraceLite.ai - Traceable Agent Evaluation" />
+  <meta property="og:description" content="Trace, replay, and verify agent behavior before it reaches production." />
+  <meta property="og:url" content="https://tracelite.ai" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://tracelite.ai/assets/tracelite-hero.png" />
+  <link rel="preload" href="assets/tracelite-hero.png" as="image" />
+  <style>
+    :root {
+      --paper: #fbfaf7;
+      --paper-2: #f5f1ea;
+      --ink: #141414;
+      --ink-soft: #4d4b47;
+      --muted: #817c74;
+      --line: #ded8cf;
+      --line-strong: #c9c0b4;
+      --surface: rgba(255, 255, 255, 0.74);
+      --teal: #1d7a72;
+      --teal-soft: #dceee9;
+      --coral: #c56a4b;
+      --gold: #9b7a35;
+      --radius: 8px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
 
-  /* NAV */
-  header.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
-  .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-  .brand .mark{width:30px;height:30px;display:block}
-  .brand b{font-weight:700;font-size:18px;letter-spacing:-.01em}
-  .nav-right{display:flex;align-items:center;gap:14px}
-  .nav-links{display:flex;gap:2px;font-size:14px;font-weight:500;color:var(--ink-soft)}
-  .nav-links a{padding:7px 12px;border-radius:8px;transition:color .18s,background .18s;cursor:pointer}
-  .nav-links a:hover{color:var(--ink);background:#F4F4F6}
-  .nav-links a.active{color:var(--ink);font-weight:600}
-  .nav-sep{width:1px;height:20px;background:var(--line-2)}
-  .gh-link{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-soft);padding:7px 11px;border:1px solid var(--line-2);border-radius:8px;transition:border-color .18s,color .18s}
-  .gh-link svg{width:16px;height:16px}
-  .gh-link:hover{color:var(--ink);border-color:var(--ink)}
-  .lang{display:flex;align-items:center;gap:6px;border:1px solid var(--line-2);border-radius:8px;padding:7px 11px;font-size:13px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--ink-soft);transition:border-color .18s,color .18s}
-  .lang:hover{border-color:var(--ink);color:var(--ink)}
-  @media(max-width:980px){.nav-links{display:none}.gh-link span{display:none}.gh-link{padding:7px 9px}}
+    * {
+      box-sizing: border-box;
+    }
 
-  /* PAGE switching */
-  .page{display:none}
-  .page.show{display:block;animation:fade .4s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    html {
+      scroll-behavior: smooth;
+    }
 
-  /* HERO */
-  .hero{position:relative;padding:104px 0 72px}
-  .hero h1{font-size:clamp(38px,5.4vw,60px);line-height:1.08;letter-spacing:-.03em;font-weight:700;margin:22px 0 0;max-width:860px}
-  .hero h1 .line{display:block}
-  .hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);max-width:58ch;margin:26px 0 0}
-  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:10px;font-size:14.5px;font-weight:600;transition:transform .18s,box-shadow .18s,border-color .18s,background .18s,opacity .18s;cursor:pointer}
-  .btn-primary{background:var(--ink);color:#fff}
-  .btn-primary:hover{transform:translateY(-1px);opacity:.9}
-  .btn-ghost{background:var(--bg);color:var(--ink);border:1px solid var(--line-2)}
-  .btn-ghost:hover{border-color:var(--ink)}
-  .hero-meta{display:flex;flex-wrap:wrap;gap:48px;margin-top:60px;padding-top:30px;border-top:1px solid var(--line)}
-  .stat .n{font-size:30px;font-weight:700;letter-spacing:-.02em}
-  .stat .l{font-size:13px;color:var(--muted);margin-top:3px}
+    body {
+      margin: 0;
+      min-width: 320px;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-  /* STRIP */
-  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-soft);padding:14px 0;overflow:hidden}
-  .strip-track{display:flex;gap:46px;white-space:nowrap;animation:scroll 30s linear infinite;width:max-content}
-  .strip-track span{font-size:12.5px;font-weight:500;color:var(--muted);display:inline-flex;align-items:center;gap:11px}
-  .strip-track span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.6}
-  @keyframes scroll{to{transform:translateX(-50%)}}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  /* SECTIONS */
-  section.block{padding:80px 0}
-  .sec-head{max-width:720px;margin-bottom:44px}
-  .sec-head h2{font-size:clamp(26px,3.6vw,38px);line-height:1.14;letter-spacing:-.025em;font-weight:700;margin-top:14px}
-  .sec-head p{font-size:16px;color:var(--ink-soft);margin-top:14px}
-  .alt{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-  /* card base */
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
-  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:var(--line-2)}
+    .wrap {
+      width: calc(100% - 40px);
+      max-width: 1120px;
+      margin: 0 auto;
+    }
 
-  /* COMPONENTS grid */
-  .comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  @media(max-width:920px){.comp-grid{grid-template-columns:1fr 1fr}}
-  @media(max-width:620px){.comp-grid{grid-template-columns:1fr}}
-  .comp{padding:24px}
-  .comp-top{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
-  .comp-code{background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:12px;padding:3px 8px;border-radius:6px}
-  .comp-top h3{font-size:17px;font-weight:700}
-  .comp .en{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.03em}
-  .comp-desc{font-size:13.5px;color:var(--ink-soft);margin:8px 0 16px}
-  .chips{display:flex;flex-wrap:wrap;gap:7px}
-  .chip{font-size:12.5px;font-weight:500;padding:5px 11px;border-radius:8px;background:#F5F5F7;color:var(--ink-soft);border:1px solid var(--line)}
-  .chip.prio{background:var(--accent-soft);color:var(--accent);border-color:#E2E2F6}
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(222, 216, 207, 0.72);
+      background: rgba(251, 250, 247, 0.82);
+      backdrop-filter: blur(18px) saturate(150%);
+    }
 
-  /* ARENA promo (home) */
-  .arena-promo{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
-  @media(max-width:880px){.arena-promo{grid-template-columns:1fr}}
-  .arena-copy h2{font-size:clamp(25px,3.4vw,34px);font-weight:700;letter-spacing:-.025em;line-height:1.16}
-  .arena-copy p{font-size:15.5px;color:var(--ink-soft);margin-top:16px;max-width:50ch}
-  .arena-feats{display:flex;flex-direction:column;gap:12px;margin-top:24px}
-  .arena-feat{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--ink-soft)}
-  .arena-feat .dot{flex:none;width:21px;height:21px;border-radius:6px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:12px;margin-top:1px}
-  /* code panel mock */
-  .terminal{border:1px solid var(--line);border-radius:12px;background:var(--bg-soft);overflow:hidden}
-  .term-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:#F2F2F4}
-  .term-bar i{width:10px;height:10px;border-radius:50%;display:block;opacity:.8}
-  .term-bar i:nth-child(1){background:#ff5f57}.term-bar i:nth-child(2){background:#febc2e}.term-bar i:nth-child(3){background:#28c840}
-  .term-bar span{margin-left:8px;font-size:12px;color:var(--muted);font-family:var(--mono)}
-  .term-body{padding:18px;font-family:var(--mono);font-size:12.6px;line-height:1.9;color:#5A616B}
-  .term-body .p{color:var(--accent)}.term-body .g{color:#1A7F5A}.term-body .v{color:#7A4DD0}.term-body .m{color:var(--muted)}.term-body .w{color:#9A6B00}
+    .nav-inner {
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-  /* BLOG */
-  .blog-list{display:flex;flex-direction:column;gap:12px}
-  .post{display:grid;grid-template-columns:120px 1fr auto;gap:22px;align-items:center;padding:22px 24px}
-  @media(max-width:720px){.post{grid-template-columns:1fr;gap:8px}}
-  .post .date{font-size:13px;color:var(--muted);font-weight:600;font-family:var(--mono)}
-  .post .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);padding:2px 8px;border-radius:6px;margin-bottom:8px}
-  .post h3{font-size:17px;font-weight:650;letter-spacing:-.01em}
-  .post p{font-size:14px;color:var(--ink-soft);margin-top:6px;max-width:62ch}
-  .post .arw{font-size:18px;color:var(--muted);transition:color .2s,transform .2s}
-  .post:hover .arw{color:var(--ink);transform:translateX(3px)}
-  @media(max-width:720px){.post .arw{display:none}}
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
 
-  .blog-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  @media(max-width:880px){.blog-cards{grid-template-columns:1fr}}
-  .bcard{padding:24px;display:flex;flex-direction:column}
-  .bcard .tag{display:inline-block;align-self:flex-start;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:6px;margin-bottom:14px}
-  .bcard .date{font-size:12.5px;color:var(--muted);font-family:var(--mono)}
-  .bcard h3{font-size:16.5px;font-weight:650;margin:8px 0 8px;letter-spacing:-.01em}
-  .bcard p{font-size:13.5px;color:var(--ink-soft);flex:1}
-  .bcard .more{font-size:13px;font-weight:600;color:var(--accent);margin-top:16px}
+    .mark {
+      position: relative;
+      width: 23px;
+      height: 23px;
+      flex: none;
+      border: 1px solid var(--ink);
+      border-radius: 6px;
+      background: #fffaf1;
+    }
 
-  /* RESEARCH detail */
-  .rblock{padding:28px 28px}
-  .rblock-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-  @media(max-width:880px){.rblock-grid{grid-template-columns:1fr}}
-  .rblock-head{display:flex;align-items:center;gap:13px;margin-bottom:6px}
-  .rblock-head .code{width:40px;height:40px;flex:none;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff;background:var(--ink)}
-  .rblock-head h3{font-size:19px;font-weight:700}
-  .rblock-head .en{font-size:12.5px;color:var(--muted);font-weight:500}
-  .rblock>.desc{font-size:14px;color:var(--ink-soft);margin:6px 0 16px}
-  .case{border-top:1px solid var(--line);padding:14px 0}
-  .case:last-child{padding-bottom:0}
-  .case .ct{font-size:14px;font-weight:650;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .case .ct .badge{font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent)}
-  .case .cd{font-size:13.5px;color:var(--ink-soft);margin-top:5px}
-  .case .metric{font-size:12.5px;color:var(--muted);margin-top:6px;font-family:var(--mono)}
-  .case .metric b{color:var(--ink-soft);font-weight:600}
-  .ghlink{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-soft);margin-top:18px;padding:8px 14px;border:1px solid var(--line-2);border-radius:8px;transition:border-color .2s,color .2s}
-  .ghlink:hover{border-color:var(--ink);color:var(--ink)}
-  .ghlink svg{width:16px;height:16px}
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      background: var(--ink);
+      border-radius: 999px;
+    }
 
-  /* ARENA page */
-  .arena-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  @media(max-width:880px){.arena-grid{grid-template-columns:1fr}}
-  .arena-card{padding:32px 30px}
-  .arena-card .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:6px}
-  .arena-card h3{font-size:22px;font-weight:700;margin:16px 0 10px;letter-spacing:-.01em}
-  .arena-card>p{font-size:14.5px;color:var(--ink-soft);max-width:46ch}
-  .arena-card ul{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:11px}
-  .arena-card li{font-size:14px;color:var(--ink-soft);padding-left:24px;position:relative}
-  .arena-card li::before{content:"";position:absolute;left:4px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.65}
-  .badge-soon{display:inline-block;margin-top:22px;font-size:12px;font-weight:600;color:var(--muted);border:1px dashed var(--line-2);padding:5px 12px;border-radius:20px}
+    .mark::before {
+      width: 11px;
+      height: 2px;
+      left: 5px;
+      top: 6px;
+    }
 
-  .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
-  @media(max-width:720px){.metrics-row{grid-template-columns:1fr 1fr}}
-  .mcard{padding:22px;text-align:center}
-  .mcard .mn{font-size:22px;font-weight:700;letter-spacing:-.02em;font-family:var(--mono)}
-  .mcard .ml{font-size:12.5px;color:var(--muted);margin-top:6px}
+    .mark::after {
+      width: 2px;
+      height: 11px;
+      right: 6px;
+      bottom: 5px;
+    }
 
-  /* JOIN page */
-  .join-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  @media(max-width:880px){.join-grid{grid-template-columns:1fr}}
-  .join-card{padding:30px 26px}
-  .join-card .who{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
-  .join-card h3{font-size:20px;font-weight:700;margin:12px 0 8px;letter-spacing:-.01em}
-  .join-card p{font-size:14px;color:var(--ink-soft)}
-  .join-card ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
-  .join-card li{font-size:13.5px;color:var(--ink-soft);padding-left:18px;position:relative}
-  .join-card li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--ink);opacity:.4}
+    .brand strong {
+      font-size: 15px;
+      font-weight: 720;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
 
-  /* CTA box */
-  .cta-box{border:1px solid var(--line);border-radius:18px;padding:56px 48px;text-align:center;background:var(--bg-soft)}
-  .cta-box h2{font-size:clamp(26px,3.8vw,40px);font-weight:700;letter-spacing:-.025em;line-height:1.12}
-  .cta-box p{font-size:16.5px;color:var(--ink-soft);margin:18px auto 0;max-width:48ch}
-  .cta-box .hero-cta{justify-content:center}
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      margin-left: auto;
+      color: var(--ink-soft);
+      font-size: 13.5px;
+      font-weight: 520;
+    }
 
-  /* FOOTER */
-  footer{border-top:1px solid var(--line);padding:42px 0 34px;margin-top:20px;color:var(--muted)}
-  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;align-items:center;padding-bottom:22px;border-bottom:1px solid var(--line)}
-  .foot-links{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--ink-soft)}
-  .foot-links a{cursor:pointer}.foot-links a:hover{color:var(--ink)}
-  .foot-bot{padding-top:20px;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .nav-links a {
+      transition: color 180ms ease;
+    }
 
-  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
-  .reveal.in{opacity:1;transform:none}
-  .page-head{padding:80px 0 16px}
-  .page-head h1{font-size:clamp(32px,4.4vw,48px);font-weight:700;letter-spacing:-.025em;line-height:1.1;margin-top:16px}
-  .page-head p{font-size:16.5px;color:var(--ink-soft);margin-top:16px;max-width:62ch}
-</style>
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      color: var(--ink-soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.56);
+      transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .github-link:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    .github-link svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 138px 0 76px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(251, 250, 247, 0.98) 0%, rgba(251, 250, 247, 0.84) 39%, rgba(251, 250, 247, 0.22) 72%, rgba(251, 250, 247, 0.82) 100%),
+        linear-gradient(180deg, rgba(251, 250, 247, 0.18) 0%, rgba(251, 250, 247, 0.96) 100%);
+      z-index: 1;
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 0 0 auto auto;
+      width: min(980px, 76vw);
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      opacity: 0.92;
+      filter: saturate(0.94) contrast(0.98);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 710px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 30px;
+      height: 1px;
+      background: var(--coral);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+      overflow-wrap: break-word;
+    }
+
+    h1 {
+      margin-top: 26px;
+      max-width: 690px;
+      font-size: 56px;
+      line-height: 1.02;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin-top: 24px;
+      max-width: 610px;
+      font-size: 18px;
+      color: var(--ink-soft);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 620;
+      border: 1px solid var(--line-strong);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .pill-primary {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .pill-ghost {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      border-color: var(--ink);
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 62px;
+      max-width: 720px;
+    }
+
+    .metric {
+      border-top: 1px solid var(--line-strong);
+      padding-top: 16px;
+    }
+
+    .metric strong {
+      display: block;
+      font-family: var(--mono);
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 5px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 78px 0;
+    }
+
+    .section.alt {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-2);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      max-width: 680px;
+    }
+
+    .section-title h2 {
+      margin-top: 14px;
+      font-size: 34px;
+      line-height: 1.12;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin-top: 13px;
+      color: var(--ink-soft);
+      font-size: 15.5px;
+      max-width: 62ch;
+    }
+
+    .tiny-link {
+      flex: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      transition: color 180ms ease;
+    }
+
+    .tiny-link:hover {
+      color: var(--ink);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .card-visual {
+      height: 172px;
+      border-bottom: 1px solid var(--line);
+      background: #f2eee7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.82;
+      filter: saturate(0.86);
+    }
+
+    .trace-lines,
+    .case-grid,
+    .runtime-path {
+      position: absolute;
+      inset: 18px;
+    }
+
+    .trace-lines::before,
+    .trace-lines::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--line-strong);
+    }
+
+    .trace-lines::before {
+      top: 44px;
+    }
+
+    .trace-lines::after {
+      bottom: 44px;
+    }
+
+    .node {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 1px rgba(29, 122, 114, 0.26);
+    }
+
+    .node.a { left: 12%; top: 24%; }
+    .node.b { left: 42%; top: 55%; background: var(--coral); }
+    .node.c { right: 18%; top: 34%; background: var(--gold); }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .case-grid span {
+      border: 1px solid var(--line-strong);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.52);
+    }
+
+    .case-grid span:nth-child(3n) {
+      background: var(--teal-soft);
+    }
+
+    .case-grid span:nth-child(5n) {
+      background: rgba(197, 106, 75, 0.18);
+    }
+
+    .runtime-path {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      gap: 12px;
+    }
+
+    .runtime-path span {
+      height: 52px;
+      border: 1px solid var(--line-strong);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.58);
+      position: relative;
+    }
+
+    .runtime-path span:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 1px;
+      top: 50%;
+      right: -16px;
+      background: var(--coral);
+    }
+
+    .card-body {
+      padding: 22px;
+    }
+
+    .card-kicker {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 13px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .card p {
+      margin-top: 11px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      color: var(--ink-soft);
+      font-size: 12.5px;
+      font-weight: 620;
+    }
+
+    .card-links a {
+      transition: color 180ms ease;
+    }
+
+    .card-links a:hover {
+      color: var(--ink);
+    }
+
+    .thesis {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .thesis-copy {
+      position: sticky;
+      top: 102px;
+    }
+
+    .thesis-copy h2 {
+      margin-top: 14px;
+      font-size: 36px;
+      line-height: 1.12;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .thesis-copy p {
+      margin-top: 16px;
+      color: var(--ink-soft);
+      font-size: 15.5px;
+    }
+
+    .proof-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .proof {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 18px;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .proof:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .proof-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--coral);
+      padding-top: 3px;
+    }
+
+    .proof h3 {
+      font-size: 19px;
+      line-height: 1.25;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .proof p {
+      margin-top: 9px;
+      color: var(--ink-soft);
+      font-size: 14.5px;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.66);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--coral);
+    }
+
+    .dot:nth-child(2) {
+      background: var(--gold);
+    }
+
+    .dot:nth-child(3) {
+      background: var(--teal);
+    }
+
+    .panel-body {
+      padding: 22px;
+      min-height: 320px;
+    }
+
+    .terminal {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.85;
+      color: var(--ink-soft);
+    }
+
+    .terminal b {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .terminal .ok {
+      color: var(--teal);
+    }
+
+    .terminal .warn {
+      color: var(--coral);
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 13px;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      background: var(--paper);
+    }
+
+    .step h3 {
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .step p {
+      margin-top: 5px;
+      color: var(--ink-soft);
+      font-size: 13.5px;
+    }
+
+    .cta {
+      padding: 58px 0 74px;
+    }
+
+    .cta-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fffdfa;
+    }
+
+    .cta h2 {
+      font-size: 28px;
+      line-height: 1.18;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .cta p {
+      margin-top: 10px;
+      color: var(--ink-soft);
+      max-width: 64ch;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 38px 0;
+      color: var(--muted);
+      background: var(--paper-2);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 720;
+    }
+
+    .footer p {
+      margin-top: 12px;
+      max-width: 520px;
+      font-size: 13.5px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 118px;
+      }
+
+      .hero-art {
+        width: 100%;
+        opacity: 0.42;
+      }
+
+      h1 {
+        font-size: 43px;
+      }
+
+      .lead {
+        font-size: 16.5px;
+      }
+
+      .cards,
+      .thesis,
+      .workflow,
+      .cta-box,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .thesis-copy {
+        position: static;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .section-title {
+        width: 100%;
+      }
+
+      .footer-links {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        width: calc(100% - 28px);
+      }
+
+      .hero-content,
+      .section-title,
+      .thesis-copy,
+      .cta-box > div {
+        max-width: 340px;
+      }
+
+      .hero-actions {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero {
+        padding: 104px 0 52px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .hero-meta {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 42px;
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+
+      .section-title h2,
+      .thesis-copy h2 {
+        font-size: 27px;
+        max-width: 12.5em;
+      }
+
+      .card-visual {
+        height: 150px;
+      }
+
+      .proof {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .panel-body,
+      .card-body,
+      .cta-box {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" data-go="home">
-      <svg class="mark" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="34" height="34" rx="9" fill="url(#lg)"/>
-        <rect x="8.6" y="18" width="3.6" height="7" rx="1.4" fill="#fff"/>
-        <rect x="15.2" y="13" width="3.6" height="12" rx="1.4" fill="#fff"/>
-        <rect x="21.8" y="9" width="3.6" height="16" rx="1.4" fill="#fff"/>
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#5B5BD6"/><stop offset="1" stop-color="#7A4DD0"/></linearGradient></defs>
-      </svg>
-      <b>Provance Lab</b>
-    </a>
-    <div class="nav-right">
-      <nav class="nav-links">
-        <a data-go="home" data-i18n="nav_home">首页</a>
-        <a data-go="research" data-i18n="nav_research">研究与论文</a>
-        <a data-go="blog" data-i18n="nav_blog">博客</a>
-        <a data-go="arena" data-i18n="nav_arena">Agent 试炼场</a>
-        <a data-go="join" data-i18n="nav_join">欢迎加入</a>
-      </nav>
-      <span class="nav-sep" aria-hidden="true"></span>
-      <a class="gh-link" href="https://github.com/shiruqian0813-ui/harness-bench" target="_blank" rel="noopener" aria-label="GitHub">
-        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        <span>GitHub</span>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="TraceLite.ai home">
+        <span class="mark" aria-hidden="true"></span>
+        <strong>TraceLite.ai</strong>
       </a>
-      <button class="lang" id="langBtn" aria-label="switch language">EN</button>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#ship">What we ship</a>
+        <a href="#thesis">Thesis</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="github-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer" aria-label="TraceLite.ai on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5C5.73.5.63 5.6.63 11.88c0 5.03 3.26 9.29 7.79 10.79.57.1.78-.25.78-.55v-2.13c-3.17.69-3.84-1.36-3.84-1.36-.52-1.31-1.27-1.66-1.27-1.66-1.03-.71.08-.7.08-.7 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.31.94.1-.73.4-1.23.72-1.51-2.53-.29-5.19-1.27-5.19-5.64 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.17.91-.25 1.88-.38 2.85-.38s1.94.13 2.85.38c2.17-1.48 3.12-1.17 3.12-1.17.63 1.57.23 2.73.12 3.02.73.8 1.17 1.82 1.17 3.07 0 4.38-2.66 5.34-5.2 5.63.41.35.77 1.04.77 2.1v3.14c0 .3.2.66.78.55a11.39 11.39 0 0 0 7.78-10.78C23.38 5.6 18.28.5 12 .5Z" />
+        </svg>
+      </a>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- ============ HOME ============ -->
-<main class="page show" id="page-home">
-
-  <!-- Section 1: HERO / core research -->
-  <section class="hero">
-    <div class="wrap">
-      <span class="eyebrow">HarnessBench · Agent Engineering Benchmark</span>
-      <h1 data-i18n="home_h1"><span class="line">让每一个 Agent，</span><span class="line"><span class="grad">在落地前就值得信赖</span></span></h1>
-      <p class="lead" data-i18n="home_lead">为了 AGI，我们把模糊的工程直觉，变成可复现、可归因的工程证据 —— 固定模型、变换 harness，量化每一项工程决策。</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" data-go="research" data-i18n="home_btn1">阅读我们的研究 →</a>
-        <a class="btn btn-ghost" data-go="join" data-i18n="home_btn2">联系我们</a>
-      </div>
-      <div class="hero-meta">
-        <div class="stat"><div class="n grad">6</div><div class="l" data-i18n="stat1">核心研究维度</div></div>
-        <div class="stat"><div class="n grad">40+</div><div class="l" data-i18n="stat2">可插拔 bench-case</div></div>
-        <div class="stat"><div class="n grad" data-i18n="stat3n">模型固定</div><div class="l" data-i18n="stat3">Harness 可变</div></div>
-        <div class="stat"><div class="n grad" data-i18n="stat4n">开源开放</div><div class="l" data-i18n="stat4">社区共建</div></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="strip" aria-hidden="true">
-    <div class="strip-track">
-      <span>Context &amp; Memory</span><span>Tool Layer</span><span>Orchestration</span><span>Robustness</span><span>Validation</span><span>Self-evolution</span><span>Model fixed · Harness variable</span>
-      <span>Context &amp; Memory</span><span>Tool Layer</span><span>Orchestration</span><span>Robustness</span><span>Validation</span><span>Self-evolution</span><span>Model fixed · Harness variable</span>
-    </div>
-  </div>
-
-  <!-- Section 2: six dimensions brief -->
-  <section class="block">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow" data-i18n="comp_eye">六大维度</span>
-        <h2 data-i18n="comp_h2">当前的 bench-case，围绕六个组件维度展开</h2>
-        <p data-i18n="comp_sub">每一个维度都对应一组可复现、可归因的工程任务，量化 harness 设计的真实影响。</p>
-      </div>
-      <div class="comp-grid">
-        <div class="card comp reveal">
-          <div class="comp-top"><span class="comp-code">C1</span><h3 data-i18n="c1_t">上下文管理 / 记忆</h3></div>
-          <div class="en">Context &amp; Memory</div>
-          <div class="comp-desc" data-i18n="c1_d">在有限窗口里留住对的信息。</div>
-          <div class="chips"><span class="chip prio" data-i18n="c1_1">压缩 / 摘要</span><span class="chip" data-i18n="c1_2">记忆调取</span><span class="chip" data-i18n="c1_3">渐进式披露</span></div>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-art" src="assets/tracelite-hero.png" alt="" aria-hidden="true" />
+      <div class="wrap hero-content">
+        <span class="eyebrow">Agent evaluation lab</span>
+        <h1 id="hero-title">TraceLite.ai</h1>
+        <p class="lead">Traceable evaluation infrastructure for AI agents. Capture real trajectories, replay failures, and turn benchmark runs into evidence your team can inspect.</p>
+        <div class="hero-actions">
+          <a class="pill pill-primary" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">View GitHub repo</a>
+          <a class="pill pill-ghost" href="#ship">Explore the system</a>
         </div>
-        <div class="card comp reveal">
-          <div class="comp-top"><span class="comp-code">C2</span><h3 data-i18n="c2_t">工具层</h3></div>
-          <div class="en">Tool Layer</div>
-          <div class="comp-desc" data-i18n="c2_d">让模型用对每一个工具。</div>
-          <div class="chips"><span class="chip prio" data-i18n="c2_1">工具描述 / schema</span><span class="chip" data-i18n="c2_2">工具筛选</span><span class="chip" data-i18n="c2_3">输出处理</span></div>
-        </div>
-        <div class="card comp reveal">
-          <div class="comp-top"><span class="comp-code">C3</span><h3 data-i18n="c3_t">子 Agent / 编排</h3></div>
-          <div class="en">Orchestration</div>
-          <div class="comp-desc" data-i18n="c3_d">多角色协作的切分与收敛。</div>
-          <div class="chips"><span class="chip prio" data-i18n="c3_1">何时停止</span><span class="chip" data-i18n="c3_2">何时 spawn</span><span class="chip" data-i18n="c3_3">结果聚合</span></div>
-        </div>
-        <div class="card comp reveal">
-          <div class="comp-top"><span class="comp-code">C4</span><h3 data-i18n="c4_t">错误恢复 / 鲁棒</h3></div>
-          <div class="en">Robustness</div>
-          <div class="comp-desc" data-i18n="c4_d">出错时止损、归因、重来。</div>
-          <div class="chips"><span class="chip prio" data-i18n="c4_1">轨迹调节 / 重规划</span><span class="chip" data-i18n="c4_2">重试策略</span><span class="chip" data-i18n="c4_3">循环检测</span></div>
-        </div>
-        <div class="card comp reveal">
-          <div class="comp-top"><span class="comp-code">C5</span><h3 data-i18n="c5_t">验证 / Sensors</h3></div>
-          <div class="en">Validation</div>
-          <div class="comp-desc" data-i18n="c5_d">定稿前知道自己做对了没有。</div>
-          <div class="chips"><span class="chip prio" data-i18n="c5_1">验证门</span><span class="chip" data-i18n="c5_2">自我批评</span><span class="chip" data-i18n="c5_3">外部验证器</span></div>
-        </div>
-        <div class="card comp reveal">
-          <div class="comp-top"><span class="comp-code">C6</span><h3 data-i18n="c6_t">自进化</h3></div>
-          <div class="en">Self-evolution</div>
-          <div class="comp-desc" data-i18n="c6_d">从经验里安全地长出能力。</div>
-          <div class="chips"><span class="chip prio" data-i18n="c6_1">受控增长 / 过滤</span><span class="chip" data-i18n="c6_2">技能合成</span><span class="chip" data-i18n="c6_3">从失败中学习</span></div>
-        </div>
-      </div>
-      <div style="margin-top:34px" class="reveal">
-        <a class="btn btn-ghost" data-go="research" data-i18n="comp_more">查看每个维度的完整 bench-case →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 3: Arena intro -->
-  <section class="block alt">
-    <div class="wrap">
-      <div class="arena-promo">
-        <div class="arena-copy reveal">
-          <span class="eyebrow" data-i18n="ap_eye">Agent 试炼场</span>
-          <h2 data-i18n="ap_h2">一个开箱即用的 <span class="grad">Agent 测评 Docker 环境</span></h2>
-          <p data-i18n="ap_p">把你正在使用的 Agent 接入隔离的容器环境，直接跑 HarnessBench 的 bench-case，实时查看各项 harness 指标 —— 无需自建评测管线。</p>
-          <div class="arena-feats">
-            <div class="arena-feat"><span class="dot">1</span><span data-i18n="ap_f1">一条命令拉起隔离的 Docker 试炼场，接入任意 Agent / Harness。</span></div>
-            <div class="arena-feat"><span class="dot">2</span><span data-i18n="ap_f2">在统一的 bench-case 上跑你的 Agent，固定模型、只看工程差异。</span></div>
-            <div class="arena-feat"><span class="dot">3</span><span data-i18n="ap_f3">查看通过率、步数、工具调用、恢复率等 harness 指标与执行轨迹。</span></div>
+        <div class="hero-meta" aria-label="TraceLite.ai focus areas">
+          <div class="metric">
+            <strong>Trace</strong>
+            <span>Full agent trajectory capture</span>
           </div>
-          <div style="margin-top:26px"><a class="btn btn-primary" data-go="arena" data-i18n="ap_btn">进入 Agent 试炼场 →</a></div>
+          <div class="metric">
+            <strong>Replay</strong>
+            <span>Failure reproduction and audit</span>
+          </div>
+          <div class="metric">
+            <strong>Verify</strong>
+            <span>Case-level scoring and evidence</span>
+          </div>
         </div>
-        <div class="reveal">
-          <div class="terminal">
-            <div class="term-bar"><i></i><i></i><i></i><span>provance-arena · docker</span></div>
-            <div class="term-body">
-<span class="m">$</span> <span class="p">docker run</span> provance/harness-arena <span class="v">--agent</span> my-agent<br>
-<span class="g">✓</span> arena ready · 42 bench-cases loaded<br>
-<span class="m">$</span> <span class="p">arena run</span> --suite context,tools,orchestration<br>
-<span class="m">  running</span> C1·context-compaction ........ <span class="g">pass</span><br>
-<span class="m">  running</span> C2·tool-schema-repair ......... <span class="g">pass</span><br>
-<span class="m">  running</span> C4·loop-detection ............. <span class="w">warn</span><br>
-<br>
-<span class="v">harness report</span><br>
-<span class="m">  pass-rate</span>     <span class="g">86.7%</span><br>
-<span class="m">  avg-steps</span>     <span class="v">14.2</span><br>
-<span class="m">  recovery</span>      <span class="v">0.71</span><br>
-<span class="m">  tool-calls</span>    <span class="v">9.4 / task</span><br>
+      </div>
+    </section>
+
+    <section class="section" id="ship">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-title">
+            <span class="eyebrow">What we ship</span>
+            <h2>Evaluation pieces for agents that need to be trusted, not just demoed.</h2>
+            <p>TraceLite.ai is built around reproducible runs: the task, the tools, the agent actions, the final artifact, and the verifier all stay connected.</p>
+          </div>
+          <a class="tiny-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">GitHub -&gt;</a>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-visual">
+              <img src="assets/tracelite-hero.png" alt="" />
+            </div>
+            <div class="card-body">
+              <div class="card-kicker"><span>01</span><span>Trace layer</span></div>
+              <h3>Trajectory capture</h3>
+              <p>Record prompts, tool calls, file changes, outputs, and intermediate states so every agent result has a readable execution trail.</p>
+              <div class="card-links">
+                <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Repository</a>
+                <a href="#workflow">Workflow</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-visual">
+              <div class="trace-lines" aria-hidden="true">
+                <span class="node a"></span>
+                <span class="node b"></span>
+                <span class="node c"></span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-kicker"><span>02</span><span>Benchmark layer</span></div>
+              <h3>Case-driven evaluation</h3>
+              <p>Run targeted cases that expose planning gaps, tool misuse, lifecycle failures, and final-artifact mismatches in real workflows.</p>
+              <div class="card-links">
+                <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Cases</a>
+                <a href="#thesis">Thesis</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-visual">
+              <div class="runtime-path" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="card-kicker"><span>03</span><span>Verifier layer</span></div>
+              <h3>Evidence-backed scoring</h3>
+              <p>Separate clean completion from correct completion by validating the final artifact, the path taken, and the contract the task required.</p>
+              <div class="card-links">
+                <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Verifier</a>
+                <a href="#contact">Contact</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="thesis">
+      <div class="wrap thesis">
+        <div class="thesis-copy">
+          <span class="eyebrow">Thesis</span>
+          <h2>Agent reliability starts with traces you can argue from.</h2>
+          <p>Pass rates are too flat on their own. A useful evaluation system should explain what happened, where the run diverged, and whether the agent satisfied the real contract of the task.</p>
+        </div>
+
+        <div class="proof-list">
+          <article class="proof">
+            <div class="proof-num">01</div>
+            <div>
+              <h3>Behavior needs context, not screenshots.</h3>
+              <p>Tool calls, hidden assumptions, environment state, and final artifacts belong in the same evidence record.</p>
+            </div>
+          </article>
+          <article class="proof">
+            <div class="proof-num">02</div>
+            <div>
+              <h3>Benchmarks should fail for the right reason.</h3>
+              <p>A discriminative case catches semantic mistakes even when the agent exits cleanly and produces a plausible-looking result.</p>
+            </div>
+          </article>
+          <article class="proof">
+            <div class="proof-num">03</div>
+            <div>
+              <h3>Evaluation should be repeatable by another team.</h3>
+              <p>Tasks, harness configuration, scoring logic, and expected evidence should be portable enough for independent reproduction.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-title">
+            <span class="eyebrow">Workflow</span>
+            <h2>From one run to an inspectable evaluation record.</h2>
+            <p>The site is static, but the product story is concrete: agents enter a harness, traces are captured, verifiers judge the result, and failures become reusable cases.</p>
+          </div>
+        </div>
+
+        <div class="workflow">
+          <div class="panel">
+            <div class="panel-head" aria-hidden="true">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="panel-body terminal" aria-label="Example evaluation status">
+              <div><b>$ tracelite run</b> cases/lifecycle-orchestration</div>
+              <div>agent: openclaw-runtime</div>
+              <div>trace: captured tool calls and artifacts</div>
+              <div>replay: deterministic environment snapshot</div>
+              <div class="warn">verifier: contract mismatch detected</div>
+              <div class="ok">evidence: saved as reusable benchmark case</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-body">
+              <div class="steps">
+                <article class="step">
+                  <div class="step-num">01</div>
+                  <div>
+                    <h3>Run the agent in a controlled harness.</h3>
+                    <p>Fix the task state, tool surface, and expected contract before measuring behavior.</p>
+                  </div>
+                </article>
+                <article class="step">
+                  <div class="step-num">02</div>
+                  <div>
+                    <h3>Capture the whole trajectory.</h3>
+                    <p>Keep the reasoning-adjacent evidence that matters: calls, outputs, files, and final deliverables.</p>
+                  </div>
+                </article>
+                <article class="step">
+                  <div class="step-num">03</div>
+                  <div>
+                    <h3>Score with explicit verifiers.</h3>
+                    <p>Judge correctness against the task contract rather than relying on whether the run looked smooth.</p>
+                  </div>
+                </article>
+                <article class="step">
+                  <div class="step-num">04</div>
+                  <div>
+                    <h3>Promote failures into cases.</h3>
+                    <p>Convert real bad runs into reusable tests for regression, model comparison, and harness design.</p>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Section 4: latest blog -->
-  <section class="block">
-    <div class="wrap">
-      <div class="sec-head reveal" style="display:flex;justify-content:space-between;align-items:flex-end;max-width:none;flex-wrap:wrap;gap:14px">
-        <div>
-          <span class="eyebrow" data-i18n="lb_eye">最新博客</span>
-          <h2 data-i18n="lb_h2">来自实验室的最新思考</h2>
-        </div>
-        <a class="btn btn-ghost" data-go="blog" data-i18n="lb_all">查看全部 →</a>
-      </div>
-      <div class="blog-cards">
-        <a class="card bcard reveal" data-go="blog">
-          <span class="tag" data-i18n="b1_tag">研究</span>
-          <span class="date">2026-06-18</span>
-          <h3 data-i18n="b1_t">固定模型、变换 Harness：我们如何归因工程收益</h3>
-          <p data-i18n="b1_d">用 ablation 把 harness 的每一处设计从模型能力中剥离，量化它对端到端结果的真实贡献。</p>
-          <span class="more" data-i18n="read_more">阅读全文 →</span>
-        </a>
-        <a class="card bcard reveal" data-go="blog">
-          <span class="tag" data-i18n="b2_tag">论文</span>
-          <span class="date">2026-06-05</span>
-          <h3 data-i18n="b2_t">上下文压缩的边界：信息留存 vs. 窗口预算</h3>
-          <p data-i18n="b2_d">在长任务里，不同压缩策略如何影响 Agent 的成功率？我们给出一组可复现的对照实验。</p>
-          <span class="more" data-i18n="read_more">阅读全文 →</span>
-        </a>
-        <a class="card bcard reveal" data-go="blog">
-          <span class="tag" data-i18n="b3_tag">业内</span>
-          <span class="date">2026-05-22</span>
-          <h3 data-i18n="b3_t">Agent 工程正在成为新的护城河</h3>
-          <p data-i18n="b3_d">当模型趋同，harness 设计的差异决定产品体验。我们梳理了近期值得关注的行业信号。</p>
-          <span class="more" data-i18n="read_more">阅读全文 →</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- closing CTA -->
-  <section class="block">
-    <div class="wrap">
-      <div class="cta-box reveal">
-        <span class="eyebrow" style="justify-content:center" data-i18n="cta_eye">为了 AGI</span>
-        <h2 data-i18n="cta_h2">把工程直觉，变成可归因的证据</h2>
-        <p data-i18n="cta_p">和我们一起，构建开源开放的 harness bench-case，推动 AGI 真正落地。</p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" data-go="research" data-i18n="cta_b1">阅读研究 →</a>
-          <a class="btn btn-ghost" data-go="join" data-i18n="cta_b2">加入我们</a>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- ============ RESEARCH ============ -->
-<main class="page" id="page-research">
-  <section class="page-head">
-    <div class="wrap">
-      <span class="eyebrow" data-i18n="r_eye">研究与论文</span>
-      <h1 data-i18n="r_h1">六个组件维度，<span class="grad">六组 bench-case</span></h1>
-      <p data-i18n="r_sub">每个维度都对应一组可复现的工程任务与量化指标。我们在固定模型下做 ablation，把工程收益从模型能力里剥离出来。所有 bench-case 开源于 GitHub。</p>
-    </div>
-  </section>
-
-  <section class="block" style="padding-top:30px">
-    <div class="wrap">
-      <div class="rblock-grid">
-
-        <div class="card rblock reveal">
-          <div class="rblock-head"><div class="code">C1</div><div><h3 data-i18n="rc1_t">上下文管理 / 记忆</h3><div class="en">Context &amp; Memory</div></div></div>
-          <div class="desc" data-i18n="rc1_d">在有限的上下文窗口里，保留对当前任务最关键的信息。</div>
-          <div class="case"><div class="ct"><span class="badge" data-i18n="prio_badge">优先</span><span data-i18n="rc1_1t">上下文压缩 / 摘要</span></div><div class="cd" data-i18n="rc1_1d">长轨迹下不同压缩策略对任务成功率与信息留存的影响。</div><div class="metric" data-i18n="rc1_1m">指标：<b>pass-rate</b> · <b>info-retention</b> · <b>token-budget</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc1_2t">记忆调取</span></div><div class="cd" data-i18n="rc1_2d">在何时、用何种检索把历史记忆带回当前推理。</div><div class="metric" data-i18n="rc1_2m">指标：<b>recall@k</b> · <b>relevance</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc1_3t">渐进式披露 / 跨会话持久化</span></div><div class="cd" data-i18n="rc1_3d">按需展开信息，并在多会话间稳定地维持状态。</div></div>
-          <a class="ghlink" href="https://github.com/shiruqian0813-ui/harness-bench/tree/main/context-memory" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span data-i18n="gh_view">在 GitHub 查看 bench-case</span></a>
-        </div>
-
-        <div class="card rblock reveal">
-          <div class="rblock-head"><div class="code">C2</div><div><h3 data-i18n="rc2_t">工具层</h3><div class="en">Tool Layer</div></div></div>
-          <div class="desc" data-i18n="rc2_d">让模型在正确的时机，用正确的参数调用正确的工具。</div>
-          <div class="case"><div class="ct"><span class="badge" data-i18n="prio_badge">优先</span><span data-i18n="rc2_1t">工具描述 / schema 设计</span></div><div class="cd" data-i18n="rc2_1d">schema 的措辞、示例与约束如何影响调用正确率。</div><div class="metric" data-i18n="rc2_1m">指标：<b>call-accuracy</b> · <b>arg-validity</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc2_2t">工具筛选 / 输出处理</span></div><div class="cd" data-i18n="rc2_2d">在大量工具中筛选候选，并稳健地解析工具返回。</div><div class="metric" data-i18n="rc2_2m">指标：<b>selection-precision</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc2_3t">参数纠错</span></div><div class="cd" data-i18n="rc2_3d">调用失败后，模型能否从报错中自我修复参数。</div></div>
-          <a class="ghlink" href="https://github.com/shiruqian0813-ui/harness-bench/tree/main/tool-layer" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span data-i18n="gh_view">在 GitHub 查看 bench-case</span></a>
-        </div>
-
-        <div class="card rblock reveal">
-          <div class="rblock-head"><div class="code">C3</div><div><h3 data-i18n="rc3_t">子 Agent / 编排</h3><div class="en">Orchestration</div></div></div>
-          <div class="desc" data-i18n="rc3_d">把任务在多个角色间切分，并把结果稳健地收敛回来。</div>
-          <div class="case"><div class="ct"><span class="badge" data-i18n="prio_badge">优先</span><span data-i18n="rc3_1t">何时停止 / 何时 spawn</span></div><div class="cd" data-i18n="rc3_1d">主控 Agent 何时拆分子任务、何时收手，避免过度编排。</div><div class="metric" data-i18n="rc3_1m">指标：<b>over-spawn-rate</b> · <b>completion</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc3_2t">协调拓扑</span></div><div class="cd" data-i18n="rc3_2d">串行、并行还是层级，不同拓扑下的效率与正确性。</div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc3_3t">结果聚合</span></div><div class="cd" data-i18n="rc3_3d">把子 Agent 的产出无损地合并为一致的最终结果。</div></div>
-          <a class="ghlink" href="https://github.com/shiruqian0813-ui/harness-bench/tree/main/orchestration" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span data-i18n="gh_view">在 GitHub 查看 bench-case</span></a>
-        </div>
-
-        <div class="card rblock reveal">
-          <div class="rblock-head"><div class="code">C4</div><div><h3 data-i18n="rc4_t">错误恢复 / 鲁棒</h3><div class="en">Robustness</div></div></div>
-          <div class="desc" data-i18n="rc4_d">出错时能止损、归因，并把轨迹重新拉回正轨。</div>
-          <div class="case"><div class="ct"><span class="badge" data-i18n="prio_badge">优先</span><span data-i18n="rc4_1t">轨迹调节 / 重规划</span></div><div class="cd" data-i18n="rc4_1d">检测到偏离后，能否重新规划而非一路错到底。</div><div class="metric" data-i18n="rc4_1m">指标：<b>recovery-rate</b> · <b>replan-cost</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc4_2t">重试策略 / 降级回退</span></div><div class="cd" data-i18n="rc4_2d">失败后的重试与回退如何兼顾成功率与成本。</div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc4_3t">循环检测</span></div><div class="cd" data-i18n="rc4_3d">识别并打破无进展的重复循环。</div></div>
-          <a class="ghlink" href="https://github.com/shiruqian0813-ui/harness-bench/tree/main/robustness" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span data-i18n="gh_view">在 GitHub 查看 bench-case</span></a>
-        </div>
-
-        <div class="card rblock reveal">
-          <div class="rblock-head"><div class="code">C5</div><div><h3 data-i18n="rc5_t">验证 / Sensors</h3><div class="en">Validation</div></div></div>
-          <div class="desc" data-i18n="rc5_d">在定稿前，让 Agent 知道自己到底做对了没有。</div>
-          <div class="case"><div class="ct"><span class="badge" data-i18n="prio_badge">优先</span><span data-i18n="rc5_1t">验证门</span></div><div class="cd" data-i18n="rc5_1d">在关键节点设置可量化的验证门，拦住错误产出。</div><div class="metric" data-i18n="rc5_1m">指标：<b>false-pass</b> · <b>false-block</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc5_2t">自我批评 / 外部验证器</span></div><div class="cd" data-i18n="rc5_2d">自检与外部验证器（编译、测试、规则）的组合效果。</div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc5_3t">完成度对照</span></div><div class="cd" data-i18n="rc5_3d">逐条核对需求，避免"看起来完成"。</div></div>
-          <a class="ghlink" href="https://github.com/shiruqian0813-ui/harness-bench/tree/main/validation" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span data-i18n="gh_view">在 GitHub 查看 bench-case</span></a>
-        </div>
-
-        <div class="card rblock reveal">
-          <div class="rblock-head"><div class="code">C6</div><div><h3 data-i18n="rc6_t">自进化</h3><div class="en">Self-evolution</div></div></div>
-          <div class="desc" data-i18n="rc6_d">从经验中安全地长出新能力，而不是无序膨胀。</div>
-          <div class="case"><div class="ct"><span class="badge" data-i18n="prio_badge">优先</span><span data-i18n="rc6_1t">受控增长 / 过滤</span></div><div class="cd" data-i18n="rc6_1d">新技能在沉淀前的筛选与质量控制，防止污染。</div><div class="metric" data-i18n="rc6_1m">指标：<b>skill-quality</b> · <b>regression</b></div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc6_2t">技能合成 / 复用</span></div><div class="cd" data-i18n="rc6_2d">把成功轨迹抽象成可复用技能，并在新任务中调用。</div></div>
-          <div class="case"><div class="ct"><span data-i18n="rc6_3t">从失败中学习</span></div><div class="cd" data-i18n="rc6_3d">把失败案例转化为可避免再犯的约束与经验。</div></div>
-          <a class="ghlink" href="https://github.com/shiruqian0813-ui/harness-bench/tree/main/self-evolution" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span data-i18n="gh_view">在 GitHub 查看 bench-case</span></a>
-        </div>
-
-      </div>
-
-      <div style="margin-top:40px;text-align:center" class="reveal">
-        <a class="btn btn-primary" href="https://github.com/shiruqian0813-ui/harness-bench" target="_blank" rel="noopener" data-i18n="r_repo">查看完整 HarnessBench 仓库 →</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- ============ BLOG ============ -->
-<main class="page" id="page-blog">
-  <section class="page-head">
-    <div class="wrap">
-      <span class="eyebrow" data-i18n="bl_eye">博客</span>
-      <h1 data-i18n="bl_h1">技术博客 · 业内新闻 · <span class="grad">相关论文</span></h1>
-      <p data-i18n="bl_sub">按时间顺序，记录我们对 Agent 工程评测的思考，以及值得关注的行业与学术动态。</p>
-    </div>
-  </section>
-
-  <section class="block" style="padding-top:30px">
-    <div class="wrap">
-      <div class="blog-list">
-        <a class="card post reveal" data-go="blog">
-          <div class="date">2026-06-18</div>
-          <div><span class="tag" data-i18n="b1_tag">研究</span><h3 data-i18n="b1_t">固定模型、变换 Harness：我们如何归因工程收益</h3><p data-i18n="b1_d">用 ablation 把 harness 的每一处设计从模型能力中剥离，量化它对端到端结果的真实贡献。</p></div>
-          <div class="arw">→</div>
-        </a>
-        <a class="card post reveal" data-go="blog">
-          <div class="date">2026-06-05</div>
-          <div><span class="tag" data-i18n="b2_tag">论文</span><h3 data-i18n="b2_t">上下文压缩的边界：信息留存 vs. 窗口预算</h3><p data-i18n="b2_d">在长任务里，不同压缩策略如何影响 Agent 的成功率？我们给出一组可复现的对照实验。</p></div>
-          <div class="arw">→</div>
-        </a>
-        <a class="card post reveal" data-go="blog">
-          <div class="date">2026-05-22</div>
-          <div><span class="tag" data-i18n="b3_tag">业内</span><h3 data-i18n="b3_t">Agent 工程正在成为新的护城河</h3><p data-i18n="b3_d">当模型趋同，harness 设计的差异决定产品体验。我们梳理了近期值得关注的行业信号。</p></div>
-          <div class="arw">→</div>
-        </a>
-        <a class="card post reveal" data-go="blog">
-          <div class="date">2026-05-09</div>
-          <div><span class="tag" data-i18n="b4_tag">研究</span><h3 data-i18n="b4_t">工具 schema 的措辞，能值多少个百分点？</h3><p data-i18n="b4_d">同一组工具、同一个模型，仅改写 schema 描述，调用正确率出现了显著差异。</p></div>
-          <div class="arw">→</div>
-        </a>
-        <a class="card post reveal" data-go="blog">
-          <div class="date">2026-04-26</div>
-          <div><span class="tag" data-i18n="b5_tag">论文</span><h3 data-i18n="b5_t">多 Agent 编排中的"过度协作"陷阱</h3><p data-i18n="b5_d">不是 spawn 越多越好 —— 我们量化了过度编排带来的成本与正确性损失。</p></div>
-          <div class="arw">→</div>
-        </a>
-        <a class="card post reveal" data-go="blog">
-          <div class="date">2026-04-10</div>
-          <div><span class="tag" data-i18n="b6_tag">公告</span><h3 data-i18n="b6_t">HarnessBench 开源：和社区一起共建 bench-case</h3><p data-i18n="b6_d">我们把六个维度的评测协议与初始 bench-case 全部开源，邀请你提交自己的 case。</p></div>
-          <div class="arw">→</div>
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- ============ ARENA ============ -->
-<main class="page" id="page-arena">
-  <section class="page-head">
-    <div class="wrap">
-      <span class="eyebrow" data-i18n="ar_eye">Agent 试炼场</span>
-      <h1 data-i18n="ar_h1">让你的 Agent，<span class="grad">先在试炼场里跑一遍</span></h1>
-      <p data-i18n="ar_sub">一个面向 Agent 的测评与诊断空间。把你正在用的 Agent 接进来，在统一的 bench-case 上运行，并对每一条执行轨迹做细粒度归因。</p>
-    </div>
-  </section>
-
-  <section class="block" style="padding-top:30px">
-    <div class="wrap">
-      <div class="arena-grid">
-        <div class="card arena-card reveal">
-          <span class="tag" data-i18n="ae_tag">测试体验环境</span>
-          <h3 data-i18n="ae_h">Agent 测试体验环境</h3>
-          <p data-i18n="ae_p">一个隔离的 Docker 测评环境，预置 HarnessBench 的全部 bench-case。接入你的 Agent，固定模型、只变 harness，直接看到工程差异带来的指标变化。</p>
-          <ul>
-            <li data-i18n="ae_1">一条命令拉起隔离容器，支持任意 Agent / Harness 接入</li>
-            <li data-i18n="ae_2">按维度选择 bench-case 套件，复现稳定、结果可比</li>
-            <li data-i18n="ae_3">实时输出通过率、步数、工具调用、恢复率等 harness 指标</li>
-            <li data-i18n="ae_4">导出结构化报告，方便横向对比不同 harness 设计</li>
-          </ul>
-          <span class="badge-soon" data-i18n="soon">体验环境即将开放 · Coming soon</span>
-        </div>
-
-        <div class="card arena-card reveal">
-          <span class="tag" data-i18n="at_tag">轨迹分析</span>
-          <h3 data-i18n="at_h">Agent 执行轨迹分析</h3>
-          <p data-i18n="at_p">把一次运行的完整轨迹拆解成可读的步骤序列，定位 Agent 在哪一步偏离、为什么失败、哪一个 harness 组件是瓶颈 —— 让分数变得可归因。</p>
-          <ul>
-            <li data-i18n="at_1">step-by-step 可视化每一次推理、工具调用与状态变化</li>
-            <li data-i18n="at_2">自动标注失败点、循环、无效重试与恢复时刻</li>
-            <li data-i18n="at_3">按六个组件维度归因，告诉你瓶颈出在哪个环节</li>
-            <li data-i18n="at_4">支持多次运行对比，量化一次 harness 改动的真实收益</li>
-          </ul>
-          <span class="badge-soon" data-i18n="soon">体验环境即将开放 · Coming soon</span>
-        </div>
-      </div>
-
-      <div class="metrics-row">
-        <div class="card mcard reveal"><div class="mn grad">pass-rate</div><div class="ml" data-i18n="m1">任务通过率</div></div>
-        <div class="card mcard reveal"><div class="mn grad">steps</div><div class="ml" data-i18n="m2">完成步数 / 效率</div></div>
-        <div class="card mcard reveal"><div class="mn grad">recovery</div><div class="ml" data-i18n="m3">错误恢复率</div></div>
-        <div class="card mcard reveal"><div class="mn grad">tool-acc</div><div class="ml" data-i18n="m4">工具调用正确率</div></div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- ============ JOIN ============ -->
-<main class="page" id="page-join">
-  <section class="page-head">
-    <div class="wrap">
-      <span class="eyebrow" data-i18n="j_eye">欢迎加入</span>
-      <h1 data-i18n="j_h1">一起构建开源开放的 <span class="grad">Harness Bench-case</span></h1>
-      <p data-i18n="j_sub">无论你是工程师、研究者，还是业内同行 —— 我们都欢迎你加入，把模糊的工程直觉变成共享的工程证据，推动 AGI 真正落地。</p>
-    </div>
-  </section>
-
-  <section class="block" style="padding-top:30px">
-    <div class="wrap">
-      <div class="join-grid">
-        <div class="card join-card reveal">
-          <span class="who" data-i18n="j1_w">加入团队</span>
-          <h3 data-i18n="j1_t">技术人员</h3>
-          <p data-i18n="j1_p">如果你热爱 Agent 工程、评测方法学与系统设计，欢迎加入我们。</p>
-          <ul><li data-i18n="j1_1">Agent / Harness 工程</li><li data-i18n="j1_2">评测协议与 ablation 方法学</li><li data-i18n="j1_3">分布式测评基础设施</li></ul>
-        </div>
-        <div class="card join-card reveal">
-          <span class="who" data-i18n="j2_w">贡献 Case</span>
-          <h3 data-i18n="j2_t">业内人士</h3>
-          <p data-i18n="j2_p">把你在真实场景里遇到的 harness 难题，沉淀成一个 bench-case，让整个社区受益。</p>
-          <ul><li data-i18n="j2_1">提交可复现的 bench-case</li><li data-i18n="j2_2">贡献真实场景与失败样本</li><li data-i18n="j2_3">参与维度与指标的设计讨论</li></ul>
-        </div>
-        <div class="card join-card reveal">
-          <span class="who" data-i18n="j3_w">开源共建</span>
-          <h3 data-i18n="j3_t">研究社区</h3>
-          <p data-i18n="j3_p">在开放、可复现的协议上做研究，让你的发现可以被他人验证和扩展。</p>
-          <ul><li data-i18n="j3_1">复现并扩展现有 bench-case</li><li data-i18n="j3_2">发表基于 HarnessBench 的研究</li><li data-i18n="j3_3">共建公共的行业评测标尺</li></ul>
-        </div>
-      </div>
-
-      <div style="margin-top:44px">
-        <div class="cta-box reveal">
-          <span class="eyebrow" style="justify-content:center" data-i18n="j_cta_eye">为了 AGI</span>
-          <h2 data-i18n="j_cta_h">让每一个 Agent，在落地前就值得信赖</h2>
-          <p data-i18n="j_cta_p">联系我们，或直接在 GitHub 上提交你的第一个 bench-case。</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="mailto:hello@provance-lab.ai" data-i18n="j_cta_b1">联系我们 →</a>
-            <a class="btn btn-ghost" href="https://github.com/shiruqian0813-ui/harness-bench" target="_blank" rel="noopener" data-i18n="j_cta_b2">前往 GitHub</a>
+    <section class="cta" id="contact">
+      <div class="wrap">
+        <div class="cta-box">
+          <div>
+            <h2>Build evaluation around evidence.</h2>
+            <p>Use the repository as the public home for TraceLite.ai while the benchmark cases and runtime pieces mature.</p>
           </div>
+          <a class="pill pill-primary" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Open GitHub</a>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 
-<footer>
-  <div class="wrap">
-    <div class="foot-top">
-      <a class="brand" data-go="home">
-        <svg class="mark" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect width="34" height="34" rx="9" fill="url(#lg2)"/>
-          <rect x="8.6" y="18" width="3.6" height="7" rx="1.4" fill="#fff"/>
-          <rect x="15.2" y="13" width="3.6" height="12" rx="1.4" fill="#fff"/>
-          <rect x="21.8" y="9" width="3.6" height="16" rx="1.4" fill="#fff"/>
-          <defs><linearGradient id="lg2" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#5B5BD6"/><stop offset="1" stop-color="#7A4DD0"/></linearGradient></defs>
-        </svg>
-        <b>Provance Lab</b>
-      </a>
-      <div class="foot-links">
-        <a data-go="home" data-i18n="nav_home">首页</a>
-        <a data-go="research" data-i18n="nav_research">研究与论文</a>
-        <a data-go="blog" data-i18n="nav_blog">博客</a>
-        <a data-go="arena" data-i18n="nav_arena">Agent 试炼场</a>
-        <a data-go="join" data-i18n="nav_join">欢迎加入</a>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div>
+        <a class="footer-brand" href="#top">
+          <span class="mark" aria-hidden="true"></span>
+          <span>TraceLite.ai</span>
+        </a>
+        <p>Traceable evaluation infrastructure for agent systems. Built for reproducible cases, replayable failures, and inspectable evidence.</p>
       </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#ship">What we ship</a>
+        <a href="#thesis">Thesis</a>
+        <a href="#workflow">Workflow</a>
+        <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
     </div>
-    <div class="foot-bot">
-      <span>© 2026 Provance Lab.</span>
-      <span data-i18n="foot_right">模型固定 · Harness 可变 · 可归因的分数</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-  const I18N = {
-    nav_home:{zh:"首页",en:"Home"}, nav_research:{zh:"研究与论文",en:"Research"},
-    nav_blog:{zh:"博客",en:"Blog"}, nav_arena:{zh:"Agent 试炼场",en:"Agent Arena"}, nav_join:{zh:"欢迎加入",en:"Join Us"},
-
-    /* HOME */
-    home_h1:{zh:'<span class="line">让每一个 Agent，</span><span class="line"><span class="grad">在落地前就值得信赖</span></span>',en:'<span class="line">Make every agent</span><span class="line"><span class="grad">trustworthy before it ships</span></span>'},
-    home_lead:{zh:"为了 AGI，我们把模糊的工程直觉，变成可复现、可归因的工程证据 —— 固定模型、变换 harness，量化每一项工程决策。",en:"For AGI — we turn vague engineering intuition into reproducible, attributable evidence: fix the model, vary the harness, and quantify every decision."},
-    home_btn1:{zh:"阅读我们的研究 →",en:"Read our research →"}, home_btn2:{zh:"联系我们",en:"Contact us"},
-    stat1:{zh:"核心研究维度",en:"Core dimensions"}, stat2:{zh:"可插拔 bench-case",en:"Pluggable bench-cases"},
-    stat3n:{zh:"模型固定",en:"Model fixed"}, stat3:{zh:"Harness 可变",en:"Harness variable"},
-    stat4n:{zh:"开源开放",en:"Open source"}, stat4:{zh:"社区共建",en:"Community-built"},
-
-    comp_eye:{zh:"六大维度",en:"Six dimensions"}, comp_h2:{zh:"当前的 bench-case，围绕六个组件维度展开",en:"Today's bench-cases span six component dimensions"},
-    comp_sub:{zh:"每一个维度都对应一组可复现、可归因的工程任务，量化 harness 设计的真实影响。",en:"Each dimension maps to a set of reproducible, attributable tasks that quantify the real impact of harness design."},
-    comp_more:{zh:"查看每个维度的完整 bench-case →",en:"See the full bench-cases per dimension →"},
-    c1_t:{zh:"上下文管理 / 记忆",en:"Context & Memory"}, c1_d:{zh:"在有限窗口里留住对的信息。",en:"Keep the right context in a limited window."},
-    c1_1:{zh:"压缩 / 摘要",en:"Compaction"}, c1_2:{zh:"记忆调取",en:"Retrieval"}, c1_3:{zh:"渐进式披露",en:"Progressive disclosure"},
-    c2_t:{zh:"工具层",en:"Tool Layer"}, c2_d:{zh:"让模型用对每一个工具。",en:"Make the model use every tool correctly."},
-    c2_1:{zh:"工具描述 / schema",en:"Tool schema"}, c2_2:{zh:"工具筛选",en:"Tool filtering"}, c2_3:{zh:"输出处理",en:"Output handling"},
-    c3_t:{zh:"子 Agent / 编排",en:"Orchestration"}, c3_d:{zh:"多角色协作的切分与收敛。",en:"Split and converge multi-agent work."},
-    c3_1:{zh:"何时停止",en:"When to stop"}, c3_2:{zh:"何时 spawn",en:"When to spawn"}, c3_3:{zh:"结果聚合",en:"Aggregation"},
-    c4_t:{zh:"错误恢复 / 鲁棒",en:"Robustness"}, c4_d:{zh:"出错时止损、归因、重来。",en:"Recover, attribute and retry on failure."},
-    c4_1:{zh:"轨迹调节 / 重规划",en:"Replanning"}, c4_2:{zh:"重试策略",en:"Retry policy"}, c4_3:{zh:"循环检测",en:"Loop detection"},
-    c5_t:{zh:"验证 / Sensors",en:"Validation"}, c5_d:{zh:"定稿前知道自己做对了没有。",en:"Know it's right before finalizing."},
-    c5_1:{zh:"验证门",en:"Verification gate"}, c5_2:{zh:"自我批评",en:"Self-critique"}, c5_3:{zh:"外部验证器",en:"External validators"},
-    c6_t:{zh:"自进化",en:"Self-evolution"}, c6_d:{zh:"从经验里安全地长出能力。",en:"Grow skills from experience, safely."},
-    c6_1:{zh:"受控增长 / 过滤",en:"Controlled growth"}, c6_2:{zh:"技能合成",en:"Skill synthesis"}, c6_3:{zh:"从失败中学习",en:"Learn from failure"},
-
-    ap_eye:{zh:"Agent 试炼场",en:"Agent Arena"},
-    ap_h2:{zh:'一个开箱即用的 <span class="grad">Agent 测评 Docker 环境</span>',en:'A ready-to-run <span class="grad">Docker arena for agent evals</span>'},
-    ap_p:{zh:"把你正在使用的 Agent 接入隔离的容器环境，直接跑 HarnessBench 的 bench-case，实时查看各项 harness 指标 —— 无需自建评测管线。",en:"Plug the agent you already use into an isolated container, run HarnessBench bench-cases, and watch every harness metric live — no eval pipeline to build."},
-    ap_f1:{zh:"一条命令拉起隔离的 Docker 试炼场，接入任意 Agent / Harness。",en:"Spin up an isolated Docker arena with one command; bring any agent / harness."},
-    ap_f2:{zh:"在统一的 bench-case 上跑你的 Agent，固定模型、只看工程差异。",en:"Run your agent on shared bench-cases — fix the model, isolate the engineering."},
-    ap_f3:{zh:"查看通过率、步数、工具调用、恢复率等 harness 指标与执行轨迹。",en:"Inspect pass-rate, steps, tool-calls, recovery and the full trajectory."},
-    ap_btn:{zh:"进入 Agent 试炼场 →",en:"Enter the Agent Arena →"},
-
-    lb_eye:{zh:"最新博客",en:"Latest from the blog"}, lb_h2:{zh:"来自实验室的最新思考",en:"Fresh thinking from the lab"}, lb_all:{zh:"查看全部 →",en:"View all →"},
-    read_more:{zh:"阅读全文 →",en:"Read more →"},
-
-    cta_eye:{zh:"为了 AGI",en:"For AGI"}, cta_h2:{zh:"把工程直觉，变成可归因的证据",en:"Turn intuition into attributable evidence"},
-    cta_p:{zh:"和我们一起，构建开源开放的 harness bench-case，推动 AGI 真正落地。",en:"Build open, reproducible harness bench-cases with us — and help AGI actually land."},
-    cta_b1:{zh:"阅读研究 →",en:"Read the research →"}, cta_b2:{zh:"加入我们",en:"Join us"},
-
-    /* RESEARCH */
-    r_eye:{zh:"研究与论文",en:"Research & Papers"},
-    r_h1:{zh:'六个组件维度，<span class="grad">六组 bench-case</span>',en:'Six dimensions, <span class="grad">six bench-case suites</span>'},
-    r_sub:{zh:"每个维度都对应一组可复现的工程任务与量化指标。我们在固定模型下做 ablation，把工程收益从模型能力里剥离出来。所有 bench-case 开源于 GitHub。",en:"Each dimension maps to reproducible tasks and quantitative metrics. We ablate with the model held fixed, separating engineering gains from raw capability. Every bench-case is open on GitHub."},
-    prio_badge:{zh:"优先",en:"Priority"}, gh_view:{zh:"在 GitHub 查看 bench-case",en:"View bench-case on GitHub"},
-    r_repo:{zh:"查看完整 HarnessBench 仓库 →",en:"Browse the full HarnessBench repo →"},
-
-    rc1_t:{zh:"上下文管理 / 记忆",en:"Context & Memory"}, rc1_d:{zh:"在有限的上下文窗口里，保留对当前任务最关键的信息。",en:"Preserve the most task-critical information within a limited context window."},
-    rc1_1t:{zh:"上下文压缩 / 摘要",en:"Context compaction"}, rc1_1d:{zh:"长轨迹下不同压缩策略对任务成功率与信息留存的影响。",en:"How compaction strategies affect success rate and information retention on long trajectories."}, rc1_1m:{zh:"指标：<b>pass-rate</b> · <b>info-retention</b> · <b>token-budget</b>",en:"Metrics: <b>pass-rate</b> · <b>info-retention</b> · <b>token-budget</b>"},
-    rc1_2t:{zh:"记忆调取",en:"Memory retrieval"}, rc1_2d:{zh:"在何时、用何种检索把历史记忆带回当前推理。",en:"When and how to retrieve prior memory back into the current reasoning."}, rc1_2m:{zh:"指标：<b>recall@k</b> · <b>relevance</b>",en:"Metrics: <b>recall@k</b> · <b>relevance</b>"},
-    rc1_3t:{zh:"渐进式披露 / 跨会话持久化",en:"Progressive disclosure / persistence"}, rc1_3d:{zh:"按需展开信息，并在多会话间稳定地维持状态。",en:"Reveal information on demand and keep state stable across sessions."},
-
-    rc2_t:{zh:"工具层",en:"Tool Layer"}, rc2_d:{zh:"让模型在正确的时机，用正确的参数调用正确的工具。",en:"Get the model to call the right tool, at the right time, with the right arguments."},
-    rc2_1t:{zh:"工具描述 / schema 设计",en:"Tool schema design"}, rc2_1d:{zh:"schema 的措辞、示例与约束如何影响调用正确率。",en:"How schema wording, examples and constraints drive call accuracy."}, rc2_1m:{zh:"指标：<b>call-accuracy</b> · <b>arg-validity</b>",en:"Metrics: <b>call-accuracy</b> · <b>arg-validity</b>"},
-    rc2_2t:{zh:"工具筛选 / 输出处理",en:"Tool selection / output handling"}, rc2_2d:{zh:"在大量工具中筛选候选，并稳健地解析工具返回。",en:"Filter candidates among many tools and robustly parse tool outputs."}, rc2_2m:{zh:"指标：<b>selection-precision</b>",en:"Metrics: <b>selection-precision</b>"},
-    rc2_3t:{zh:"参数纠错",en:"Argument repair"}, rc2_3d:{zh:"调用失败后，模型能否从报错中自我修复参数。",en:"After a failed call, can the model self-repair arguments from the error?"},
-
-    rc3_t:{zh:"子 Agent / 编排",en:"Orchestration"}, rc3_d:{zh:"把任务在多个角色间切分，并把结果稳健地收敛回来。",en:"Split work across roles and converge the results back robustly."},
-    rc3_1t:{zh:"何时停止 / 何时 spawn",en:"When to stop / when to spawn"}, rc3_1d:{zh:"主控 Agent 何时拆分子任务、何时收手，避免过度编排。",en:"When the lead agent should spawn or stop — avoiding over-orchestration."}, rc3_1m:{zh:"指标：<b>over-spawn-rate</b> · <b>completion</b>",en:"Metrics: <b>over-spawn-rate</b> · <b>completion</b>"},
-    rc3_2t:{zh:"协调拓扑",en:"Coordination topology"}, rc3_2d:{zh:"串行、并行还是层级，不同拓扑下的效率与正确性。",en:"Serial, parallel or hierarchical — efficiency and correctness per topology."},
-    rc3_3t:{zh:"结果聚合",en:"Result aggregation"}, rc3_3d:{zh:"把子 Agent 的产出无损地合并为一致的最终结果。",en:"Merge sub-agent outputs into a single, consistent result without loss."},
-
-    rc4_t:{zh:"错误恢复 / 鲁棒",en:"Robustness"}, rc4_d:{zh:"出错时能止损、归因，并把轨迹重新拉回正轨。",en:"On error, cut losses, attribute the cause and steer the trajectory back."},
-    rc4_1t:{zh:"轨迹调节 / 重规划",en:"Replanning"}, rc4_1d:{zh:"检测到偏离后，能否重新规划而非一路错到底。",en:"After detecting drift, can the agent replan instead of compounding the error?"}, rc4_1m:{zh:"指标：<b>recovery-rate</b> · <b>replan-cost</b>",en:"Metrics: <b>recovery-rate</b> · <b>replan-cost</b>"},
-    rc4_2t:{zh:"重试策略 / 降级回退",en:"Retry / fallback"}, rc4_2d:{zh:"失败后的重试与回退如何兼顾成功率与成本。",en:"How retry and fallback balance success rate against cost."},
-    rc4_3t:{zh:"循环检测",en:"Loop detection"}, rc4_3d:{zh:"识别并打破无进展的重复循环。",en:"Detect and break out of unproductive repeating loops."},
-
-    rc5_t:{zh:"验证 / Sensors",en:"Validation"}, rc5_d:{zh:"在定稿前，让 Agent 知道自己到底做对了没有。",en:"Let the agent know whether it actually got it right — before finalizing."},
-    rc5_1t:{zh:"验证门",en:"Verification gate"}, rc5_1d:{zh:"在关键节点设置可量化的验证门，拦住错误产出。",en:"Place quantifiable verification gates at key points to block bad output."}, rc5_1m:{zh:"指标：<b>false-pass</b> · <b>false-block</b>",en:"Metrics: <b>false-pass</b> · <b>false-block</b>"},
-    rc5_2t:{zh:"自我批评 / 外部验证器",en:"Self-critique / external validators"}, rc5_2d:{zh:"自检与外部验证器（编译、测试、规则）的组合效果。",en:"Combining self-critique with external validators (compile, test, rules)."},
-    rc5_3t:{zh:"完成度对照",en:"Requirement check"}, rc5_3d:{zh:'逐条核对需求，避免"看起来完成"。',en:'Check requirements one by one to avoid "looks done".'},
-
-    rc6_t:{zh:"自进化",en:"Self-evolution"}, rc6_d:{zh:"从经验中安全地长出新能力，而不是无序膨胀。",en:"Grow new capability from experience, safely — not by uncontrolled bloat."},
-    rc6_1t:{zh:"受控增长 / 过滤",en:"Controlled growth / filtering"}, rc6_1d:{zh:"新技能在沉淀前的筛选与质量控制，防止污染。",en:"Filter and quality-gate new skills before they persist, preventing pollution."}, rc6_1m:{zh:"指标：<b>skill-quality</b> · <b>regression</b>",en:"Metrics: <b>skill-quality</b> · <b>regression</b>"},
-    rc6_2t:{zh:"技能合成 / 复用",en:"Skill synthesis / reuse"}, rc6_2d:{zh:"把成功轨迹抽象成可复用技能，并在新任务中调用。",en:"Abstract successful trajectories into reusable skills and call them on new tasks."},
-    rc6_3t:{zh:"从失败中学习",en:"Learn from failure"}, rc6_3d:{zh:"把失败案例转化为可避免再犯的约束与经验。",en:"Turn failures into constraints and lessons that prevent repeats."},
-
-    /* BLOG */
-    bl_eye:{zh:"博客",en:"Blog"}, bl_h1:{zh:'技术博客 · 业内新闻 · <span class="grad">相关论文</span>',en:'Engineering posts · industry news · <span class="grad">papers</span>'},
-    bl_sub:{zh:"按时间顺序，记录我们对 Agent 工程评测的思考，以及值得关注的行业与学术动态。",en:"In chronological order — our thinking on agent-engineering evaluation, plus industry and academic signals worth watching."},
-    b1_tag:{zh:"研究",en:"Research"}, b2_tag:{zh:"论文",en:"Paper"}, b3_tag:{zh:"业内",en:"Industry"}, b4_tag:{zh:"研究",en:"Research"}, b5_tag:{zh:"论文",en:"Paper"}, b6_tag:{zh:"公告",en:"Announcement"},
-    b1_t:{zh:"固定模型、变换 Harness：我们如何归因工程收益",en:"Fix the model, vary the harness: how we attribute engineering gains"},
-    b1_d:{zh:"用 ablation 把 harness 的每一处设计从模型能力中剥离，量化它对端到端结果的真实贡献。",en:"Ablations that separate each harness design choice from raw model capability, quantifying its true end-to-end contribution."},
-    b2_t:{zh:"上下文压缩的边界：信息留存 vs. 窗口预算",en:"The limits of context compaction: retention vs. budget"},
-    b2_d:{zh:"在长任务里，不同压缩策略如何影响 Agent 的成功率？我们给出一组可复现的对照实验。",en:"On long tasks, how do compaction strategies move success rate? A set of reproducible controlled experiments."},
-    b3_t:{zh:"Agent 工程正在成为新的护城河",en:"Agent engineering is becoming the new moat"},
-    b3_d:{zh:"当模型趋同，harness 设计的差异决定产品体验。我们梳理了近期值得关注的行业信号。",en:"As models converge, harness design decides the product experience. We round up the industry signals worth tracking."},
-    b4_t:{zh:"工具 schema 的措辞，能值多少个百分点？",en:"How many points is your tool-schema wording worth?"},
-    b4_d:{zh:"同一组工具、同一个模型，仅改写 schema 描述，调用正确率出现了显著差异。",en:"Same tools, same model — rewriting only the schema descriptions shifted call accuracy noticeably."},
-    b5_t:{zh:'多 Agent 编排中的"过度协作"陷阱',en:"The 'over-collaboration' trap in multi-agent orchestration"},
-    b5_d:{zh:"不是 spawn 越多越好 —— 我们量化了过度编排带来的成本与正确性损失。",en:"More spawns isn't better — we quantify the cost and correctness loss from over-orchestration."},
-    b6_t:{zh:"HarnessBench 开源：和社区一起共建 bench-case",en:"HarnessBench is open source: build bench-cases with the community"},
-    b6_d:{zh:"我们把六个维度的评测协议与初始 bench-case 全部开源，邀请你提交自己的 case。",en:"We've open-sourced the six-dimension protocol and initial bench-cases — submit your own case."},
-
-    /* ARENA */
-    ar_eye:{zh:"Agent 试炼场",en:"Agent Arena"},
-    ar_h1:{zh:'让你的 Agent，<span class="grad">先在试炼场里跑一遍</span>',en:'Run your agent <span class="grad">through the arena first</span>'},
-    ar_sub:{zh:"一个面向 Agent 的测评与诊断空间。把你正在用的 Agent 接进来，在统一的 bench-case 上运行，并对每一条执行轨迹做细粒度归因。",en:"An evaluation-and-diagnosis space for agents. Bring the agent you already use, run it on shared bench-cases, and attribute every trajectory at fine granularity."},
-    ae_tag:{zh:"测试体验环境",en:"Test environment"}, ae_h:{zh:"Agent 测试体验环境",en:"Agent test environment"},
-    ae_p:{zh:"一个隔离的 Docker 测评环境，预置 HarnessBench 的全部 bench-case。接入你的 Agent，固定模型、只变 harness，直接看到工程差异带来的指标变化。",en:"An isolated Docker eval environment preloaded with every HarnessBench bench-case. Plug in your agent, fix the model, vary only the harness, and watch the metrics move."},
-    ae_1:{zh:"一条命令拉起隔离容器，支持任意 Agent / Harness 接入",en:"One command to launch an isolated container; bring any agent / harness"},
-    ae_2:{zh:"按维度选择 bench-case 套件，复现稳定、结果可比",en:"Pick bench-case suites by dimension — stable to reproduce, easy to compare"},
-    ae_3:{zh:"实时输出通过率、步数、工具调用、恢复率等 harness 指标",en:"Live pass-rate, steps, tool-calls, recovery and other harness metrics"},
-    ae_4:{zh:"导出结构化报告，方便横向对比不同 harness 设计",en:"Export structured reports to compare harness designs side by side"},
-    at_tag:{zh:"轨迹分析",en:"Trajectory analysis"}, at_h:{zh:"Agent 执行轨迹分析",en:"Agent trajectory analysis"},
-    at_p:{zh:"把一次运行的完整轨迹拆解成可读的步骤序列，定位 Agent 在哪一步偏离、为什么失败、哪一个 harness 组件是瓶颈 —— 让分数变得可归因。",en:"Break a run's full trajectory into a readable step sequence — locate where the agent drifted, why it failed, and which harness component was the bottleneck. Scores you can attribute."},
-    at_1:{zh:"step-by-step 可视化每一次推理、工具调用与状态变化",en:"Step-by-step view of every reasoning move, tool call and state change"},
-    at_2:{zh:"自动标注失败点、循环、无效重试与恢复时刻",en:"Auto-annotate failure points, loops, dead retries and recovery moments"},
-    at_3:{zh:"按六个组件维度归因，告诉你瓶颈出在哪个环节",en:"Attribute across the six components to pinpoint where the bottleneck is"},
-    at_4:{zh:"支持多次运行对比，量化一次 harness 改动的真实收益",en:"Compare runs to quantify the real gain of a single harness change"},
-    soon:{zh:"体验环境即将开放 · Coming soon",en:"Hands-on environment opening soon"},
-    m1:{zh:"任务通过率",en:"Task pass-rate"}, m2:{zh:"完成步数 / 效率",en:"Steps / efficiency"}, m3:{zh:"错误恢复率",en:"Recovery rate"}, m4:{zh:"工具调用正确率",en:"Tool-call accuracy"},
-
-    /* JOIN */
-    j_eye:{zh:"欢迎加入",en:"Join Us"},
-    j_h1:{zh:'一起构建开源开放的 <span class="grad">Harness Bench-case</span>',en:'Build open <span class="grad">harness bench-cases</span> together'},
-    j_sub:{zh:"无论你是工程师、研究者，还是业内同行 —— 我们都欢迎你加入，把模糊的工程直觉变成共享的工程证据，推动 AGI 真正落地。",en:"Engineer, researcher or industry peer — you're welcome here. Help turn vague intuition into shared engineering evidence, and push AGI to actually land."},
-    j1_w:{zh:"加入团队",en:"Join the team"}, j1_t:{zh:"技术人员",en:"Engineers"}, j1_p:{zh:"如果你热爱 Agent 工程、评测方法学与系统设计，欢迎加入我们。",en:"If you love agent engineering, evaluation methodology and systems design, come build with us."},
-    j1_1:{zh:"Agent / Harness 工程",en:"Agent / harness engineering"}, j1_2:{zh:"评测协议与 ablation 方法学",en:"Eval protocol & ablation methodology"}, j1_3:{zh:"分布式测评基础设施",en:"Distributed eval infrastructure"},
-    j2_w:{zh:"贡献 Case",en:"Contribute a case"}, j2_t:{zh:"业内人士",en:"Industry peers"}, j2_p:{zh:"把你在真实场景里遇到的 harness 难题，沉淀成一个 bench-case，让整个社区受益。",en:"Turn a real-world harness problem into a bench-case the whole community can use."},
-    j2_1:{zh:"提交可复现的 bench-case",en:"Submit reproducible bench-cases"}, j2_2:{zh:"贡献真实场景与失败样本",en:"Share real scenarios & failure samples"}, j2_3:{zh:"参与维度与指标的设计讨论",en:"Join dimension & metric design"},
-    j3_w:{zh:"开源共建",en:"Open collaboration"}, j3_t:{zh:"研究社区",en:"Researchers"}, j3_p:{zh:"在开放、可复现的协议上做研究，让你的发现可以被他人验证和扩展。",en:"Do research on an open, reproducible protocol so your findings can be verified and extended."},
-    j3_1:{zh:"复现并扩展现有 bench-case",en:"Reproduce & extend existing cases"}, j3_2:{zh:"发表基于 HarnessBench 的研究",en:"Publish research on HarnessBench"}, j3_3:{zh:"共建公共的行业评测标尺",en:"Co-build a public industry yardstick"},
-    j_cta_eye:{zh:"为了 AGI",en:"For AGI"}, j_cta_h:{zh:"让每一个 Agent，在落地前就值得信赖",en:"Make every agent trustworthy before it ships"},
-    j_cta_p:{zh:"联系我们，或直接在 GitHub 上提交你的第一个 bench-case。",en:"Contact us, or open your first bench-case directly on GitHub."},
-    j_cta_b1:{zh:"联系我们 →",en:"Contact us →"}, j_cta_b2:{zh:"前往 GitHub",en:"Go to GitHub"},
-
-    foot_right:{zh:"模型固定 · Harness 可变 · 可归因的分数",en:"Model fixed · Harness variable · Attributable scores"}
-  };
-
-  /* ---- i18n ---- */
-  const btn = document.getElementById('langBtn');
-  function setLang(l){
-    document.documentElement.lang = l;
-    document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const t = I18N[el.getAttribute('data-i18n')];
-      if(t && t[l]!=null) el.innerHTML = t[l];
-    });
-    btn.textContent = l==='zh' ? 'EN' : '中';
-    try{ localStorage.setItem('lang', l); }catch(e){}
-  }
-  let cur; try{ cur = localStorage.getItem('lang'); }catch(e){}
-  setLang(cur || 'zh');
-  btn.addEventListener('click', ()=> setLang(document.documentElement.lang==='zh' ? 'en' : 'zh'));
-
-  /* ---- page routing ---- */
-  const pages = ['home','research','blog','arena','join'];
-  function go(name, push){
-    if(!pages.includes(name)) name='home';
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
-    document.getElementById('page-'+name).classList.add('show');
-    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active', a.getAttribute('data-go')===name));
-    if(push!==false){ try{ history.replaceState(null,'','#'+name); }catch(e){} }
-    window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
-    runReveal();
-  }
-  document.addEventListener('click', e=>{
-    const t = e.target.closest('[data-go]');
-    if(t){ e.preventDefault(); go(t.getAttribute('data-go')); }
-  });
-  window.addEventListener('hashchange', ()=> go(location.hash.replace('#',''), false));
-
-  /* ---- reveal on scroll ---- */
-  let io;
-  function runReveal(){
-    if(io) io.disconnect();
-    io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
-    document.querySelectorAll('.page.show .reveal').forEach((el,i)=>{el.classList.remove('in');el.style.transitionDelay=(Math.min(i%4,3)*70)+'ms';io.observe(el);});
-  }
-
-  go(location.hash.replace('#','') || 'home', false);
-</script>
+  </footer>
 </body>
 </html>
