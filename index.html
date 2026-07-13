@@ -125,7 +125,14 @@
       color: var(--ink);
     }
 
-    .github-link {
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .social-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -138,15 +145,37 @@
       transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
     }
 
-    .github-link:hover {
+    .social-link:hover {
       color: var(--ink);
       border-color: var(--ink);
       transform: translateY(-1px);
     }
 
-    .github-link svg {
+    .social-link svg,
+    .social-link img {
+      display: block;
       width: 17px;
       height: 17px;
+    }
+
+    .xiaohongshu-link:hover {
+      border-color: #ff2442;
+      background: rgba(255, 36, 66, 0.06);
+    }
+
+    .xiaohongshu-link img {
+      width: 19px;
+      height: 19px;
+    }
+
+    .wechat-link:hover {
+      border-color: #07c160;
+      background: rgba(7, 193, 96, 0.06);
+    }
+
+    .wechat-link img {
+      width: 19px;
+      height: 19px;
     }
 
     .hero {
@@ -894,11 +923,19 @@
         <a href="#workflow">Workflow</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="github-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer" aria-label="TraceLite AI on GitHub">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 .5C5.73.5.63 5.6.63 11.88c0 5.03 3.26 9.29 7.79 10.79.57.1.78-.25.78-.55v-2.13c-3.17.69-3.84-1.36-3.84-1.36-.52-1.31-1.27-1.66-1.27-1.66-1.03-.71.08-.7.08-.7 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.31.94.1-.73.4-1.23.72-1.51-2.53-.29-5.19-1.27-5.19-5.64 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.17.91-.25 1.88-.38 2.85-.38s1.94.13 2.85.38c2.17-1.48 3.12-1.17 3.12-1.17.63 1.57.23 2.73.12 3.02.73.8 1.17 1.82 1.17 3.07 0 4.38-2.66 5.34-5.2 5.63.41.35.77 1.04.77 2.1v3.14c0 .3.2.66.78.55a11.39 11.39 0 0 0 7.78-10.78C23.38 5.6 18.28.5 12 .5Z" />
-        </svg>
-      </a>
+      <div class="social-links" aria-label="TraceLite AI social links">
+        <a class="social-link github-link" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer" aria-label="TraceLite AI on GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5C5.73.5.63 5.6.63 11.88c0 5.03 3.26 9.29 7.79 10.79.57.1.78-.25.78-.55v-2.13c-3.17.69-3.84-1.36-3.84-1.36-.52-1.31-1.27-1.66-1.27-1.66-1.03-.71.08-.7.08-.7 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.31.94.1-.73.4-1.23.72-1.51-2.53-.29-5.19-1.27-5.19-5.64 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.17.91-.25 1.88-.38 2.85-.38s1.94.13 2.85.38c2.17-1.48 3.12-1.17 3.12-1.17.63 1.57.23 2.73.12 3.02.73.8 1.17 1.82 1.17 3.07 0 4.38-2.66 5.34-5.2 5.63.41.35.77 1.04.77 2.1v3.14c0 .3.2.66.78.55a11.39 11.39 0 0 0 7.78-10.78C23.38 5.6 18.28.5 12 .5Z" />
+          </svg>
+        </a>
+        <a class="social-link xiaohongshu-link" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener noreferrer" aria-label="TraceLite AI on Xiaohongshu">
+          <img src="assets/xiaohongshu.svg" alt="" aria-hidden="true" />
+        </a>
+        <a class="social-link wechat-link" href="wechat.html" target="_blank" rel="noopener noreferrer" aria-label="View TraceLite AI WeChat Official Account QR code">
+          <img src="assets/wechat.svg" alt="" aria-hidden="true" />
+        </a>
+      </div>
     </div>
   </header>
 
@@ -913,7 +950,7 @@
         </h1>
         <p class="lead">Traceable evaluation infrastructure for AI agents. Capture real trajectories, replay failures, and turn benchmark runs into evidence your team can inspect.</p>
         <div class="hero-actions">
-          <a class="pill pill-primary" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">View GitHub repo</a>
+          <a class="pill pill-primary" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">View GitHub repo</a>
           <a class="pill pill-ghost" href="#ship">Explore the system</a>
         </div>
         <div class="hero-meta" aria-label="TraceLite AI focus areas">
@@ -941,7 +978,7 @@
             <h2>Evaluation pieces for agents that need to be trusted, not just demoed.</h2>
             <p>TraceLite AI is built around reproducible runs: the task, the tools, the agent actions, the final artifact, and the verifier all stay connected.</p>
           </div>
-          <a class="tiny-link" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">GitHub -&gt;</a>
+          <a class="tiny-link" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">GitHub -&gt;</a>
         </div>
 
         <div class="cards">
@@ -954,7 +991,7 @@
               <h3>Trajectory capture</h3>
               <p>Record prompts, tool calls, file changes, outputs, and intermediate states so every agent result has a readable execution trail.</p>
               <div class="card-links">
-                <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Repository</a>
+                <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Repository</a>
                 <a href="#workflow">Workflow</a>
               </div>
             </div>
@@ -973,7 +1010,7 @@
               <h3>Case-driven evaluation</h3>
               <p>Run targeted cases that expose planning gaps, tool misuse, lifecycle failures, and final-artifact mismatches in real workflows.</p>
               <div class="card-links">
-                <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Cases</a>
+                <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Cases</a>
                 <a href="#thesis">Thesis</a>
               </div>
             </div>
@@ -993,7 +1030,7 @@
               <h3>Evidence-backed scoring</h3>
               <p>Separate clean completion from correct completion by validating the final artifact, the path taken, and the contract the task required.</p>
               <div class="card-links">
-                <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Verifier</a>
+                <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Verifier</a>
                 <a href="#contact">Contact</a>
               </div>
             </div>
@@ -1108,7 +1145,7 @@
             <h2>Build evaluation around evidence.</h2>
             <p>Use the repository as the public home for TraceLite AI while the benchmark cases and runtime pieces mature.</p>
           </div>
-          <a class="pill pill-primary" href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">Open GitHub</a>
+          <a class="pill pill-primary" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Open GitHub</a>
         </div>
       </div>
     </section>
@@ -1126,7 +1163,7 @@
         <a href="#ship">What we ship</a>
         <a href="#thesis">Thesis</a>
         <a href="#workflow">Workflow</a>
-        <a href="https://github.com/zsicheng0214/tracelite.ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">GitHub</a>
       </nav>
     </div>
   </footer>
