@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Research — TraceLite</title>
+<meta name="description" content="TraceLite research areas: agent evaluation, synthetic data, and agent training." />
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<link rel="apple-touch-icon" href="images/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#FAFAFA; --text:#111111; --text-2:#6E6E6E; --ocean:#171717;
+  --teal:#2B2B2B; --aqua:#9A9A9A; --blue:#2B2B2B; --border:rgba(17, 17, 17, 0.12);
+  --bg-rgb:250,250,250;
+  --maxw:1180px; --pad:clamp(20px,5vw,56px); --section-y:clamp(96px,11vw,150px);
+  --ease:cubic-bezier(.22,.61,.36,1); --ease-soft:cubic-bezier(.4,0,.2,1);
+  --font-sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;overflow-x:hidden;letter-spacing:-0.01em;}
+a{color:inherit;text-decoration:none;}
+canvas{display:block;}
+.mono{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:74px;display:flex;align-items:center;background:transparent;border-bottom:1px solid transparent;transition:background .5s var(--ease-soft),border-color .5s,backdrop-filter .5s;}
+.nav.scrolled{background:rgba(var(--bg-rgb),.82);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--border);}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:19px;letter-spacing:-0.02em;}
+.brand .logo{height:26px;width:auto;flex:none;display:block;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a.lk{font-size:15px;color:var(--text-2);position:relative;padding:4px 0;transition:color .25s var(--ease-soft);}
+.nav-links a.lk::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--teal);transition:width .3s var(--ease);}
+.nav-links a.lk:hover{color:var(--text);}
+.nav-links a.lk:hover::after{width:100%;}
+.nav-links a.lk.active{padding:6px 12px;border:1px solid var(--teal);border-radius:6px;color:var(--teal);}
+.nav-links a.lk.active::after{display:none;}
+.nav-links a.lk.active:hover{color:var(--ocean);border-color:var(--ocean);}
+.nav-cta{display:flex;align-items:center;gap:22px;}
+.nav-cta .nav-links{gap:22px;}
+.nav-cta a{font-size:15px;display:inline-flex;align-items:center;gap:5px;color:var(--text);border-bottom:1px solid transparent;padding-bottom:2px;transition:color .25s,border-color .25s;}
+.nav-cta a:hover{color:var(--teal);}
+.nav-cta a.join{border-bottom-color:var(--teal);}
+.nav-cta a.join:hover{color:var(--teal);}
+.lang-toggle{font-size:13px;font-weight:600;line-height:1;color:var(--teal);background:transparent;
+  border:1px solid var(--teal);border-radius:6px;padding:6px 10px;cursor:pointer;
+  transition:background .25s,color .25s,border-color .25s,transform .25s var(--ease);}
+.lang-toggle:hover{background:rgba(43,43,43,.08);color:var(--ocean);border-color:var(--ocean);}
+.lang-toggle:active{transform:scale(.94);}
+.narrow-only{display:none;}
+
+/* PAGE HERO */
+.page-hero{position:relative;min-height:clamp(220px,26vh,300px);display:flex;align-items:flex-end;padding-top:108px;padding-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.hero-bg .blob{position:absolute;border-radius:50%;filter:blur(72px);}
+.hero-bg .blob-1{top:-150px;left:-90px;width:480px;height:480px;background:radial-gradient(circle at 50% 50%,rgba(17,17,17,.07),rgba(17,17,17,.025) 55%,rgba(17,17,17,0) 74%);}
+.hero-bg .blob-2{top:-30px;left:320px;width:400px;height:400px;background:radial-gradient(circle at 50% 50%,rgba(17,17,17,.045),rgba(17,17,17,0) 72%);}
+.hero-bg .hero-lines{position:absolute;inset:0;width:100%;height:100%;}
+.hero-bg .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,250,250,.2) 0%,rgba(250,250,250,.5) 45%,rgba(250,250,250,.9) 82%,var(--bg) 100%);}
+.hero-content{position:relative;z-index:1;}
+.page-hero h1{font-size:clamp(38px,6vw,76px);line-height:1.02;font-weight:600;letter-spacing:-0.035em;max-width:16ch;}
+.page-hero p.lead{font-size:18px;line-height:1.62;color:var(--text-2);max-width:560px;margin-top:18px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease-soft),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal[data-d="1"]{transition-delay:.08s;}
+.reveal[data-d="2"]{transition-delay:.16s;}
+
+/* RESEARCH — vertical stacked layout (single continuous flow) */
+.research{padding-top:30px;padding-bottom:var(--section-y);}
+.research-stack{
+  position:relative;
+  background:rgba(255,255,255,.6);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:clamp(22px,2.4vw,36px);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+/* blocks separated by tight vertical whitespace only — no rules */
+.r-block{padding-block:clamp(16px,1.8vw,24px);}
+.r-block + .r-block{padding-top:clamp(18px,2vw,26px);}
+.r-head{display:flex;align-items:center;gap:9px;margin-bottom:22px;}
+.r-head .c-ico{width:22px;height:22px;color:var(--teal);flex:none;}
+.r-head h2{font-size:clamp(26px,3vw,38px);font-weight:700;letter-spacing:-0.02em;color:#3F3F3F;}
+
+/* shared link */
+.col-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:18px;
+  font-size:15px;font-weight:500;color:var(--teal);
+  border-bottom:1px solid transparent;padding-bottom:2px;width:fit-content;
+  transition:gap .25s var(--ease),border-color .25s;
+}
+.col-link:hover{gap:10px;border-color:var(--teal);}
+
+/* BLOCK 1 — Research Directions (compact vertical list, no dividers) */
+.dir-list{display:flex;flex-direction:column;gap:14px;}
+.dir-item{position:relative;display:flex;align-items:flex-start;gap:14px;padding-left:2px;}
+.dir-item .d-ico{width:22px;height:22px;color:var(--teal);flex:none;margin-top:3px;}
+.dir-item .d-text{min-width:0;}
+.dir-item h3{font-size:19px;font-weight:600;letter-spacing:-0.01em;color:var(--text);}
+.dir-item p{font-size:15.5px;line-height:1.5;color:var(--text-2);margin-top:4px;}
+
+/* BLOCK 2 — Papers (horizontal scroll strip, 2-up desktop / 1-up mobile, no dots) */
+.papers-strip{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:14px;padding-bottom:6px;
+}
+.papers-strip::-webkit-scrollbar{height:6px;}
+.papers-strip::-webkit-scrollbar-thumb{background:rgba(63,63,63,.22);border-radius:3px;}
+.papers-strip::-webkit-scrollbar-track{background:transparent;}
+.paper-card{
+  display:flex;flex-direction:column;gap:12px;scroll-snap-align:start;
+  background:rgba(230,230,230,.22);
+  border:1px solid var(--border);border-radius:14px;
+  padding:16px;cursor:pointer;
+  transition:transform .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease),background-color .3s var(--ease);
+}
+.paper-card:hover{transform:translateY(-3px);border-color:var(--teal);box-shadow:0 16px 36px -20px rgba(63,63,63,.22);background:rgba(255,255,255,.7);}
+.paper-card .pc-visual{
+  width:100%;aspect-ratio:16/7;border-radius:10px;overflow:hidden;
+  background:#fff;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.paper-card .pc-visual img{width:100%;height:100%;object-fit:contain;padding:5px;display:block;}
+.paper-card h3{font-size:clamp(17px,1.5vw,20px);font-weight:600;line-height:1.3;letter-spacing:-0.01em;color:var(--text);}
+.paper-card:hover h3{color:var(--teal);}
+.paper-card .pc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
+.paper-card .pc-meta span{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;
+  color:var(--teal);background:rgba(63,63,63,.10);border-radius:5px;padding:3px 8px;
+}
+
+/* BLOCK 3 — Products (compact vertical list, no dividers) */
+.prod-list{display:flex;flex-direction:column;gap:14px;}
+.prod-item{display:flex;gap:14px;align-items:flex-start;}
+.prod-item .p-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);margin-top:7px;flex:none;}
+.prod-item .p-text{min-width:0;}
+.prod-item h3{font-size:19px;font-weight:600;color:var(--text);}
+.prod-item p{font-size:15.5px;line-height:1.5;color:var(--text-2);margin-top:4px;}
+
+@media (max-width:767px){
+  .research-stack{padding:18px 16px;}
+  .papers-strip{grid-template-columns:1fr;}
+  .r-head{margin-bottom:12px;}
+}
+
+/* PAPERS MODAL — expand-in detail card */
+.paper-card{cursor:pointer;}
+
+.paper-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px;}
+.paper-modal.open{display:flex;}
+.pm-backdrop{position:absolute;inset:0;background:rgba(17,17,17,.42);backdrop-filter:blur(4px);opacity:0;transition:opacity .35s var(--ease);}
+.paper-modal.open .pm-backdrop{opacity:1;}
+.pm-card{
+  position:relative;width:min(640px,100%);max-height:86vh;overflow:auto;
+  background:var(--bg);border:1px solid var(--border);border-radius:18px;
+  padding:26px;box-shadow:0 40px 90px -30px rgba(17,17,17,.5);
+  transform:translateY(28px) scale(.94);opacity:0;
+  transition:transform .42s var(--ease),opacity .42s var(--ease);
+}
+.paper-modal.open .pm-card{transform:translateY(0) scale(1);opacity:1;}
+.pm-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--bg);color:var(--text);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px -6px rgba(17,17,17,.35);z-index:2;
+  transition:border-color .25s,color .25s,background .25s,transform .25s var(--ease);}
+.pm-close:hover{border-color:var(--teal);color:var(--teal);background:rgba(63,63,63,.08);transform:scale(1.06);}
+.pm-visual{width:100%;border-radius:12px;margin-top:50px;margin-bottom:18px;overflow:hidden;
+  background:#fff;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;}
+.pm-visual img{width:100%;max-height:46vh;object-fit:contain;padding:8px;display:block;}
+.pm-card h3{font-size:clamp(20px,2.6vw,28px);font-weight:600;line-height:1.22;letter-spacing:-0.02em;color:var(--text);}
+.pm-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.pm-meta span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;color:var(--teal);background:rgba(63,63,63,.10);border-radius:6px;padding:3px 9px;}
+.pm-abstract{margin-top:18px;font-size:15px;line-height:1.7;color:var(--text-2);}
+.pm-abstract .lbl{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+
+/* --- Oral 论文高亮 --- */
+.paper-card.is-oral{border-color:var(--teal);background:rgba(255,255,255,.62);
+  box-shadow:0 14px 34px -22px rgba(0,0,0,.4);}
+.paper-card .pc-meta .tag-oral{background:var(--text);color:var(--bg);font-weight:600;}
+
+/* --- 暂时下线的区块（Research Directions / Products）---------------------
+   markup 原样留着，只是加了 data-masked 属性。想恢复：删掉那个属性即可。 */
+[data-masked]{display:none!important;}
+
+/* FOOTER */
+.footer{background:var(--ocean);color:rgba(245,245,245,.7);padding-block:56px 40px;margin-top:0;}
+.footer .f-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+.footer .f-brand{font-size:21px;font-weight:600;color:#F5F5F5;display:flex;align-items:center;gap:11px;}
+.footer .f-brand .logo{height:30px;width:auto;display:block;filter:brightness(0) invert(1);}
+.footer .f-tag{margin-top:14px;font-size:14px;max-width:280px;line-height:1.6;color:rgba(245,245,245,.6);}
+.footer .f-col{display:flex;gap:28px;flex-wrap:wrap;}
+.footer .f-col a{font-size:15px;color:rgba(245,245,245,.72);transition:color .25s;}
+.footer .f-col a:hover{color:#fff;}
+.footer .f-bottom{margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:rgba(245,245,245,.5);}
+
+/* RESPONSIVE */
+@media (max-width:767px){
+  body{font-size:16px;}
+  .nav-links{display:none;}
+  .nav-cta .ext{display:none;}
+  .narrow-only{display:inline-flex;}
+  .page-hero{padding-top:104px;padding-bottom:34px;}
+  .footer .f-top{flex-direction:column;gap:28px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="TraceLite home">
+      <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
+    <div class="nav-cta">
+      <div class="nav-links">
+        <a class="lk active" href="research.html" data-i18n="research">Research</a>
+        <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
+        <a class="lk" href="contact.html" data-i18n="contact">Contact</a>
+      </div>
+      <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <svg class="hero-lines" viewBox="0 0 1440 300" preserveAspectRatio="none">
+      <path d="M-60 260 C 120 220, 300 130, 520 180 S 900 280, 1100 140 S 1340 60, 1520 110" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.3"/>
+      <path d="M-40 290 C 160 260, 340 170, 560 200 S 940 250, 1160 120 S 1380 70, 1540 100" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.204"/>
+      <path d="M-80 230 C 100 200, 260 140, 480 160 S 860 230, 1080 130 S 1300 50, 1500 90" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="6 8"/>
+      <path d="M-100 150 C 80 120, 280 90, 500 110 S 920 170, 1120 80 S 1360 40, 1540 70" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.272"/>
+      <path d="M-60 300 C 140 280, 360 210, 580 240 S 980 300, 1180 180 S 1400 110, 1560 150" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.238" stroke-dasharray="4 10"/>
+      <path d="M-120 200 C 60 175, 280 130, 540 150 S 980 230, 1200 120 S 1380 60, 1560 100" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.221"/>
+      <path d="M-40 100 C 120 80, 320 60, 560 75 S 960 130, 1180 60 S 1400 30, 1540 55" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204" stroke-dasharray="2 7"/>
+      <path d="M-90 250 C 90 230, 300 180, 520 205 S 900 270, 1120 160 S 1380 90, 1560 130" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.255"/>
+      <path d="M-70 60 C 110 45, 320 30, 560 45 S 980 95, 1200 40 S 1420 20, 1560 40" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204" stroke-dasharray="3 9"/>
+      <path d="M-110 175 C 70 155, 280 115, 520 135 S 940 205, 1160 110 S 1380 55, 1560 95" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.187"/>
+      <path d="M-50 280 C 130 260, 360 195, 580 220 S 980 280, 1200 165 S 1420 100, 1560 140" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.17" stroke-dasharray="5 11"/>
+      <path d="M-130 120 C 50 100, 260 70, 480 90 S 900 150, 1120 70 S 1360 35, 1540 60" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.187" stroke-dasharray="3 8"/>
+      <path d="M-60 220 C 120 200, 320 150, 540 175 S 940 240, 1160 140 S 1380 80, 1560 120" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204"/>
+      <path d="M-100 80 C 80 60, 300 40, 520 55 S 940 110, 1160 50 S 1400 25, 1560 45" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="4 9"/>
+      <path d="M-40 310 C 160 290, 360 230, 600 255 S 980 305, 1200 195 S 1420 130, 1560 165" fill="none" stroke="var(--teal)" stroke-width="0.85" stroke-opacity="0.187" stroke-dasharray="6 10"/>
+      <path d="M-120 270 C 60 250, 300 200, 520 225 S 900 285, 1120 175 S 1380 110, 1560 150" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.204" stroke-dasharray="2 6"/>
+      <path d="M-70 160 C 110 140, 320 105, 540 125 S 940 185, 1160 100 S 1400 55, 1560 90" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.17" stroke-dasharray="5 12"/>
+      <path d="M-90 40 C 90 28, 320 18, 560 30 S 980 75, 1200 35 S 1420 18, 1560 32" fill="none" stroke="var(--teal)" stroke-width="0.7" stroke-opacity="0.153" stroke-dasharray="3 7"/>
+      <path d="M-110 230 C 70 210, 280 165, 500 190 S 920 250, 1140 145 S 1380 85, 1560 125" fill="none" stroke="var(--teal)" stroke-width="0.85" stroke-opacity="0.187"/>
+      <path d="M-50 130 C 130 110, 340 80, 560 100 S 960 155, 1180 90 S 1400 50, 1540 80" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="4 8"/>
+      <circle cx="520" cy="180" r="3" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1100" cy="140" r="3" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="340" cy="170" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1160" cy="120" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="500" cy="110" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1120" cy="80" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="540" cy="150" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1180" cy="180" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="480" cy="90" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1080" cy="70" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="600" cy="255" r="2" fill="var(--teal)" opacity="0.272"/>
+      <circle cx="1200" cy="195" r="2" fill="var(--teal)" opacity="0.272"/>
+      <circle cx="520" cy="125" r="1.8" fill="var(--teal)" opacity="0.255"/>
+      <circle cx="1140" cy="145" r="1.8" fill="var(--teal)" opacity="0.255"/>
+      <circle cx="560" cy="100" r="1.8" fill="var(--teal)" opacity="0.238"/>
+      <circle cx="1180" cy="90" r="1.8" fill="var(--teal)" opacity="0.238"/>
+    </svg>
+    <div class="tint"></div>
+  </div>
+  <div class="wrap hero-content">
+    <span class="mono reveal">RESEARCH</span>
+    <h1 class="reveal" data-d="1">What we work on.</h1>
+    <p class="lead reveal" data-d="2">Evaluation, data, and training — connected to trace the path toward more capable agents.</p>
+  </div>
+</header>
+
+<!-- RESEARCH -->
+<section class="research" id="research">
+  <div class="wrap">
+    <div class="research-stack">
+
+      <!-- BLOCK 1 — Research Directions -->
+      <div class="r-block" data-masked="directions">
+        <div class="r-head">
+          <svg class="c-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>
+          <h2>Research Directions</h2>
+        </div>
+        <div class="dir-list">
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
+        </div>
+        <a class="col-link" href="#">Explore all directions →</a>
+      </div>
+
+      <!-- BLOCK 2 — Papers -->
+      <div class="r-block">
+        <div class="r-head">
+          <svg class="c-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h7M8 17h7"/></svg>
+          <h2>Papers</h2>
+        </div>
+        <div class="papers-strip">
+          <article class="paper-card is-oral" data-year="ACL 2026 Industry" data-tags="Dialogue Agents · Synthetic Data" data-fig="images/papers/simrpd.jpg" data-oral="1" data-abstract="Proactive dialogue agents steer recruitment conversations toward concrete business outcomes, but training them is bottlenecked by the scarcity of high-quality, goal-oriented domain data. SimRPD is a three-stage framework: a high-fidelity user simulator synthesizes large-scale multi-turn conversations, a Chain-of-Intention evaluation framework assesses the simulator and selects high-quality data using both global-level and instance-level metrics, and the agent is then trained on that selection. In a real-world recruitment scenario SimRPD outperforms existing simulator-based data selection strategies.">
+            <div class="pc-visual"><img src="images/papers/simrpd.jpg" alt="Main figure — SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection" loading="lazy" /></div>
+            <h3>SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection</h3>
+            <div class="pc-meta"><span class="tag-oral">Oral</span><span>ACL 2026 Industry</span><span>Dialogue Agents</span><span>Synthetic Data</span></div>
+          </article>
+          <article class="paper-card" data-year="CVPR 2026" data-tags="Video Reasoning · Reinforcement Learning" data-fig="images/papers/earl-select-less.jpg" data-abstract="Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.">
+            <div class="pc-visual"><img src="images/papers/earl-select-less.jpg" alt="Main figure — Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning" loading="lazy" /></div>
+            <h3>Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h3>
+            <div class="pc-meta"><span>CVPR 2026</span><span>Video Reasoning</span><span>Reinforcement Learning</span></div>
+          </article>
+          <article class="paper-card" data-year="ACL 2026" data-tags="Vision-Language · Reinforcement Learning" data-fig="images/papers/adaptive-pixel-reasoning.jpg" data-abstract="Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.">
+            <div class="pc-visual"><img src="images/papers/adaptive-pixel-reasoning.jpg" alt="Main figure — Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning" loading="lazy" /></div>
+            <h3>Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h3>
+            <div class="pc-meta"><span>ACL 2026</span><span>Vision-Language</span><span>Reinforcement Learning</span></div>
+          </article>
+          <article class="paper-card" data-year="Aquaculture and Fisheries 2026" data-tags="Computer Vision · Aquaculture" data-fig="images/papers/stafdd.jpg" data-abstract="Fish disease spreads rapidly in high-density aquaculture, where manual inspection is too slow to catch it early. STAFDD combines what a fish looks like with how it moves: SSCA-YOLO, an improved YOLOv8 with an SPD-CBS downsampling module, a small-object head and coordinate attention, detects body-surface abnormalities; ByteSort with ReID features tracks individuals into stable trajectories; an LSTM reads abnormal behaviour from those trajectories; and a learnable MLP gate fuses the two branches by confidence. On a dataset built from Aeromonas hydrophila-challenged Prussian carp, tracking reaches 89.74% HOTA and 94.05% MOTA, and overall classification accuracy reaches 96.86%.">
+            <div class="pc-visual"><img src="images/papers/stafdd.jpg" alt="Main figure — STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method" loading="lazy" /></div>
+            <h3>STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method</h3>
+            <div class="pc-meta"><span>Aquaculture and Fisheries 2026</span><span>Computer Vision</span><span>Aquaculture</span></div>
+          </article>
+          <article class="paper-card" data-year="arXiv 2025" data-tags="Benchmark · Video Reasoning" data-fig="images/papers/causalstep.jpg" data-abstract="Existing video benchmarks mostly probe shallow understanding and let models exploit global context, so they never really test causal, step-by-step reasoning. CausalStep segments videos into causally linked units and enforces a strict sequential question-answer protocol that blocks shortcut solutions, with distractors built from an error-type taxonomy so every question is diagnostic. The benchmark covers 100 videos across six categories with 1,852 multiple-choice pairs and seven diagnostic metrics; leading proprietary and open-source models all fall well short of the human baseline.">
+            <div class="pc-visual"><img src="images/papers/causalstep.jpg" alt="Main figure — CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos" loading="lazy" /></div>
+            <h3>CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos</h3>
+            <div class="pc-meta"><span>arXiv 2025</span><span>Benchmark</span><span>Video Reasoning</span></div>
+          </article>
+          <article class="paper-card" data-year="Manuscript" data-tags="Genomics · Foundation Models" data-fig="images/papers/fishcaduceus.jpg" data-abstract="Genetic improvement in aquaculture depends on resolving functional elements in fish genomes, yet most farmed species lack experimental annotation. FishCaduceus is a single-nucleotide DNA language model pretrained on eight cyprinid genomes, combining a bidirectional Mamba architecture with reverse-complement equivariance and a stratified sampling strategy that offsets differences in genome size and repeat content. Classifiers trained solely on labelled zebrafish data transfer across phylogenetically diverse freshwater and marine fishes at a mean AUPRC of 0.957. In a goldfish twin-tail GWAS region the model prioritizes 24 high-impact candidates out of 4,653 variants and independently identifies the known chdS E127X stop-gain mutation as strongly deleterious.">
+            <div class="pc-visual"><img src="images/papers/fishcaduceus.jpg" alt="Main figure — FishCaduceus: A DNA Language Model for Cyprinid Genomics at Single-Nucleotide Resolution" loading="lazy" /></div>
+            <h3>FishCaduceus: A DNA Language Model for Cyprinid Genomics at Single-Nucleotide Resolution</h3>
+            <div class="pc-meta"><span>Manuscript</span><span>Genomics</span><span>Foundation Models</span></div>
+          </article>
+          <article class="paper-card" data-year="Manuscript" data-tags="Genomics · Benchmark" data-fig="images/papers/fishnalm.jpg" data-abstract="Fish functional genomics has lacked lineage-specific foundation models. FishNALM is a family of DNA foundation language models pretrained on genomes from 8 core cyprinid species and 20 diverse fish species, released alongside FishGUE — a fish genomics benchmark of 17 tasks spanning chromatin features, transcription factor binding sites, promoter identification and splice-site recognition. FishNALM-8L reaches an average MCC of 0.853, performs particularly well on chromatin-related regulatory tasks, and generalizes across species on splice-site prediction. In zero-shot analyses it captures signals associated with mutational consequences and prioritizes low-frequency variants in real population data.">
+            <div class="pc-visual"><img src="images/papers/fishnalm.jpg" alt="Main figure — FishNALM: A Foundation DNA Language Model for Fish Genomes" loading="lazy" /></div>
+            <h3>FishNALM: A Foundation DNA Language Model for Fish Genomes</h3>
+            <div class="pc-meta"><span>Manuscript</span><span>Genomics</span><span>Benchmark</span></div>
+          </article>
+          <article class="paper-card" data-year="Under Review" data-tags="Multimodal · Reward Models" data-fig="images/papers/mm-verirubric.jpg" data-abstract="Most multimodal reward models emit only an outcome reward, which is sparse and misses the structure of human preference. MM-VeriRubric builds training data for multimodal rubric generation at scale: task-aware visual clue extraction grounds rubrics in task-relevant image evidence, and rubric-aligned rejected responses with controlled error dimensions let each rubric be verified through consistency checking. The verified data trains both a rubric generator and a rubric-based reward model, improving preference judgment by 16.4% on VL-RewardBench and Best-of-5 selection by 13.1% on MMMU-Pro.">
+            <div class="pc-visual"><img src="images/papers/mm-verirubric.jpg" alt="Main figure — MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models" loading="lazy" /></div>
+            <h3>MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
+            <div class="pc-meta"><span>Under Review</span><span>Multimodal</span><span>Reward Models</span></div>
+          </article>
+          <article class="paper-card" data-year="Under Review" data-tags="Dialogue Policy · Simulators" data-fig="images/papers/dps.jpg" data-abstract="Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.">
+            <div class="pc-visual"><img src="images/papers/dps.jpg" alt="Main figure — Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training" loading="lazy" /></div>
+            <h3>Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
+            <div class="pc-meta"><span>Under Review</span><span>Dialogue Policy</span><span>Simulators</span></div>
+          </article>
+          <article class="paper-card" data-year="Under Review" data-tags="Embodied Agents · Planning" data-fig="images/papers/eviseek.jpg" data-abstract="Embodied agents can acquire the evidence a task needs through interaction rather than waiting for it to appear in passive observation — the hard part is knowing what evidence is required and turning that into something to go do. EviSeek is a training-free framework with three parts: Evidence-Demand Planning derives explicit, answer-agnostic evidence demands and matching acquisition goals; Evidence-Seeking Interaction pursues them through viewpoint changes or physical intervention; and Evidence-Oriented Memory retains demand-linked evidence and tracks coverage, with the final answer generated solely from what was retained. It substantially improves answer and grounded accuracy on ESI-Bench and achieves the best path-weighted correctness on EXPRESS-Bench.">
+            <div class="pc-visual"><img src="images/papers/eviseek.jpg" alt="Main figure — EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking" loading="lazy" /></div>
+            <h3>EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking</h3>
+            <div class="pc-meta"><span>Under Review</span><span>Embodied Agents</span><span>Planning</span></div>
+          </article>
+          <article class="paper-card" data-year="Under Review" data-tags="Cross-Modal Retrieval · Representation Learning" data-fig="images/papers/kdph.jpg" data-abstract="Proxy-based deep cross-modal hashing models each class proxy as a deterministic point, and in multi-label settings label co-occurrence turns that rigidity into gradient contention and optimization collapse. KDPH replaces point proxies with flexible anisotropic Kent distributions on the hypersphere, so a proxy absorbs conflicting gradients by adjusting its directional variance instead of drifting — holding a stable semantic mean direction while stretching to cover diverse label correlations. A tailored loss using the Cayley transform enforces strict orthogonality of the geometric parameters. It is the first framework to bring Kent distributions into cross-modal hashing, and it mitigates proxy collapse and oscillation while outperforming state-of-the-art methods on three benchmarks.">
+            <div class="pc-visual"><img src="images/papers/kdph.jpg" alt="Main figure — Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing" loading="lazy" /></div>
+            <h3>Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing</h3>
+            <div class="pc-meta"><span>Under Review</span><span>Cross-Modal Retrieval</span><span>Representation Learning</span></div>
+          </article>
+        </div>
+        <a class="col-link" href="papers.html">View all papers →</a>
+      </div>
+
+      <!-- BLOCK 3 — Products -->
+      <div class="r-block" data-masked="products">
+        <div class="r-head">
+          <svg class="c-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 22v-6M2 12h6M22 12h-6"/><circle cx="12" cy="12" r="3"/></svg>
+          <h2>Products</h2>
+        </div>
+        <div class="prod-list">
+          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
+          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
+          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
+          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
+        </div>
+        <a class="col-link" href="#">View all products →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PAPERS DETAIL MODAL -->
+<div class="paper-modal" id="paperModal" aria-hidden="true">
+  <div class="pm-backdrop" data-close></div>
+  <div class="pm-card" role="dialog" aria-modal="true">
+    <button class="pm-close" data-close aria-label="Close">×</button>
+    <div class="pm-visual"><img id="pmFig" alt="" /></div>
+    <h3 id="pmTitle"></h3>
+    <div class="pm-meta" id="pmMeta"></div>
+    <div class="pm-abstract"><span class="lbl">Summary</span><span id="pmAbstract"></span></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="f-top">
+      <div>
+        <div class="f-brand">
+          <img class="logo" src="images/logo.png" alt="TraceLite AI" /></div>
+        <p class="f-tag">Open research for evolving intelligence.</p>
+      </div>
+      <div class="f-col">
+        <a href="research.html">Research</a>
+        <a href="blog.html">Blog</a>
+        <a href="mailto:hello@tracelite.ai">Contact</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 TRACELITE</span>
+      <span>OPEN RESEARCH ORGANIZATION</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+function rand(a,b){ return a + Math.random()*(b-a); }
+
+/* nav scrolled state */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* reveal on scroll */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.16, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===== Papers detail modal (stacked cards) ===== */
+(function(){
+  const modal = document.getElementById('paperModal');
+  if(!modal) return;
+  const pmTitle = document.getElementById('pmTitle');
+  const pmMeta = document.getElementById('pmMeta');
+  const pmAbstract = document.getElementById('pmAbstract');
+  const pmFig = document.getElementById('pmFig');
+  let lastFocus = null;
+
+  function open(card){
+    pmTitle.textContent = card.querySelector('h3')?.textContent || '';
+    const year = card.dataset.year || '';
+    const tags = (card.dataset.tags || '').split('·').map(s=>s.trim()).filter(Boolean);
+    pmMeta.innerHTML = (year?`<span>${year}</span>`:'') + tags.map(t=>`<span>${t}</span>`).join('');
+    pmAbstract.textContent = card.dataset.abstract || '';
+    const fig = card.dataset.fig || '';
+    const figWrap = pmFig.parentElement;
+    if(fig){ pmFig.src = fig; pmFig.alt = 'Main figure — ' + pmTitle.textContent; figWrap.hidden = false; }
+    else { pmFig.removeAttribute('src'); figWrap.hidden = true; }
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    const c = modal.querySelector('.pm-close'); if(c) c.focus();
+  }
+  function close(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    if(lastFocus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('.paper-card').forEach(card=>{
+    card.addEventListener('click', ()=> open(card));
+  });
+  modal.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', close));
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+})();
+
+/* language toggle for nav (EN / 中文) */
+(function(){
+  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
+  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
+  const btn = document.getElementById('langToggle');
+  let zh = false;
+  function apply(){
+    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
+    btn.textContent = zh ? 'EN' : '中';
+    document.documentElement.lang = zh ? 'zh' : 'en';
+  }
+  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
+  apply();
+})();
+</script>
+</body>
+</html>

@@ -1,1171 +1,967 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TraceLite AI - Traceable Agent Evaluation</title>
-  <meta name="description" content="TraceLite AI is an agent evaluation lab for trace replay, benchmark cases, and reproducible harness evidence." />
-  <meta property="og:title" content="TraceLite AI - Traceable Agent Evaluation" />
-  <meta property="og:description" content="Trace, replay, and verify agent behavior before it reaches production." />
-  <meta property="og:url" content="https://tracelite.ai" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://tracelite.ai/assets/tracelite-hero.png" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="preload" href="assets/tracelite-hero.png" as="image" />
-  <style>
-    :root {
-      --paper: #fbfaf7;
-      --paper-2: #f5f1ea;
-      --ink: #141414;
-      --ink-soft: #4d4b47;
-      --muted: #817c74;
-      --line: #ded8cf;
-      --line-strong: #c9c0b4;
-      --surface: rgba(255, 255, 255, 0.74);
-      --teal: #1d7a72;
-      --teal-soft: #dceee9;
-      --coral: #c56a4b;
-      --gold: #9b7a35;
-      --radius: 8px;
-      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      font-family: var(--font);
-      color: var(--ink);
-      background: var(--paper);
-      line-height: 1.55;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .wrap {
-      width: calc(100% - 40px);
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 20;
-      border-bottom: 1px solid rgba(222, 216, 207, 0.72);
-      background: rgba(251, 250, 247, 0.82);
-      backdrop-filter: blur(18px) saturate(150%);
-    }
-
-    .nav-inner {
-      height: 66px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      display: block;
-      width: 31px;
-      height: 31px;
-      object-fit: contain;
-    }
-
-    .brand-name {
-      font-size: 16px;
-      font-weight: 760;
-      letter-spacing: 0;
-      white-space: nowrap;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      margin-left: auto;
-      color: var(--ink-soft);
-      font-size: 13.5px;
-      font-weight: 520;
-    }
-
-    .nav-links a {
-      transition: color 180ms ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--ink);
-    }
-
-    .social-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 0 0 auto;
-    }
-
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      color: var(--ink-soft);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.56);
-      transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
-    }
-
-    .social-link:hover {
-      color: var(--ink);
-      border-color: var(--ink);
-      transform: translateY(-1px);
-    }
-
-    .social-link svg,
-    .social-link img {
-      display: block;
-      width: 17px;
-      height: 17px;
-    }
-
-    .xiaohongshu-link:hover {
-      border-color: #ff2442;
-      background: rgba(255, 36, 66, 0.06);
-    }
-
-    .xiaohongshu-link img {
-      width: 19px;
-      height: 19px;
-    }
-
-    .wechat-link:hover {
-      border-color: #07c160;
-      background: rgba(7, 193, 96, 0.06);
-    }
-
-    .wechat-link img {
-      width: 19px;
-      height: 19px;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 138px 0 76px;
-      border-bottom: 1px solid var(--line);
-      background: var(--paper);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(251, 250, 247, 0.98) 0%, rgba(251, 250, 247, 0.84) 39%, rgba(251, 250, 247, 0.22) 72%, rgba(251, 250, 247, 0.82) 100%),
-        linear-gradient(180deg, rgba(251, 250, 247, 0.18) 0%, rgba(251, 250, 247, 0.96) 100%);
-      z-index: 1;
-    }
-
-    .hero-art {
-      position: absolute;
-      inset: 0 0 auto auto;
-      width: min(980px, 76vw);
-      height: 100%;
-      object-fit: cover;
-      object-position: center right;
-      opacity: 0.92;
-      filter: saturate(0.94) contrast(0.98);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 710px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 30px;
-      height: 1px;
-      background: var(--coral);
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin: 0;
-      overflow-wrap: break-word;
-    }
-
-    h1 {
-      margin-top: 26px;
-      max-width: 690px;
-      font-size: 56px;
-      line-height: 1.02;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .logo-heading {
-      line-height: 1;
-    }
-
-    .hero-logo {
-      width: min(545px, 100%);
-      height: auto;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .lead {
-      margin-top: 24px;
-      max-width: 610px;
-      font-size: 18px;
-      color: var(--ink-soft);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-      margin-top: 34px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 620;
-      border: 1px solid var(--line-strong);
-      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-    }
-
-    .pill-primary {
-      color: #fff;
-      background: var(--ink);
-      border-color: var(--ink);
-    }
-
-    .pill-ghost {
-      color: var(--ink);
-      background: rgba(255, 255, 255, 0.64);
-    }
-
-    .pill:hover {
-      transform: translateY(-1px);
-      border-color: var(--ink);
-    }
-
-    .hero-meta {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 62px;
-      max-width: 720px;
-    }
-
-    .metric {
-      border-top: 1px solid var(--line-strong);
-      padding-top: 16px;
-    }
-
-    .metric strong {
-      display: block;
-      font-family: var(--mono);
-      font-size: 19px;
-      font-weight: 700;
-    }
-
-    .metric span {
-      display: block;
-      margin-top: 5px;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-
-    .section {
-      padding: 78px 0;
-    }
-
-    .section.alt {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--paper-2);
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 28px;
-      margin-bottom: 28px;
-    }
-
-    .section-title {
-      max-width: 680px;
-    }
-
-    .section-title h2 {
-      margin-top: 14px;
-      font-size: 34px;
-      line-height: 1.12;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .section-title p {
-      margin-top: 13px;
-      color: var(--ink-soft);
-      font-size: 15.5px;
-      max-width: 62ch;
-    }
-
-    .tiny-link {
-      flex: none;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      transition: color 180ms ease;
-    }
-
-    .tiny-link:hover {
-      color: var(--ink);
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      min-height: 100%;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      overflow: hidden;
-      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--line-strong);
-      background: rgba(255, 255, 255, 0.88);
-    }
-
-    .card-visual {
-      height: 172px;
-      border-bottom: 1px solid var(--line);
-      background: #f2eee7;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      opacity: 0.82;
-      filter: saturate(0.86);
-    }
-
-    .trace-lines,
-    .case-grid,
-    .runtime-path {
-      position: absolute;
-      inset: 18px;
-    }
-
-    .trace-lines::before,
-    .trace-lines::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--line-strong);
-    }
-
-    .trace-lines::before {
-      top: 44px;
-    }
-
-    .trace-lines::after {
-      bottom: 44px;
-    }
-
-    .node {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border: 2px solid #fff;
-      border-radius: 50%;
-      background: var(--teal);
-      box-shadow: 0 0 0 1px rgba(29, 122, 114, 0.26);
-    }
-
-    .node.a { left: 12%; top: 24%; }
-    .node.b { left: 42%; top: 55%; background: var(--coral); }
-    .node.c { right: 18%; top: 34%; background: var(--gold); }
-
-    .case-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      gap: 7px;
-    }
-
-    .case-grid span {
-      border: 1px solid var(--line-strong);
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.52);
-    }
-
-    .case-grid span:nth-child(3n) {
-      background: var(--teal-soft);
-    }
-
-    .case-grid span:nth-child(5n) {
-      background: rgba(197, 106, 75, 0.18);
-    }
-
-    .runtime-path {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      align-items: center;
-      gap: 12px;
-    }
-
-    .runtime-path span {
-      height: 52px;
-      border: 1px solid var(--line-strong);
-      border-radius: 7px;
-      background: rgba(255, 255, 255, 0.58);
-      position: relative;
-    }
-
-    .runtime-path span:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      width: 18px;
-      height: 1px;
-      top: 50%;
-      right: -16px;
-      background: var(--coral);
-    }
-
-    .card-body {
-      padding: 22px;
-    }
-
-    .card-kicker {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 13px;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--muted);
-    }
-
-    .card h3 {
-      font-size: 20px;
-      line-height: 1.2;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .card p {
-      margin-top: 11px;
-      color: var(--ink-soft);
-      font-size: 14px;
-    }
-
-    .card-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-      color: var(--ink-soft);
-      font-size: 12.5px;
-      font-weight: 620;
-    }
-
-    .card-links a {
-      transition: color 180ms ease;
-    }
-
-    .card-links a:hover {
-      color: var(--ink);
-    }
-
-    .thesis {
-      display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
-      gap: 56px;
-      align-items: start;
-    }
-
-    .thesis-copy {
-      position: sticky;
-      top: 102px;
-    }
-
-    .thesis-copy h2 {
-      margin-top: 14px;
-      font-size: 36px;
-      line-height: 1.12;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .thesis-copy p {
-      margin-top: 16px;
-      color: var(--ink-soft);
-      font-size: 15.5px;
-    }
-
-    .proof-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .proof {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 18px;
-      padding: 22px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .proof:last-child {
-      border-bottom: 1px solid var(--line);
-    }
-
-    .proof-num {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--coral);
-      padding-top: 3px;
-    }
-
-    .proof h3 {
-      font-size: 19px;
-      line-height: 1.25;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .proof p {
-      margin-top: 9px;
-      color: var(--ink-soft);
-      font-size: 14.5px;
-    }
-
-    .workflow {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.66);
-      overflow: hidden;
-    }
-
-    .panel-head {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      min-height: 40px;
-      padding: 0 14px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      background: var(--coral);
-    }
-
-    .dot:nth-child(2) {
-      background: var(--gold);
-    }
-
-    .dot:nth-child(3) {
-      background: var(--teal);
-    }
-
-    .panel-body {
-      padding: 22px;
-      min-height: 320px;
-    }
-
-    .terminal {
-      font-family: var(--mono);
-      font-size: 12.5px;
-      line-height: 1.85;
-      color: var(--ink-soft);
-    }
-
-    .terminal b {
-      color: var(--ink);
-      font-weight: 700;
-    }
-
-    .terminal .ok {
-      color: var(--teal);
-    }
-
-    .terminal .warn {
-      color: var(--coral);
-    }
-
-    .steps {
-      display: grid;
-      gap: 14px;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 13px;
-      align-items: start;
-    }
-
-    .step-num {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--line-strong);
-      border-radius: 50%;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--ink-soft);
-      background: var(--paper);
-    }
-
-    .step h3 {
-      font-size: 16px;
-      line-height: 1.25;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .step p {
-      margin-top: 5px;
-      color: var(--ink-soft);
-      font-size: 13.5px;
-    }
-
-    .cta {
-      padding: 58px 0 74px;
-    }
-
-    .cta-box {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 30px;
-      padding: 34px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fffdfa;
-    }
-
-    .cta h2 {
-      font-size: 28px;
-      line-height: 1.18;
-      font-weight: 650;
-      letter-spacing: 0;
-    }
-
-    .cta p {
-      margin-top: 10px;
-      color: var(--ink-soft);
-      max-width: 64ch;
-    }
-
-    .footer {
-      border-top: 1px solid var(--line);
-      padding: 38px 0;
-      color: var(--muted);
-      background: var(--paper-2);
-    }
-
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 30px;
-      align-items: start;
-    }
-
-    .footer-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--ink);
-      font-weight: 720;
-    }
-
-    .footer-logo {
-      display: block;
-      width: 190px;
-      height: auto;
-    }
-
-    .footer p {
-      margin-top: 12px;
-      max-width: 520px;
-      font-size: 13.5px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      font-size: 13.5px;
-      color: var(--ink-soft);
-    }
-
-    .footer-links a:hover {
-      color: var(--ink);
-    }
-
-    @media (max-width: 900px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 118px;
-      }
-
-      .hero-art {
-        width: 100%;
-        opacity: 0.42;
-      }
-
-      h1 {
-        font-size: 43px;
-      }
-
-      .lead {
-        font-size: 16.5px;
-      }
-
-      .cards,
-      .thesis,
-      .workflow,
-      .cta-box,
-      .footer-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .thesis-copy {
-        position: static;
-      }
-
-      .section-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .section-title {
-        width: 100%;
-      }
-
-      .footer-links {
-        justify-content: flex-start;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .wrap {
-        width: calc(100% - 28px);
-      }
-
-      .brand-mark {
-        width: 29px;
-        height: 29px;
-      }
-
-      .hero-content,
-      .section-title,
-      .thesis-copy,
-      .cta-box > div {
-        max-width: 340px;
-      }
-
-      .hero-actions {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .hero {
-        padding: 104px 0 52px;
-      }
-
-      h1 {
-        font-size: 36px;
-      }
-
-      .hero-logo {
-        width: min(292px, 100%);
-      }
-
-      .hero-meta {
-        grid-template-columns: 1fr;
-        gap: 14px;
-        margin-top: 42px;
-      }
-
-      .section {
-        padding: 56px 0;
-      }
-
-      .section-title h2,
-      .thesis-copy h2 {
-        font-size: 27px;
-        max-width: 12.5em;
-      }
-
-      .card-visual {
-        height: 150px;
-      }
-
-      .proof {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .panel-body,
-      .card-body,
-      .cta-box {
-        padding: 20px;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TraceLite — Trace the evolution of intelligence.</title>
+<meta name="description" content="TraceLite is an open research organization focused on agent evaluation and synthetic data, connecting evaluation, data, and training to explore the path toward AGI." />
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<link rel="apple-touch-icon" href="images/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#FAFAFA; --text:#111111; --text-2:#6E6E6E; --ocean:#171717;
+  --teal:#2B2B2B; --aqua:#9A9A9A; --blue:#2B2B2B; --border:rgba(17, 17, 17, 0.12);
+  --bg-rgb:250,250,250;
+  --maxw:1180px; --pad:clamp(20px,5vw,56px); --section-y:clamp(96px,11vw,150px);
+  --ease:cubic-bezier(.22,.61,.36,1); --ease-soft:cubic-bezier(.4,0,.2,1);
+  --font-sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--font-sans);background:linear-gradient(180deg,#FFFFFF 0%,#FAFAFA 26%,#F6F6F6 52%,#F1F1F1 74%,#ECECEC 100%);background-attachment:fixed;color:var(--text);font-size:17px;line-height:1.6;overflow-x:hidden;letter-spacing:-0.01em;}
+a{color:inherit;text-decoration:none;}
+canvas{display:block;}
+.mono{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:74px;display:flex;align-items:center;background:transparent;border-bottom:1px solid transparent;transition:background .5s var(--ease-soft),border-color .5s,backdrop-filter .5s;}
+.nav.scrolled{background:rgba(var(--bg-rgb),.82);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--border);}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:19px;letter-spacing:-0.02em;}
+.brand .logo{height:26px;width:auto;flex:none;display:block;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a.lk{font-size:15px;color:var(--text-2);position:relative;padding:4px 0;transition:color .25s var(--ease-soft);}
+.nav-links a.lk::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--teal);transition:width .3s var(--ease);}
+.nav-links a.lk:hover{color:var(--text);}
+.nav-links a.lk:hover::after{width:100%;}
+.nav-links a.lk.active{padding:6px 12px;border:1px solid var(--teal);border-radius:6px;color:var(--teal);}
+.nav-links a.lk.active::after{display:none;}
+.nav-links a.lk.active:hover{color:var(--ocean);border-color:var(--ocean);}
+.nav-cta{display:flex;align-items:center;gap:22px;}
+.nav-cta .nav-links{gap:22px;}
+.nav-cta a{font-size:15px;display:inline-flex;align-items:center;gap:5px;color:var(--text);border-bottom:1px solid transparent;padding-bottom:2px;transition:color .25s,border-color .25s;}
+.nav-cta a:hover{color:var(--teal);}
+.nav-cta a.join{border-bottom-color:var(--teal);}
+.nav-cta a.join:hover{color:var(--teal);}
+.lang-toggle{font-size:13px;font-weight:600;line-height:1;color:var(--teal);background:transparent;
+  border:1px solid var(--teal);border-radius:6px;padding:6px 10px;cursor:pointer;
+  transition:background .25s,color .25s,border-color .25s,transform .25s var(--ease);}
+.lang-toggle:hover{background:rgba(43,43,43,.08);color:var(--ocean);border-color:var(--ocean);}
+.lang-toggle:active{transform:scale(.94);}
+.narrow-only{display:none;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:15px;font-weight:500;padding:13px 22px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:transform .25s var(--ease),background .3s,color .3s,border-color .3s,box-shadow .3s;}
+.btn .arw{transition:transform .3s var(--ease);}
+.btn:hover .arw{transform:translateX(4px);}
+.btn-primary{background:var(--ocean);color:#F5F5F5;}
+.btn-primary:hover{background:#000000;box-shadow:0 12px 34px -14px rgba(23,23,23,.55);transform:translateY(-2px);}
+.btn-ghost{color:var(--text);border-color:var(--border);}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+
+/* HERO */
+.hero{position:relative;min-height:clamp(680px,90vh,900px);display:flex;align-items:center;padding-top:74px;overflow:hidden;}
+.hero::before{content:"";position:absolute;right:calc(50% - 45vw - 38px);top:50%;transform:translateY(-50%);width:min(90vw,760px);height:min(90vw,760px);background:radial-gradient(circle, rgba(17,17,17,0.09) 0%, rgba(17,17,17,0.05) 32%, rgba(17,17,17,0.02) 55%, rgba(17,17,17,0) 72%);pointer-events:none;}
+.hero .wrap{display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;width:100%;}
+.hero-copy{max-width:660px;}
+.hero h1{font-size:clamp(38px,5.4vw,66px);line-height:1.06;font-weight:600;letter-spacing:-0.032em;margin:0 0 24px;color:var(--text-2);}
+.hero h1 .teal{color:var(--text);}
+.hero p.lead{font-size:18px;line-height:1.62;color:var(--text-2);max-width:560px;}
+.hero-cta{display:flex;gap:14px;margin-top:34px;}
+.hero-visual{position:relative;height:clamp(420px,48vw,580px);display:flex;align-items:center;justify-content:center;}
+#sphere{width:100%;height:100%;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease-soft),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal[data-d="1"]{transition-delay:.08s;}
+.reveal[data-d="2"]{transition-delay:.16s;}
+
+/* RESEARCH */
+.research{padding-block:var(--section-y);border-top:1px solid var(--border);}
+.section-head{max-width:760px;}
+.eyebrow{display:block;margin-bottom:18px;}
+h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;letter-spacing:-0.03em;}
+.research-list{margin-top:32px;border-top:1px solid var(--border);}
+.research-row{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:26px;min-height:148px;padding:30px 8px;border-bottom:1px solid var(--border);cursor:pointer;transition:transform .3s var(--ease);}
+.research-row .idx{font-family:var(--font-mono);font-size:13px;color:var(--teal);}
+.research-row .r-main h3{font-size:clamp(26px,3.4vw,42px);font-weight:600;letter-spacing:-0.025em;transition:color .3s;}
+.research-row .r-main p{color:var(--text-2);font-size:16px;margin-top:10px;max-width:480px;line-height:1.55;}
+/* hover trajectory */
+.research-row .r-traj{position:absolute;left:54px;top:50%;transform:translateY(-50%);width:120px;height:60px;opacity:0;transition:opacity .35s var(--ease);pointer-events:none;}
+.research-row .r-arrow{font-size:22px;color:var(--text-2);transition:transform .3s var(--ease),color .3s;}
+.research-row:hover{transform:translateX(6px);}
+.research-row:hover .r-main h3{color:var(--teal);}
+.research-row:hover .r-arrow{transform:translateX(6px);color:var(--teal);}
+.research-row:hover .r-traj{opacity:1;}
+
+/* FIELD NOTES */
+.notes{padding-block:var(--section-y);border-top:1px solid var(--border);}
+.notes-list{margin-top:44px;border-top:1px solid var(--border);}
+.note-row{display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:center;padding:26px 8px;border-bottom:1px solid var(--border);cursor:pointer;transition:transform .3s var(--ease);}
+.note-row .nd{font-family:var(--font-mono);font-size:12px;color:var(--text-2);letter-spacing:.06em;}
+.note-row .nt{font-size:clamp(18px,2.2vw,25px);font-weight:500;letter-spacing:-0.02em;transition:color .3s;}
+.note-row .na{font-size:20px;color:var(--text-2);transition:transform .3s var(--ease),color .3s;}
+.note-row:hover{transform:translateX(7px);}
+.note-row:hover .nt{color:var(--teal);}
+.note-row:hover .na{transform:translateX(5px);color:var(--teal);}
+
+/* CONTACT */
+.contact{padding-block:var(--section-y);border-top:1px solid var(--border);}
+.contact h2{font-size:clamp(38px,6vw,76px);line-height:1.02;font-weight:600;letter-spacing:-0.035em;max-width:16ch;}
+.contact p{font-size:18px;color:var(--text-2);max-width:540px;margin:24px 0 36px;line-height:1.6;}
+.contact .hero-cta{margin-top:0;}
+
+/* HOME EXTENSIONS (below hero) — part of one continuous page gradient */
+.home-ext{position:relative;}
+.home-ext .ext-module{position:relative;z-index:1;padding-block:clamp(30px,3.4vw,48px);}
+.home-ext .ext-module>.wrap{position:relative;z-index:1;}
+/* gentle radial wash for depth, no hard edges */
+.home-ext .ext-module::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 8% 22%, rgba(43,43,43,.045) 0, rgba(43,43,43,0) 40%),
+    radial-gradient(circle at 94% 80%, rgba(43,43,43,.04) 0, rgba(43,43,43,0) 42%);}
+
+/* title group — soft, connected, no heavy rules */
+.home-ext .section-head{position:relative;}
+.home-ext h2.title{color:var(--text);font-size:clamp(25px,3vw,36px);line-height:1.14;letter-spacing:-0.02em;}
+.home-ext .eyebrow{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#3F3F3F;margin-bottom:14px;}
+.home-ext .ext-lead{margin-top:16px;max-width:600px;font-size:18px;line-height:1.62;color:var(--text-2);}
+/* short, low-opacity decorative underline under title */
+.home-ext .section-head::after{content:"";display:block;width:88px;height:2px;margin-top:18px;border-radius:2px;
+  background:linear-gradient(90deg,rgba(63,63,63,.5),rgba(63,63,63,0));}
+/* sparse dashed arc decoration near title */
+.home-ext .section-head::before{content:"";position:absolute;top:-14px;right:-6px;width:120px;height:54px;
+  border:1px dashed rgba(63,63,63,.15);border-bottom:none;border-left:none;border-radius:0 26px 0 0;pointer-events:none;}
+
+/* shared translucent card surface — floats on the background */
+.home-ext .glass{background-color:rgba(255,255,255,.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(63,63,63,.08);box-shadow:0 4px 20px rgba(17,17,17,.04);border-radius:16px;}
+
+/* module 1 — directions */
+.home-ext .dir-grid{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.home-ext .dir-card{padding:28px 24px;transition:transform .3s var(--ease),border-color .3s,box-shadow .3s,background-color .3s;}
+.home-ext .dir-card:hover{transform:translateY(-6px);border-color:rgba(63,63,63,.22);box-shadow:0 18px 40px -22px rgba(43,43,43,.38);}
+.home-ext .dir-icon{width:42px;height:42px;color:var(--teal);margin-bottom:18px;}
+.home-ext .dir-icon svg{width:100%;height:100%;display:block;}
+.home-ext .dir-card h3{font-size:20px;font-weight:600;letter-spacing:-0.02em;color:var(--text);}
+.home-ext .dir-card p{margin-top:10px;font-size:15px;line-height:1.6;color:var(--text-2);}
+
+/* module 2 — outputs */
+.home-ext .out-grid{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+.home-ext .out-col h3.sub{font-size:13px;font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:#3F3F3F;margin-bottom:10px;}
+.home-ext .item{display:flex;gap:18px;padding:18px;border-radius:14px;transition:transform .25s var(--ease),background-color .25s,border-color .25s,box-shadow .25s;}
+.home-ext .item+.item{margin-top:14px;}
+.home-ext .item:hover{background-color:rgba(255,255,255,.8);border-color:rgba(63,63,63,.18);box-shadow:0 6px 22px -16px rgba(17,17,17,.3);}
+.home-ext .item .ph-thumb{flex:none;width:80px;height:80px;border-radius:12px;background:#fff;border:1px solid var(--border);object-fit:contain;padding:3px;}
+.home-ext .item .it-body h4{font-size:18px;font-weight:600;color:var(--text);}
+.home-ext .item .it-meta{font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;color:#3F3F3F;margin:6px 0 8px;}
+.home-ext .item .it-body p{font-size:15px;line-height:1.58;color:var(--text-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.home-ext .out-link{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:15px;font-weight:500;color:var(--teal);transition:gap .25s var(--ease);}
+.home-ext .out-link:hover{gap:12px;}
+.home-ext .home-item{cursor:pointer;}
+.home-ext .item.home-item:hover{transform:translateX(3px);}
+.home-ext .item.home-item:hover .it-body h4{color:var(--teal);}
+.home-ext .item.home-item:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+
+/* module 3 — blog previews */
+.home-ext .blog-prev-grid{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.home-ext .blog-prev{display:block;overflow:hidden;transition:transform .3s var(--ease),border-color .3s,box-shadow .3s,background-color .3s;}
+.home-ext .blog-prev:hover{transform:translateY(-6px);border-color:rgba(63,63,63,.22);box-shadow:0 18px 40px -22px rgba(43,43,43,.38);background-color:rgba(255,255,255,.82);}
+.home-ext .blog-prev .ph-cover{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#F0F0F0,#E2E2E2);}
+.home-ext .blog-prev .bp-body{padding:20px;}
+.home-ext .blog-prev .bp-date{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:#3F3F3F;}
+.home-ext .blog-prev h4{margin:8px 0;font-size:17px;font-weight:600;line-height:1.3;color:var(--text);}
+.home-ext .blog-prev p{font-size:14px;line-height:1.55;color:var(--text-2);}
+.home-ext .blog-prev-foot{margin-top:32px;text-align:center;}
+.home-ext .ext-btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;padding:13px 24px;border-radius:6px;border:1px solid var(--teal);color:var(--teal);background:rgba(255,255,255,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .3s,color .3s,gap .25s var(--ease);}
+.home-ext .ext-btn:hover{background:rgba(43,43,43,.1);gap:12px;}
+
+@media (max-width:1023px){
+  .home-ext .dir-grid{grid-template-columns:repeat(2,1fr);}
+  .home-ext .blog-prev-grid{grid-template-columns:1fr;}
+}
+@media (max-width:767px){
+  .home-ext .dir-grid{grid-template-columns:1fr;}
+  .home-ext .out-grid{grid-template-columns:1fr;gap:30px;}
+  .home-ext .section-head::before{display:none;}
+}
+
+/* --- Products 暂时下线 ---------------------------------------------------
+   markup 原封不动留在页面里，只是加了 data-masked="products"。
+   想恢复：删掉那个属性就行，下面两条规则会自动失效。 */
+[data-masked]{display:none!important;}
+.home-ext .out-grid:has(>[data-masked]){grid-template-columns:1fr;}
+
+/* --- 首页精选论文：两列铺开 --- */
+.home-ext .out-col .paper-items{display:grid;grid-template-columns:1fr 1fr;gap:16px 26px;}
+.home-ext .out-col .paper-items .item+.item{margin-top:0;}
+@media (max-width:767px){.home-ext .out-col .paper-items{grid-template-columns:1fr;}}
+
+/* --- Oral 论文高亮 --- */
+.home-ext .item.is-oral{background-color:rgba(255,255,255,.62);
+  box-shadow:0 8px 26px -18px rgba(0,0,0,.34);}
+.home-ext .item .it-meta .it-oral{display:inline-block;background:var(--text);color:var(--bg);
+  border-radius:4px;padding:1px 6px;margin-right:6px;letter-spacing:.06em;}
+
+/* Our Focus —— 单个排行榜入口框 */
+.home-ext .dir-grid-single{grid-template-columns:minmax(0,560px);}
+.home-ext .focus-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:20px;text-decoration:none;cursor:pointer;}
+.home-ext .focus-card .dir-icon{margin:0;}
+.home-ext .focus-card .fc-eyebrow{display:block;font-family:var(--font-mono);font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.home-ext .focus-card h3{font-size:19px;}
+.home-ext .focus-card p{margin-top:6px;}
+.home-ext .focus-card .fc-go{font-size:19px;color:var(--text-2);
+  transition:transform .3s var(--ease),color .3s;}
+.home-ext .focus-card:hover .fc-go{transform:translateX(5px);color:var(--teal);}
+.home-ext .focus-card:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+@media (max-width:560px){
+  .home-ext .focus-card{grid-template-columns:auto 1fr;row-gap:12px;}
+  .home-ext .focus-card .fc-go{display:none;}
+}
+
+
+/* 进站动画：满屏一句话逐词上墨，播完淡出 */
+html.intro-lock{overflow:hidden;}
+.intro{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:34px;
+  background:var(--bg);padding:0 clamp(24px,7vw,90px);cursor:pointer;
+  transform:translateY(0);
+  /* 幕布上提：位移用带一点回弹收尾的曲线，句子在幕布走之前先淡一点，免得整块生硬 */
+  transition:transform .95s cubic-bezier(.65,.02,.28,1);}
+.intro.done{transform:translateY(-100%);pointer-events:none;}
+.intro.done .intro-line,.intro.done .intro-skip{opacity:0;transition:opacity .35s var(--ease-soft);}
+/* 幕布下沿一道极淡的分界，上提时能看出这是一层布而不是页面在跳 */
+.intro::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--border);}
+.intro-line{max-width:26ch;text-align:center;
+  font-size:clamp(27px,4.7vw,58px);line-height:1.26;font-weight:600;letter-spacing:-0.028em;}
+.intro-line .w{color:rgba(17,17,17,.13);transition:color .45s var(--ease-soft);}
+.intro-line .w.on{color:var(--text);}
+.intro-skip{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--text-2);opacity:0;transition:opacity .5s;}
+.intro.hint .intro-skip{opacity:.55;}
+@media (prefers-reduced-motion:reduce){ .intro{display:none;} }
+
+/* HOME-EXT ITEM MODAL */
+.home-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:24px;}
+.home-modal.open{display:flex;}
+.home-modal .pm-backdrop{position:absolute;inset:0;background:rgba(17,17,17,.42);backdrop-filter:blur(4px);opacity:0;transition:opacity .35s var(--ease);}
+.home-modal.open .pm-backdrop{opacity:1;}
+.home-modal .pm-card{
+  position:relative;width:min(720px,100%);max-height:88vh;overflow:auto;
+  background:var(--bg);border:1px solid var(--border);border-radius:18px;
+  padding:26px;box-shadow:0 40px 90px -30px rgba(17,17,17,.5);
+  transform:translateY(28px) scale(.94);opacity:0;
+  transition:transform .42s var(--ease),opacity .42s var(--ease);
+}
+.home-modal.open .pm-card{transform:translateY(0) scale(1);opacity:1;}
+.home-modal .pm-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--bg);color:var(--text);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px -6px rgba(17,17,17,.35);z-index:2;
+  transition:border-color .25s,color .25s,background .25s,transform .25s var(--ease);}
+.home-modal .pm-close:hover{border-color:var(--teal);color:var(--teal);background:rgba(43,43,43,.08);transform:scale(1.06);}
+.home-modal .pm-cover{width:100%;max-height:46vh;border-radius:12px;object-fit:contain;margin-top:46px;margin-bottom:20px;background:#fff;border:1px solid var(--border);}
+.home-modal .pm-visual{width:100%;aspect-ratio:16/9;border-radius:12px;margin-top:46px;margin-bottom:20px;background:linear-gradient(135deg,#2B2B2B,#9A9A9A);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;}
+.home-modal h3{font-size:clamp(22px,2.8vw,30px);font-weight:600;line-height:1.2;letter-spacing:-0.025em;color:var(--text);}
+.home-modal .pm-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.home-modal .pm-meta span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;color:var(--teal);background:rgba(43,43,43,.10);border-radius:6px;padding:3px 9px;}
+.home-modal .pm-body{margin-top:20px;font-size:16px;line-height:1.75;color:var(--text-2);}
+.home-modal .pm-body p{margin-bottom:16px;}
+.home-modal .pm-body p:last-child{margin-bottom:0;}
+
+/* FOOTER */
+.footer{background:var(--ocean);color:rgba(245,245,245,.7);padding-block:56px 40px;}
+.footer .f-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+.footer .f-brand{font-size:21px;font-weight:600;color:#F5F5F5;display:flex;align-items:center;gap:11px;}
+.footer .f-brand .logo{height:30px;width:auto;display:block;filter:brightness(0) invert(1);}
+.footer .f-tag{margin-top:14px;font-size:14px;max-width:280px;line-height:1.6;color:rgba(245,245,245,.6);}
+.footer .f-col{display:flex;gap:28px;flex-wrap:wrap;}
+.footer .f-col a{font-size:15px;color:rgba(245,245,245,.72);transition:color .25s;}
+.footer .f-col a:hover{color:#fff;}
+.footer .f-bottom{margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:rgba(245,245,245,.5);}
+
+/* RESPONSIVE */
+@media (max-width:1023px){
+  .hero .wrap{grid-template-columns:1fr;gap:8px;}
+  .hero-visual{order:2;height:clamp(320px,58vw,440px);margin-top:14px;}
+}
+@media (max-width:767px){
+  body{font-size:16px;}
+  .nav-links{display:none;}
+  .nav-cta .ext{display:none;}
+  .narrow-only{display:inline-flex;}
+  .research-row{grid-template-columns:auto 1fr;gap:12px;min-height:auto;}
+  .research-row .r-arrow{display:none;}
+  .research-row .r-traj{display:none;}
+  .footer .f-top{flex-direction:column;gap:28px;}
+  .note-row{grid-template-columns:auto 1fr;}
+  .note-row .na{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
 </head>
 <body>
-  <header class="nav">
-    <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="TraceLite AI home">
-        <img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true" />
-        <span class="brand-name">TraceLite AI</span>
-      </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#ship">What we ship</a>
-        <a href="#thesis">Thesis</a>
-        <a href="#workflow">Workflow</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div class="social-links" aria-label="TraceLite AI social links">
-        <a class="social-link github-link" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer" aria-label="TraceLite AI on GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 .5C5.73.5.63 5.6.63 11.88c0 5.03 3.26 9.29 7.79 10.79.57.1.78-.25.78-.55v-2.13c-3.17.69-3.84-1.36-3.84-1.36-.52-1.31-1.27-1.66-1.27-1.66-1.03-.71.08-.7.08-.7 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.31.94.1-.73.4-1.23.72-1.51-2.53-.29-5.19-1.27-5.19-5.64 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.13 1.17.91-.25 1.88-.38 2.85-.38s1.94.13 2.85.38c2.17-1.48 3.12-1.17 3.12-1.17.63 1.57.23 2.73.12 3.02.73.8 1.17 1.82 1.17 3.07 0 4.38-2.66 5.34-5.2 5.63.41.35.77 1.04.77 2.1v3.14c0 .3.2.66.78.55a11.39 11.39 0 0 0 7.78-10.78C23.38 5.6 18.28.5 12 .5Z" />
-          </svg>
-        </a>
-        <a class="social-link xiaohongshu-link" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener noreferrer" aria-label="TraceLite AI on Xiaohongshu">
-          <img src="assets/xiaohongshu.svg" alt="" aria-hidden="true" />
-        </a>
-        <a class="social-link wechat-link" href="wechat.html" target="_blank" rel="noopener noreferrer" aria-label="View TraceLite AI WeChat Official Account QR code">
-          <img src="assets/wechat.svg" alt="" aria-hidden="true" />
+
+<!-- INTRO — 一句话上墨，播完进站 -->
+<div class="intro" id="intro" hidden aria-hidden="true">
+  <p class="intro-line" id="introLine">We build the instruments that measure progress toward general intelligence.</p>
+  <span class="intro-skip">Click to skip</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="TraceLite home">
+      <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
+    <div class="nav-cta">
+      <div class="nav-links">
+        <a class="lk" href="research.html" data-i18n="research">Research</a>
+        <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
+        <a class="lk" href="contact.html" data-i18n="contact">Contact</a>
+      </div>
+      <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1 class="reveal" data-d="1">Trace the evolution<br>of <span class="teal">intelligence.</span></h1>
+      <p class="lead reveal" data-d="2">TraceLite is an open research organization focused on agent evaluation and synthetic data, connecting evaluation, data, and training to explore the path toward AGI.</p>
+      <div class="hero-cta reveal" data-d="2">
+        <a class="btn btn-primary" href="research.html">Research <span class="arw">→</span></a>
+        <a class="btn btn-ghost" href="contact.html">Contact ↗</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <canvas id="sphere"></canvas>
+    </div>
+  </div>
+</header>
+
+<!-- HOME EXTENSIONS -->
+<main class="home-ext">
+
+  <!-- Module 1: Core Research Directions -->
+  <section class="ext-module" id="directions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our Focus</span>
+        <h2 class="title">Core Research Directions</h2>
+      </div>
+      <div class="dir-grid dir-grid-single">
+        <!-- ↓↓↓ 排行榜地址还没给：把 href="#" 换成真实网址即可（外链会新开标签页） -->
+        <a class="dir-card glass reveal focus-card" href="#" data-d="1">
+          <div class="dir-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          </div>
+          <div class="fc-text">
+            <span class="fc-eyebrow">Leaderboard</span>
+            <h3>Placeholder Leaderboard Name</h3>
+            <p>Placeholder description text.</p>
+          </div>
+          <span class="fc-go" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <img class="hero-art" src="assets/tracelite-hero.png" alt="" aria-hidden="true" />
-      <div class="wrap hero-content">
-        <span class="eyebrow">Agent evaluation lab</span>
-        <h1 class="logo-heading" id="hero-title">
-          <img class="hero-logo" src="assets/logo-transparent.png" alt="" aria-hidden="true" />
-          <span class="sr-only">TraceLite AI</span>
-        </h1>
-        <p class="lead">Traceable evaluation infrastructure for AI agents. Capture real trajectories, replay failures, and turn benchmark runs into evidence your team can inspect.</p>
-        <div class="hero-actions">
-          <a class="pill pill-primary" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">View GitHub repo</a>
-          <a class="pill pill-ghost" href="#ship">Explore the system</a>
+  <!-- Module 2: Selected Output -->
+  <section class="ext-module" id="outputs">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Featured Work</span>
+        <h2 class="title">Research Output</h2>
+      </div>
+      <div class="out-grid">
+        <div class="out-col reveal" data-d="1">
+          <h3 class="sub">Papers</h3>
+          <div class="paper-items">
+            <div class="item home-item" tabindex="0" role="button" aria-label="Read: Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning">
+              <img class="ph-thumb" src="images/papers/earl-select-less.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h4>
+                <div class="it-meta">CVPR 2026 · Video Reasoning · Reinforcement Learning</div>
+                <p>Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.</p>
+              </div>
+            </div>
+            <div class="item home-item" tabindex="0" role="button" aria-label="Read: Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning">
+              <img class="ph-thumb" src="images/papers/adaptive-pixel-reasoning.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h4>
+                <div class="it-meta">ACL 2026 · Vision-Language · Reinforcement Learning</div>
+                <p>Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.</p>
+              </div>
+            </div>
+            <div class="item home-item is-oral" tabindex="0" role="button" aria-label="Read: SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection" data-oral="1">
+              <img class="ph-thumb" src="images/papers/simrpd.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection</h4>
+                <div class="it-meta"><span class="it-oral">Oral</span> ACL 2026 Industry · Dialogue Agents · Synthetic Data</div>
+                <p>Proactive dialogue agents steer recruitment conversations toward concrete business outcomes, but training them is bottlenecked by the scarcity of high-quality, goal-oriented domain data. SimRPD is a three-stage framework: a high-fidelity user simulator synthesizes large-scale multi-turn conversations, a Chain-of-Intention evaluation framework assesses the simulator and selects high-quality data using both global-level and instance-level metrics, and the agent is then trained on that selection. In a real-world recruitment scenario SimRPD outperforms existing simulator-based data selection strategies.</p>
+              </div>
+            </div>
+            <div class="item home-item" tabindex="0" role="button" aria-label="Read: STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method">
+              <img class="ph-thumb" src="images/papers/stafdd.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method</h4>
+                <div class="it-meta">Aquaculture and Fisheries 2026 · Computer Vision · Aquaculture</div>
+                <p>Fish disease spreads rapidly in high-density aquaculture, where manual inspection is too slow to catch it early. STAFDD combines what a fish looks like with how it moves: SSCA-YOLO, an improved YOLOv8 with an SPD-CBS downsampling module, a small-object head and coordinate attention, detects body-surface abnormalities; ByteSort with ReID features tracks individuals into stable trajectories; an LSTM reads abnormal behaviour from those trajectories; and a learnable MLP gate fuses the two branches by confidence. On a dataset built from Aeromonas hydrophila-challenged Prussian carp, tracking reaches 89.74% HOTA and 94.05% MOTA, and overall classification accuracy reaches 96.86%.</p>
+              </div>
+            </div>
+          </div>
+          <a class="out-link" href="papers.html">View all papers →</a>
         </div>
-        <div class="hero-meta" aria-label="TraceLite AI focus areas">
-          <div class="metric">
-            <strong>Trace</strong>
-            <span>Full agent trajectory capture</span>
+        <div class="out-col reveal" data-d="2" data-masked="products">
+          <h3 class="sub">Products</h3>
+          <div class="item home-item" tabindex="0" role="button" aria-label="Read: Placeholder Product Name">
+            <div class="ph-thumb" aria-hidden="true"></div>
+            <div class="it-body">
+              <h4>Placeholder Product Name</h4>
+              <div class="it-meta">Placeholder</div>
+              <p>Placeholder description text.</p>
+            </div>
           </div>
-          <div class="metric">
-            <strong>Replay</strong>
-            <span>Failure reproduction and audit</span>
+          <div class="item home-item" tabindex="0" role="button" aria-label="Read: Placeholder Product Name">
+            <div class="ph-thumb" aria-hidden="true"></div>
+            <div class="it-body">
+              <h4>Placeholder Product Name</h4>
+              <div class="it-meta">Placeholder</div>
+              <p>Placeholder description text.</p>
+            </div>
           </div>
-          <div class="metric">
-            <strong>Verify</strong>
-            <span>Case-level scoring and evidence</span>
-          </div>
+          <a class="out-link" href="research.html">Explore all products →</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="ship">
-      <div class="wrap">
-        <div class="section-head">
-          <div class="section-title">
-            <span class="eyebrow">What we ship</span>
-            <h2>Evaluation pieces for agents that need to be trusted, not just demoed.</h2>
-            <p>TraceLite AI is built around reproducible runs: the task, the tools, the agent actions, the final artifact, and the verifier all stay connected.</p>
-          </div>
-          <a class="tiny-link" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">GitHub -&gt;</a>
-        </div>
-
-        <div class="cards">
-          <article class="card">
-            <div class="card-visual">
-              <img src="assets/tracelite-hero.png" alt="" />
-            </div>
-            <div class="card-body">
-              <div class="card-kicker"><span>01</span><span>Trace layer</span></div>
-              <h3>Trajectory capture</h3>
-              <p>Record prompts, tool calls, file changes, outputs, and intermediate states so every agent result has a readable execution trail.</p>
-              <div class="card-links">
-                <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Repository</a>
-                <a href="#workflow">Workflow</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-visual">
-              <div class="trace-lines" aria-hidden="true">
-                <span class="node a"></span>
-                <span class="node b"></span>
-                <span class="node c"></span>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="card-kicker"><span>02</span><span>Benchmark layer</span></div>
-              <h3>Case-driven evaluation</h3>
-              <p>Run targeted cases that expose planning gaps, tool misuse, lifecycle failures, and final-artifact mismatches in real workflows.</p>
-              <div class="card-links">
-                <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Cases</a>
-                <a href="#thesis">Thesis</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-visual">
-              <div class="runtime-path" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="card-kicker"><span>03</span><span>Verifier layer</span></div>
-              <h3>Evidence-backed scoring</h3>
-              <p>Separate clean completion from correct completion by validating the final artifact, the path taken, and the contract the task required.</p>
-              <div class="card-links">
-                <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Verifier</a>
-                <a href="#contact">Contact</a>
-              </div>
-            </div>
-          </article>
-        </div>
+  <!-- Module 3: Latest Updates -->
+  <section class="ext-module" id="updates">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Insights</span>
+        <h2 class="title">Latest Insights</h2>
       </div>
-    </section>
-
-    <section class="section alt" id="thesis">
-      <div class="wrap thesis">
-        <div class="thesis-copy">
-          <span class="eyebrow">Thesis</span>
-          <h2>Agent reliability starts with traces you can argue from.</h2>
-          <p>Pass rates are too flat on their own. A useful evaluation system should explain what happened, where the run diverged, and whether the agent satisfied the real contract of the task.</p>
-        </div>
-
-        <div class="proof-list">
-          <article class="proof">
-            <div class="proof-num">01</div>
-            <div>
-              <h3>Behavior needs context, not screenshots.</h3>
-              <p>Tool calls, hidden assumptions, environment state, and final artifacts belong in the same evidence record.</p>
-            </div>
-          </article>
-          <article class="proof">
-            <div class="proof-num">02</div>
-            <div>
-              <h3>Benchmarks should fail for the right reason.</h3>
-              <p>A discriminative case catches semantic mistakes even when the agent exits cleanly and produces a plausible-looking result.</p>
-            </div>
-          </article>
-          <article class="proof">
-            <div class="proof-num">03</div>
-            <div>
-              <h3>Evaluation should be repeatable by another team.</h3>
-              <p>Tasks, harness configuration, scoring logic, and expected evidence should be portable enough for independent reproduction.</p>
-            </div>
-          </article>
-        </div>
+      <div class="blog-prev-grid">
+        <article class="blog-prev glass reveal home-item" data-d="1" tabindex="0" role="button" aria-label="Read: Placeholder Article Title">
+          <div class="ph-cover" aria-hidden="true"></div>
+          <div class="bp-body">
+            <div class="bp-date">Placeholder Date</div>
+            <h4>Placeholder Article Title</h4>
+            <p>Placeholder excerpt text.</p>
+          </div>
+        </article>
+        <article class="blog-prev glass reveal home-item" data-d="2" tabindex="0" role="button" aria-label="Read: Placeholder Article Title">
+          <div class="ph-cover" aria-hidden="true"></div>
+          <div class="bp-body">
+            <div class="bp-date">Placeholder Date</div>
+            <h4>Placeholder Article Title</h4>
+            <p>Placeholder excerpt text.</p>
+          </div>
+        </article>
+        <article class="blog-prev glass reveal home-item" data-d="3" tabindex="0" role="button" aria-label="Read: Placeholder Article Title">
+          <div class="ph-cover" aria-hidden="true"></div>
+          <div class="bp-body">
+            <div class="bp-date">Placeholder Date</div>
+            <h4>Placeholder Article Title</h4>
+            <p>Placeholder excerpt text.</p>
+          </div>
+        </article>
       </div>
-    </section>
-
-    <section class="section" id="workflow">
-      <div class="wrap">
-        <div class="section-head">
-          <div class="section-title">
-            <span class="eyebrow">Workflow</span>
-            <h2>From one run to an inspectable evaluation record.</h2>
-            <p>The site is static, but the product story is concrete: agents enter a harness, traces are captured, verifiers judge the result, and failures become reusable cases.</p>
-          </div>
-        </div>
-
-        <div class="workflow">
-          <div class="panel">
-            <div class="panel-head" aria-hidden="true">
-              <span class="dot"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
-            </div>
-            <div class="panel-body terminal" aria-label="Example evaluation status">
-              <div><b>$ tracelite run</b> cases/lifecycle-orchestration</div>
-              <div>agent: openclaw-runtime</div>
-              <div>trace: captured tool calls and artifacts</div>
-              <div>replay: deterministic environment snapshot</div>
-              <div class="warn">verifier: contract mismatch detected</div>
-              <div class="ok">evidence: saved as reusable benchmark case</div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-body">
-              <div class="steps">
-                <article class="step">
-                  <div class="step-num">01</div>
-                  <div>
-                    <h3>Run the agent in a controlled harness.</h3>
-                    <p>Fix the task state, tool surface, and expected contract before measuring behavior.</p>
-                  </div>
-                </article>
-                <article class="step">
-                  <div class="step-num">02</div>
-                  <div>
-                    <h3>Capture the whole trajectory.</h3>
-                    <p>Keep the reasoning-adjacent evidence that matters: calls, outputs, files, and final deliverables.</p>
-                  </div>
-                </article>
-                <article class="step">
-                  <div class="step-num">03</div>
-                  <div>
-                    <h3>Score with explicit verifiers.</h3>
-                    <p>Judge correctness against the task contract rather than relying on whether the run looked smooth.</p>
-                  </div>
-                </article>
-                <article class="step">
-                  <div class="step-num">04</div>
-                  <div>
-                    <h3>Promote failures into cases.</h3>
-                    <p>Convert real bad runs into reusable tests for regression, model comparison, and harness design.</p>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="blog-prev-foot">
+        <a class="ext-btn" href="blog.html">Visit Blog →</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="cta" id="contact">
-      <div class="wrap">
-        <div class="cta-box">
-          <div>
-            <h2>Build evaluation around evidence.</h2>
-            <p>Use the repository as the public home for TraceLite AI while the benchmark cases and runtime pieces mature.</p>
-          </div>
-          <a class="pill pill-primary" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">Open GitHub</a>
-        </div>
-      </div>
-    </section>
-  </main>
+</main>
 
-  <footer class="footer">
-    <div class="wrap footer-inner">
+<!-- HOME-EXT ITEM MODAL -->
+<div class="home-modal" id="homeModal" aria-hidden="true">
+  <div class="pm-backdrop" data-close></div>
+  <div class="pm-card" role="dialog" aria-modal="true">
+    <button class="pm-close" data-close aria-label="Close">×</button>
+    <div class="pm-visual" id="hmVisual" hidden></div>
+    <img class="pm-cover" id="hmCover" alt="" hidden />
+    <h3 id="hmTitle"></h3>
+    <div class="pm-meta" id="hmMeta"></div>
+    <div class="pm-body" id="hmBody"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="f-top">
       <div>
-        <a class="footer-brand" href="#top">
-          <img class="footer-logo" src="assets/logo-transparent.png" alt="TraceLite AI" />
-        </a>
-        <p>Traceable evaluation infrastructure for agent systems. Built for reproducible cases, replayable failures, and inspectable evidence.</p>
+        <div class="f-brand">
+          <img class="logo" src="images/logo.png" alt="TraceLite AI" /></div>
+        <p class="f-tag">Open research for evolving intelligence.</p>
       </div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="#ship">What we ship</a>
-        <a href="#thesis">Thesis</a>
-        <a href="#workflow">Workflow</a>
-        <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </nav>
+      <div class="f-col">
+        <a href="research.html">Research</a>
+        <a href="blog.html">Blog</a>
+        <a href="mailto:hello@tracelite.ai">Contact</a>
+      </div>
     </div>
-  </footer>
+    <div class="f-bottom">
+      <span>© 2026 TRACELITE</span>
+      <span>OPEN RESEARCH ORGANIZATION</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+function lerp(a,b,t){ return a + (b-a)*t; }
+function rand(a,b){ return a + Math.random()*(b-a); }
+
+/* nav scrolled state */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* reveal on scroll */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.16, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===== HERO — Trace Sphere (slow rotate + flowing trajectories + gentle mouse) ===== */
+(function(){
+  const cv = document.getElementById('sphere'); const ctx = cv.getContext('2d');
+  let W,H,DPR,cx,cy,R,points=[],rimPoints=[],orbits=[],birth=null,flow=0;
+  const mouse={x:0,y:0,tx:0,ty:0,prox:0,tprox:0};
+  function resize(){
+    const r=cv.getBoundingClientRect(); DPR=Math.min(window.devicePixelRatio||1,2);
+    W=r.width;H=r.height; cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx=W/2;cy=H/2;R=Math.min(W,H)*0.36; build();
+  }
+  function build(){
+    points=[];rimPoints=[];orbits=[];
+    const N = window.innerWidth<768 ? 110 : 240;
+    for(let i=0;i<N;i++){
+      const phi=Math.acos(1-2*(i+0.5)/N); const theta=Math.PI*(1+Math.sqrt(5))*i;
+      const x=Math.sin(phi)*Math.cos(theta), y=Math.sin(phi)*Math.sin(theta), z=Math.cos(phi);
+      const k=Math.random();
+      const isBright = k<0.16;
+      let color;
+      if(isBright){
+        color = Math.random()<0.65 ? '#8A8A8A' : '#2B2B2B';
+      } else {
+        const r = Math.random();
+        color = r<0.45 ? '#8A8A8A' : (r<0.88 ? '#2B2B2B' : '#9A9A9A');
+      }
+      points.push({x,y,z,type:isBright?'bright':'p',
+        color:color,
+        size:isBright?rand(1.6,2.6):rand(0.5,1.3), phase:Math.random()*TAU, sp:rand(0.2,0.7)});
+    }
+    // subtle rim dots — sparse small points that lightly trace the silhouette
+    const M = window.innerWidth<768 ? 8 : 12;
+    for(let i=0;i<M;i++){
+      const a = (i/M)*TAU + rand(-0.05,0.05);
+      const rr = rand(0.96,0.99);            // sit just inside the outer edge
+      rimPoints.push({x:Math.cos(a)*rr, y:Math.sin(a)*rr, z:Math.sqrt(Math.max(0,1-rr*rr))*(Math.random()<0.5?-1:1),
+        color:'#2B2B2B', size:rand(0.9,1.4), phase:Math.random()*TAU, sp:rand(0.3,0.8)});
+    }
+    const rings = window.innerWidth<768 ? 3 : 5;
+    for(let i=0;i<rings;i++) orbits.push({axis:(i/rings)*Math.PI,tilt:-0.55+1.1*(i/Math.max(1,rings-1)),rad:0.72+0.055*i,sp:rand(0.35,0.6),off:(i/rings)*TAU,color:i%2?'#8A8A8A':'#2B2B2B',alpha:0.11});
+  }
+  function rot(p,ax,ay){
+    let x=p.x*Math.cos(ax)-p.z*Math.sin(ax), z=p.x*Math.sin(ax)+p.z*Math.cos(ax);
+    let y=p.y*Math.cos(ay)-z*Math.sin(ay), z2=p.y*Math.sin(ay)+z*Math.cos(ay);
+    return {x:x,y:y,z:z2};
+  }
+  function project(p){ const persp=1.8, s=persp/(persp-p.z); return {sx:cx+p.x*R*s, sy:cy+p.y*R*s}; }
+  let angX=0.18, angY=0, loopT=0;
+  // word loop: EVALUATE -> SYNTHESIZE -> TRAIN -> EVOLVE -> (loop)
+  const wordLoop=[
+    {word:'EVALUATE', a:0},
+    {word:'SYNTHESIZE', a:TAU*0.25},
+    {word:'TRAIN', a:TAU*0.5},
+    {word:'EVOLVE', a:TAU*0.75}
+  ];
+
+  function drawStar(cx0,cy0,Rx,Ry,rot){
+    // slender four-point star (concave sparkle), sharper notch for a daintier look
+    const rix=Rx*0.18, riy=Ry*0.18;
+    const c=Math.cos(rot||0), s=Math.sin(rot||0);
+    const pts=[[0,-Ry],[rix,-riy],[Rx,0],[rix,riy],[0,Ry],[-rix,riy],[-Rx,0],[-rix,-riy]];
+    ctx.beginPath();
+    pts.forEach((p,i)=>{
+      const x=cx0 + p[0]*c - p[1]*s;
+      const y=cy0 + p[0]*s + p[1]*c;
+      i? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+    });
+    ctx.closePath();
+  }
+
+  function drawWordLoop(rotFn, glow, ts){
+    const rad=0.86; // word ring sits well outside the core sphere
+    // slightly thicker orbit track so words clearly belong to a ring
+    ctx.beginPath();
+    for(let i=0;i<=260;i++){ const a=(i/260)*TAU - Math.PI/2;
+      let rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.03*Math.sin(a*2)});
+      const pr=project(rp); if(i===0)ctx.moveTo(pr.sx,pr.sy); else ctx.lineTo(pr.sx,pr.sy);
+    }
+    ctx.strokeStyle='rgba(43,43,43,0.38)'; ctx.lineWidth=1.4; ctx.stroke();
+
+    // words + node dots — each word hangs from its node on the orbit via a short stem
+    wordLoop.forEach((w,idx)=>{
+      const a=w.a - Math.PI/2;
+      const rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.02});
+      const pr=project(rp); const depth=(rp.z+1)/2;
+      const b=glow[idx];
+
+      // compute outward normal of the orbit at this point (in screen space)
+      const da=0.025;
+      const p1=project(rotFn({x:Math.cos(a-da)*rad,y:Math.sin(a-da)*rad,z:0.02}));
+      const p2=project(rotFn({x:Math.cos(a+da)*rad,y:Math.sin(a+da)*rad,z:0.02}));
+      let nx=-(p2.sy-p1.sy), ny=(p2.sx-p1.sx);
+      const nl=Math.sqrt(nx*nx+ny*ny)||1; nx/=nl; ny/=nl;
+      // ensure label stays on the outer side of the ring
+      const outward = (nx*(pr.sx-cx)+ny*(pr.sy-cy)) < 0 ? -1 : 1;
+      nx*=outward; ny*=outward;
+      // when a node sits on the left/right extreme, push the label vertically
+      // (not radially) so long words like SYNTHESIZE never run off-canvas
+      if(Math.abs(nx) > Math.abs(ny)){
+        ny = (pr.sy < cy) ? -1 : 1;
+        nx = 0;
+      }
+
+      const stem=18 + b*3;
+      const lx=pr.sx+nx*stem, ly=pr.sy+ny*stem;
+
+      // stem from orbit to label
+      ctx.globalAlpha=0.35+depth*0.45; ctx.strokeStyle='#2B2B2B'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(pr.sx,pr.sy); ctx.lineTo(lx,ly); ctx.stroke();
+
+      // node dot on the orbit (skip for EVALUATE node — the four-point star anchors it)
+      const dotR=2.8+b*2.6;
+      if(idx!==0){
+        ctx.globalAlpha=0.45+depth*0.45;
+        ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR,0,TAU); ctx.fillStyle='#2B2B2B'; ctx.fill();
+        if(b>0.02){
+          ctx.globalAlpha=0.18*b; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR*3.2,0,TAU); ctx.fillStyle='#2B2B2B'; ctx.fill();
+        }
+      }
+
+      // four-pointed star at the EVALUATE node (idx 0) — slender sparkle, twinkling glow
+      if(idx===0){
+        // rotate 90° so the long axis is horizontal and clears the EVALUATE word,
+        // nudge down a touch so the word never overlaps a star arm.
+        const sy = pr.sy + 3;
+        // pulse-star: 2.2s loop. The GLOW flares (brightens + swells) like a star;
+        // the solid core only subtly scales so movement stays natural, no hard "square" jump.
+        const t = ((ts||0) % 2200) / 2200;            // 0..1 over 2.2s
+        const f = 0.5 - 0.5*Math.cos(t*Math.PI*2);     // 0 at 0%, 1 at 50%, 0 at 100%
+        const coreScale = 0.95 + 0.12*f;              // 0.95 -> 1.07 -> 0.95 (gentle)
+        const glowScale = 0.85 + 0.4*f;               // 0.85 -> 1.25 -> 0.85 (glow swells = twinkle)
+        const glowAlpha = 0.16 + 0.34*f;              // 0.16 -> 0.5 -> 0.16 (tighter, softer)
+        const coreAlpha = 0.74 + 0.26*f;              // 0.74 -> 1 -> 0.74 (core also flickers)
+        const baseR = (9 + depth*2) * 1.3;             // 1.3x larger than normal dots (visual anchor)
+        const Rx = baseR * 1.5 * coreScale;            // long horizontal half-axis (after 90° rotation)
+        const Ry = baseR * 0.82 * coreScale;           // short vertical half-axis
+        const rot = Math.PI/2;                         // rotate 90°: vertical sparkle -> horizontal
+        // soft outer glow halo — this is what "twinkles" (kept compact)
+        ctx.save();
+        ctx.globalCompositeOperation='lighter';
+        const haloR = baseR*1.3*glowScale + baseR*0.7;
+        const g0=ctx.createRadialGradient(pr.sx,sy,0,pr.sx,sy,haloR);
+        g0.addColorStop(0,`rgba(63,63,63,${0.5*glowAlpha})`);
+        g0.addColorStop(0.45,`rgba(63,63,63,${0.28*glowAlpha})`);
+        g0.addColorStop(1,'rgba(63,63,63,0)');
+        ctx.globalAlpha=1; ctx.fillStyle=g0;
+        ctx.beginPath(); ctx.arc(pr.sx,sy,haloR,0,TAU); ctx.fill();
+        ctx.restore();
+        // star body — slender four-point star, solid teal (no white center), soft falloff
+        const sg=ctx.createRadialGradient(pr.sx,sy,0,pr.sx,sy,Ry);
+        sg.addColorStop(0,'#3F3F3F');
+        sg.addColorStop(0.45,'#3F3F3F');
+        sg.addColorStop(1,'rgba(63,63,63,0.82)');
+        ctx.globalAlpha=coreAlpha;
+        ctx.fillStyle=sg;
+        drawStar(pr.sx,sy,Rx,Ry,rot); ctx.fill();
+        ctx.globalAlpha=1;
+      }
+
+      // word label (always horizontal for readability)
+      ctx.font='600 15px "IBM Plex Mono", monospace';
+      const tw=ctx.measureText(w.word).width;
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      let fx=lx;
+      const margin=10;
+      if(fx - tw/2 < margin) fx = margin + tw/2;
+      if(fx + tw/2 > W - margin) fx = W - margin - tw/2;
+      ctx.fillStyle = idx===0 ? '#111111' : '#4A4A4A';
+      ctx.globalAlpha=0.65 + depth*0.35 + b*0.35;
+      ctx.fillText(w.word, fx, ly);
+    });
+    ctx.globalAlpha=1;
+
+    // traveling light dot — enlarged 1.3x, teal (#9A9A9A) with bright white core for visibility
+    const t=loopT;
+    const a = t - Math.PI/2;
+    let rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.04*Math.sin(a*2)});
+    const pr=project(rp); const depth=(rp.z+1)/2;
+    const R0=3.4; // ~2.6 * 1.3
+    ctx.globalAlpha=0.18 + depth*0.32; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*2.6,0,TAU); ctx.fillStyle='#9A9A9A'; ctx.fill();
+    ctx.globalAlpha=0.9 + depth*0.1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0,0,TAU); ctx.fillStyle='#9A9A9A'; ctx.fill();
+    ctx.globalAlpha=1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*0.45,0,TAU); ctx.fillStyle='#FFFFFF'; ctx.fill();
+    ctx.globalAlpha=1;
+  }
+
+  function frame(ts){
+    if(!birth) birth=ts;
+    const grow = REDUCED ? 1 : Math.min((ts-birth)/2600/1,1);
+    flow += 0.0010; // trajectory flow speed
+    mouse.x=lerp(mouse.x,mouse.tx,0.06); mouse.y=lerp(mouse.y,mouse.ty,0.06);
+    mouse.prox=lerp(mouse.prox,mouse.tprox,0.06);
+    // far = faster free spin, near = slower (held) + gentle mouse pull
+    const baseSpin = lerp(0.0011, 0.00018, mouse.prox);
+    angY += baseSpin;
+    angX = 0.18 + mouse.y*(0.03*mouse.prox);
+    angY += mouse.x*(0.03*mouse.prox);
+
+    // traveling light dot + restrained node glow as it passes
+    loopT = (loopT + 0.0032) % TAU;
+    const glow = wordLoop.map((w,idx)=>{
+      const wa = w.a; // 0, .25, .5, .75 TAU
+      let d = Math.abs(loopT - wa); d = Math.min(d, TAU-d);
+      return Math.max(0, 1 - d/0.22); // sharp but soft falloff
+    });
+    ctx.clearRect(0,0,W,H);
+
+    const worldRot = p=>rot(rot(p,angY,angX),0,0);
+
+    // orbits (flowing trajectories) — use flow offset to animate dashed motion
+    orbits.forEach(o=>{
+      o.off += 0.004*o.sp;
+      ctx.beginPath(); const seg=160;
+      for(let i=0;i<=seg;i++){ const a=(i/seg)*TAU;
+        let rp=rot({x:Math.cos(a)*o.rad,y:Math.sin(a)*o.rad*o.tilt,z:Math.sin(a)*o.rad*0.15}, o.off,o.axis);
+        rp=rot(rp,angY,angX); const pr=project(rp);
+        if(i===0) ctx.moveTo(pr.sx,pr.sy); else ctx.lineTo(pr.sx,pr.sy);
+      }
+      ctx.strokeStyle=o.color; ctx.globalAlpha=o.alpha*grow; ctx.lineWidth=0.6; ctx.stroke(); ctx.globalAlpha=1;
+    });
+
+    // word loop on sphere surface
+    drawWordLoop(worldRot, glow, ts);
+
+    // points
+    const sorted=points.map(p=>({p,rp:rot(p,angY,angX)})).sort((a,b)=>a.rp.z-b.rp.z);
+    sorted.forEach(({p,rp})=>{
+      const pr=project(rp); const depth=(rp.z+1)/2;
+      const appear=Math.min(Math.max((grow-depth*0.4)/0.6,0),1); if(appear<=0) return;
+      const pulse=p.type==='bright'?1+Math.sin(ts*0.002*p.sp*6+p.phase)*0.16:1;
+      const sz=p.size*pulse*appear*(0.5+depth*0.7);
+      ctx.globalAlpha=(0.22+depth*0.7)*appear; ctx.fillStyle=p.color;
+      ctx.beginPath(); ctx.arc(pr.sx,pr.sy,sz,0,TAU); ctx.fill();
+      if(p.type==='bright'){ ctx.globalAlpha=0.16*appear; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,sz*3,0,TAU); ctx.fill(); }
+    });
+
+    // rim dots — small, plain points tracing the silhouette (no glow)
+    const rimSorted = rimPoints.map(p=>({p,rp:rot(p,angY,angX)})).sort((a,b)=>a.rp.z-b.rp.z);
+    rimSorted.forEach(({p,rp})=>{
+      const pr=project(rp); const depth=(rp.z+1)/2;
+      const appear=Math.min(Math.max((grow-depth*0.4)/0.6,0),1); if(appear<=0) return;
+      const sz=p.size*appear;
+      ctx.globalAlpha=(0.35+depth*0.5)*appear; ctx.fillStyle=p.color;
+      ctx.beginPath(); ctx.arc(pr.sx,pr.sy,sz,0,TAU); ctx.fill();
+    });
+    ctx.globalAlpha=1; requestAnimationFrame(frame);
+  }
+  resize(); window.addEventListener('resize',resize);
+  if(!REDUCED){
+    window.addEventListener('mousemove', e=>{
+      const r=cv.getBoundingClientRect();
+      const nx=((e.clientX-r.left)/r.width-0.5)*2;   // -1..1 within element
+      const ny=((e.clientY-r.top)/r.height-0.5)*2;
+      // distance from sphere center (element center), normalized to element size
+      const dist=Math.hypot(nx,ny);
+      const RANGE=1.15;                                // influence radius (element units)
+      mouse.tprox = Math.max(0, 1 - dist/RANGE);       // 1 at center .. 0 beyond range
+      mouse.tx=nx*4; mouse.ty=ny*4;
+    });
+    window.addEventListener('mouseleave', ()=>{ mouse.tprox=0; });
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ===== RESEARCH row hover trajectory ===== */
+(function(){
+  document.querySelectorAll('.r-traj').forEach(cv=>{
+    const ctx=cv.getContext('2d'); const seed=parseInt(cv.dataset.seed)||0;
+    let W,H,DPR,pts=[];
+    function resize(){
+      const r=cv.getBoundingClientRect(); DPR=Math.min(window.devicePixelRatio||1,2);
+      W=r.width;H=r.height; cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+      pts=[]; const n=5;
+      for(let i=0;i<n;i++) pts.push({x:rand(6,W-6),y:rand(8,H-8),ph:rand(0,TAU)+seed});
+    }
+    function frame(ts){
+      ctx.clearRect(0,0,W,H);
+      ctx.beginPath();
+      pts.forEach((p,i)=>{ const yy=p.y+Math.sin(ts*0.0011+p.ph)*4; if(i===0)ctx.moveTo(p.x,yy); else ctx.lineTo(p.x,yy); });
+      ctx.strokeStyle='rgba(43,43,43,0.55)'; ctx.lineWidth=1; ctx.stroke();
+      pts.forEach(p=>{ const yy=p.y+Math.sin(ts*0.0011+p.ph)*4; ctx.beginPath(); ctx.arc(p.x,yy,2,0,TAU); ctx.fillStyle='#2B2B2B'; ctx.fill(); });
+      requestAnimationFrame(frame);
+    }
+    resize(); window.addEventListener('resize',resize);
+    if(REDUCED){
+      ctx.clearRect(0,0,W,H); ctx.beginPath();
+      pts.forEach((p,i)=> i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.strokeStyle='rgba(43,43,43,0.55)'; ctx.lineWidth=1; ctx.stroke();
+      pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,2,0,TAU);ctx.fillStyle='#2B2B2B';ctx.fill();});
+    } else requestAnimationFrame(frame);
+  });
+})();
+
+/* language toggle for nav (EN / 中文) */
+(function(){
+  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
+  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
+  const btn = document.getElementById('langToggle');
+  let zh = false;
+  function apply(){
+    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
+    btn.textContent = zh ? 'EN' : '中';
+    document.documentElement.lang = zh ? 'zh' : 'en';
+  }
+  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
+  apply();
+})();
+
+/* ===== HOME-EXT item modal (papers / products / insights) ===== */
+(function(){
+  const modal = document.getElementById('homeModal');
+  if(!modal) return;
+  const hmTitle = document.getElementById('hmTitle');
+  const hmMeta  = document.getElementById('hmMeta');
+  const hmBody  = document.getElementById('hmBody');
+  const hmCover = document.getElementById('hmCover');
+  const hmVisual= document.getElementById('hmVisual');
+  let lastFocus = null;
+
+  function open(row){
+    // title: papers/products use .it-body h4, insights use .bp-body h4
+    const titleEl = row.querySelector('.it-body h4, .bp-body h4');
+    hmTitle.textContent = titleEl ? titleEl.textContent.trim() : '';
+
+    // meta: papers use .it-meta (split by ·), insights use .bp-date
+    const metaParts = [];
+    const itMeta = row.querySelector('.it-meta');
+    if(itMeta){
+      itMeta.textContent.split('·').forEach(s=>{ const t=s.trim(); if(t) metaParts.push(t); });
+    } else {
+      const bpDate = row.querySelector('.bp-date');
+      if(bpDate && bpDate.textContent.trim()) metaParts.push(bpDate.textContent.trim());
+    }
+    hmMeta.innerHTML = metaParts.map(t=>`<span>${t}</span>`).join('');
+
+    // body: use the existing description paragraph as the article body
+    const desc = row.querySelector('.it-body p, .bp-body p');
+    hmBody.innerHTML = desc ? `<p>${desc.textContent.trim()}</p>` : '';
+
+    // cover: insights have a visual gradient; papers/products use placeholder thumb
+    const isInsight = !!row.querySelector('.bp-body');
+    if(isInsight){
+      hmVisual.hidden = false; hmCover.hidden = true;
+      hmVisual.textContent = hmTitle.textContent;
+    } else {
+      hmVisual.hidden = true; hmCover.hidden = false;
+      const thumb = row.querySelector('img.ph-thumb');
+      if(thumb && thumb.getAttribute('src')){
+        hmCover.src = thumb.getAttribute('src');
+        hmCover.alt = 'Main figure — ' + hmTitle.textContent;
+      } else {
+        hmCover.removeAttribute('src'); hmCover.alt = '';
+        hmCover.style.background = 'linear-gradient(135deg,#F0F0F0,#E2E2E2)';
+      }
+    }
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    const c = modal.querySelector('.pm-close'); if(c) c.focus();
+  }
+  function close(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    if(lastFocus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('.home-item').forEach(row=>{
+    row.addEventListener('click', ()=> open(row));
+    row.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(row); } });
+  });
+  modal.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', close));
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+})();
+</script>
+<script>
+/* 进站动画：逐词上墨 → 停一拍 → 淡出。一个会话只播一次，随时可点掉。 */
+(function(){
+  var intro = document.getElementById('intro');
+  var line  = document.getElementById('introLine');
+  if(!intro || !line) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen   = false;
+  try { seen = sessionStorage.getItem('tl-intro') === '1'; } catch(e){}
+  if(reduce || seen){ intro.remove(); return; }
+
+  var WORD_MS = 105,      // 每个词点亮的间隔
+      HOLD_MS = 2000,     // 整句写完后停留多久（改这里调长短）
+      FADE_MS = 950;      // 幕布上提时长（要和 CSS 里 .intro 的 transition 对齐）
+  var words = line.textContent.trim().split(/\s+/);
+  line.innerHTML = words.map(function(w){ return '<span class="w">' + w + '</span>'; }).join(' ');
+  var spans = line.querySelectorAll('.w');
+
+  intro.hidden = false;
+  document.documentElement.classList.add('intro-lock');
+  try { sessionStorage.setItem('tl-intro', '1'); } catch(e){}
+
+  var timers = [];
+  var ended = false;
+  function end(){
+    if(ended) return;
+    ended = true;
+    timers.forEach(clearTimeout);
+    intro.classList.add('done');
+    document.documentElement.classList.remove('intro-lock');
+    setTimeout(function(){ intro.remove(); }, FADE_MS);
+  }
+
+  spans.forEach(function(sp, i){
+    timers.push(setTimeout(function(){ sp.classList.add('on'); }, 260 + i * WORD_MS));
+  });
+  timers.push(setTimeout(function(){ intro.classList.add('hint'); }, 900));
+  timers.push(setTimeout(end, 260 + spans.length * WORD_MS + HOLD_MS));
+
+  intro.addEventListener('click', end);
+  window.addEventListener('keydown', end, {once:true});
+  window.addEventListener('wheel', end, {once:true, passive:true});
+  window.addEventListener('touchstart', end, {once:true, passive:true});
+})();
+</script>
 </body>
 </html>

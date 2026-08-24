@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — TraceLite</title>
+<meta name="description" content="Get in touch with TraceLite." />
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<link rel="apple-touch-icon" href="images/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#FAFAFA; --text:#111111; --text-2:#6E6E6E; --ocean:#171717;
+  --teal:#2B2B2B; --aqua:#9A9A9A; --blue:#2B2B2B; --border:rgba(17, 17, 17, 0.12);
+  --bg-rgb:250,250,250;
+  --maxw:1180px; --pad:clamp(20px,5vw,56px); --section-y:clamp(96px,11vw,150px);
+  --ease:cubic-bezier(.22,.61,.36,1); --ease-soft:cubic-bezier(.4,0,.2,1);
+  --font-sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);font-size:17px;line-height:1.6;overflow-x:hidden;letter-spacing:-0.01em;}
+a{color:inherit;text-decoration:none;}
+.mono{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:74px;display:flex;align-items:center;background:transparent;border-bottom:1px solid transparent;transition:background .5s var(--ease-soft),border-color .5s,backdrop-filter .5s;}
+.nav.scrolled{background:rgba(var(--bg-rgb),.82);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--border);}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:19px;letter-spacing:-0.02em;}
+.brand .logo{height:26px;width:auto;flex:none;display:block;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a.lk{font-size:15px;color:var(--text-2);position:relative;padding:4px 0;transition:color .25s var(--ease-soft);}
+.nav-links a.lk::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--teal);transition:width .3s var(--ease);}
+.nav-links a.lk:hover{color:var(--text);}
+.nav-links a.lk:hover::after{width:100%;}
+.nav-links a.lk.active{padding:6px 12px;border:1px solid var(--teal);border-radius:6px;color:var(--teal);}
+.nav-links a.lk.active::after{display:none;}
+.nav-links a.lk.active:hover{color:var(--ocean);border-color:var(--ocean);}
+.nav-cta{display:flex;align-items:center;gap:22px;}
+.nav-cta .nav-links{gap:22px;}
+.nav-cta a{font-size:15px;display:inline-flex;align-items:center;gap:5px;color:var(--text);border-bottom:1px solid transparent;padding-bottom:2px;transition:color .25s,border-color .25s;}
+.nav-cta a:hover{color:var(--teal);}
+.nav-cta a.join{border-bottom-color:var(--teal);}
+.nav-cta a.join:hover{color:var(--teal);}
+.lang-toggle{font-size:13px;font-weight:600;line-height:1;color:var(--teal);background:transparent;
+  border:1px solid var(--teal);border-radius:6px;padding:6px 10px;cursor:pointer;
+  transition:background .25s,color .25s,border-color .25s,transform .25s var(--ease);}
+.lang-toggle:hover{background:rgba(43,43,43,.08);color:var(--ocean);border-color:var(--ocean);}
+.lang-toggle:active{transform:scale(.94);}
+.narrow-only{display:none;}
+
+/* PAGE HERO */
+.page-hero{position:relative;min-height:clamp(220px,26vh,300px);display:flex;align-items:flex-end;padding-top:108px;padding-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.hero-bg .blob{position:absolute;border-radius:50%;filter:blur(72px);}
+.hero-bg .blob-1{top:-150px;left:-90px;width:480px;height:480px;background:radial-gradient(circle at 50% 50%,rgba(17,17,17,.07),rgba(17,17,17,.025) 55%,rgba(17,17,17,0) 74%);}
+.hero-bg .blob-2{top:-30px;left:320px;width:400px;height:400px;background:radial-gradient(circle at 50% 50%,rgba(17,17,17,.045),rgba(17,17,17,0) 72%);}
+.hero-bg .hero-lines{position:absolute;inset:0;width:100%;height:100%;}
+.hero-bg .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,250,250,.2) 0%,rgba(250,250,250,.5) 45%,rgba(250,250,250,.9) 82%,var(--bg) 100%);}
+.hero-content{position:relative;z-index:1;}
+.page-hero h1{font-size:clamp(38px,6vw,76px);line-height:1.02;font-weight:600;letter-spacing:-0.035em;max-width:16ch;}
+.page-hero p.lead{font-size:18px;line-height:1.62;color:var(--text-2);max-width:560px;margin-top:18px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease-soft),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal[data-d="1"]{transition-delay:.08s;}
+.reveal[data-d="2"]{transition-delay:.16s;}
+
+/* FIELD NOTES */
+.contact{padding-top:34px;padding-bottom:var(--section-y);}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px;}
+.contact-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:42px 26px;border:1px solid var(--border);border-radius:12px;background:var(--bg);transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
+.contact-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(43,43,43,.12);}
+.contact-card .icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(43,43,43,.08);color:var(--teal);}
+.contact-card .icon svg{width:22px;height:22px;}
+.contact-card h3{font-size:18px;font-weight:600;letter-spacing:-0.01em;}
+.contact-card p{font-size:14px;color:var(--text-2);line-height:1.5;}
+.contact-card .meta{font-family:var(--font-mono);font-size:12px;letter-spacing:.05em;color:var(--teal);}
+@media (max-width:767px){
+  .contact-grid{grid-template-columns:1fr;}
+}
+
+/* 社交卡：微信二维码 + 小红书 */
+[data-masked]{display:none!important;}
+.contact-grid{grid-template-columns:repeat(2,1fr);}
+.contact-card .icon img{width:22px;height:22px;display:block;
+  filter:grayscale(1) brightness(0.35);}   /* 原图是品牌色，压成中性灰配黑白灰站 */
+.contact-card.wechat-card{cursor:default;}
+.contact-card.wechat-card:hover{transform:none;border-color:var(--border);box-shadow:none;}
+.contact-card .qr{width:132px;height:132px;border-radius:8px;border:1px solid var(--border);
+  display:block;}
+@media (max-width:767px){ .contact-grid{grid-template-columns:1fr;} }
+
+/* FOOTER */
+.footer{background:var(--ocean);color:rgba(245,245,245,.7);padding-block:56px 40px;margin-top:0;}
+.footer .f-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+.footer .f-brand{font-size:21px;font-weight:600;color:#F5F5F5;display:flex;align-items:center;gap:11px;}
+.footer .f-brand .logo{height:30px;width:auto;display:block;filter:brightness(0) invert(1);}
+.footer .f-tag{margin-top:14px;font-size:14px;max-width:280px;line-height:1.6;color:rgba(245,245,245,.6);}
+.footer .f-col{display:flex;gap:28px;flex-wrap:wrap;}
+.footer .f-col a{font-size:15px;color:rgba(245,245,245,.72);transition:color .25s;}
+.footer .f-col a:hover{color:#fff;}
+.footer .f-bottom{margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:rgba(245,245,245,.5);}
+
+/* RESPONSIVE */
+@media (max-width:767px){
+  body{font-size:16px;}
+  .nav-links{display:none;}
+  .nav-cta .ext{display:none;}
+  .narrow-only{display:inline-flex;}
+  .page-hero{padding-top:104px;padding-bottom:34px;}
+  .note-row{grid-template-columns:auto 1fr;}
+  .note-row .na{display:none;}
+  .footer .f-top{flex-direction:column;gap:28px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="TraceLite home">
+      <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
+    <div class="nav-cta">
+      <div class="nav-links">
+        <a class="lk" href="research.html" data-i18n="research">Research</a>
+        <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
+        <a class="lk active" href="contact.html" data-i18n="contact">Contact</a>
+      </div>
+      <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="blob blob-1"></div><div class="blob blob-2"></div>
+    <svg class="hero-lines" viewBox="0 0 1440 300" preserveAspectRatio="none">
+      <path d="M-60 260 C 120 220, 300 130, 520 180 S 900 280, 1100 140 S 1340 60, 1520 110" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.3"/>
+      <path d="M-40 290 C 160 260, 340 170, 560 200 S 940 250, 1160 120 S 1380 70, 1540 100" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.204"/>
+      <path d="M-80 230 C 100 200, 260 140, 480 160 S 860 230, 1080 130 S 1300 50, 1500 90" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="6 8"/>
+      <path d="M-100 150 C 80 120, 280 90, 500 110 S 920 170, 1120 80 S 1360 40, 1540 70" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.272"/>
+      <path d="M-60 300 C 140 280, 360 210, 580 240 S 980 300, 1180 180 S 1400 110, 1560 150" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.238" stroke-dasharray="4 10"/>
+      <path d="M-120 200 C 60 175, 280 130, 540 150 S 980 230, 1200 120 S 1380 60, 1560 100" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.221"/>
+      <path d="M-40 100 C 120 80, 320 60, 560 75 S 960 130, 1180 60 S 1400 30, 1540 55" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204" stroke-dasharray="2 7"/>
+      <path d="M-90 250 C 90 230, 300 180, 520 205 S 900 270, 1120 160 S 1380 90, 1560 130" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.255"/>
+      <path d="M-70 60 C 110 45, 320 30, 560 45 S 980 95, 1200 40 S 1420 20, 1560 40" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204" stroke-dasharray="3 9"/>
+      <path d="M-110 175 C 70 155, 280 115, 520 135 S 940 205, 1160 110 S 1380 55, 1560 95" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.187"/>
+      <path d="M-50 280 C 130 260, 360 195, 580 220 S 980 280, 1200 165 S 1420 100, 1560 140" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.17" stroke-dasharray="5 11"/>
+      <path d="M-130 120 C 50 100, 260 70, 480 90 S 900 150, 1120 70 S 1360 35, 1540 60" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.187" stroke-dasharray="3 8"/>
+      <path d="M-60 220 C 120 200, 320 150, 540 175 S 940 240, 1160 140 S 1380 80, 1560 120" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204"/>
+      <path d="M-100 80 C 80 60, 300 40, 520 55 S 940 110, 1160 50 S 1400 25, 1560 45" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="4 9"/>
+      <path d="M-40 310 C 160 290, 360 230, 600 255 S 980 305, 1200 195 S 1420 130, 1560 165" fill="none" stroke="var(--teal)" stroke-width="0.85" stroke-opacity="0.187" stroke-dasharray="6 10"/>
+      <path d="M-120 270 C 60 250, 300 200, 520 225 S 900 285, 1120 175 S 1380 110, 1560 150" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.204" stroke-dasharray="2 6"/>
+      <path d="M-70 160 C 110 140, 320 105, 540 125 S 940 185, 1160 100 S 1400 55, 1560 90" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.17" stroke-dasharray="5 12"/>
+      <path d="M-90 40 C 90 28, 320 18, 560 30 S 980 75, 1200 35 S 1420 18, 1560 32" fill="none" stroke="var(--teal)" stroke-width="0.7" stroke-opacity="0.153" stroke-dasharray="3 7"/>
+      <path d="M-110 230 C 70 210, 280 165, 500 190 S 920 250, 1140 145 S 1380 85, 1560 125" fill="none" stroke="var(--teal)" stroke-width="0.85" stroke-opacity="0.187"/>
+      <path d="M-50 130 C 130 110, 340 80, 560 100 S 960 155, 1180 90 S 1400 50, 1540 80" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="4 8"/>
+      <circle cx="520" cy="180" r="3" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1100" cy="140" r="3" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="340" cy="170" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1160" cy="120" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="500" cy="110" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1120" cy="80" r="2.5" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="540" cy="150" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1180" cy="180" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="480" cy="90" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="1080" cy="70" r="2" fill="var(--teal)" opacity="0.3"/>
+      <circle cx="600" cy="255" r="2" fill="var(--teal)" opacity="0.272"/>
+      <circle cx="1200" cy="195" r="2" fill="var(--teal)" opacity="0.272"/>
+      <circle cx="520" cy="125" r="1.8" fill="var(--teal)" opacity="0.255"/>
+      <circle cx="1140" cy="145" r="1.8" fill="var(--teal)" opacity="0.255"/>
+      <circle cx="560" cy="100" r="1.8" fill="var(--teal)" opacity="0.238"/>
+      <circle cx="1180" cy="90" r="1.8" fill="var(--teal)" opacity="0.238"/>
+    </svg>
+    <div class="tint"></div>
+  </div>
+  <div class="wrap hero-content">
+    <span class="mono reveal">Contact</span>
+    <h1 class="reveal" data-d="1">Get in touch.</h1>
+    <p class="lead reveal" data-d="2">Interested in collaborating, integrating a benchmark, or just want to say hello?</p>
+  </div>
+</header>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <a class="contact-card reveal" href="mailto:hello@tracelite.ai" aria-label="Email us">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        </span>
+        <div>
+          <h3>Email</h3>
+          <p>hello@tracelite.ai</p>
+        </div>
+        <span class="meta">Say hello →</span>
+      </a>
+      <a class="contact-card reveal" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        </span>
+        <div>
+          <h3>GitHub</h3>
+          <p>Explore our work</p>
+        </div>
+        <span class="meta">Open source →</span>
+      </a>
+      <a class="contact-card reveal" href="#" aria-label="Schedule a call" data-masked="schedule">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </span>
+        <div>
+          <h3>Schedule</h3>
+          <p>Book a 30-min call</p>
+        </div>
+        <span class="meta">Pick a time →</span>
+      </a>
+      <div class="contact-card reveal wechat-card">
+        <span class="icon">
+          <img src="images/social/wechat.svg" alt="" aria-hidden="true" />
+        </span>
+        <div>
+          <h3>WeChat</h3>
+          <p>TraceLite AI 微信公众号</p>
+        </div>
+        <img class="qr" src="images/social/wechat-official-account.jpg" alt="TraceLite AI 微信公众号二维码" loading="lazy" />
+        <span class="meta">扫码关注</span>
+      </div>
+      <a class="contact-card reveal" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu">
+        <span class="icon">
+          <img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" />
+        </span>
+        <div>
+          <h3>Xiaohongshu</h3>
+          <p>TraceLite AI 小红书</p>
+        </div>
+        <span class="meta">Follow us →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="f-top">
+      <div>
+        <div class="f-brand">
+          <img class="logo" src="images/logo.png" alt="TraceLite AI" /></div>
+        <p class="f-tag">Open research for evolving intelligence.</p>
+      </div>
+      <div class="f-col">
+        <a href="research.html">Research</a>
+        <a href="blog.html">Blog</a>
+        <a href="mailto:hello@tracelite.ai">Contact</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 TRACELITE</span>
+      <span>OPEN RESEARCH ORGANIZATION</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* nav scrolled state */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* reveal on scroll */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.16, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* language toggle for nav (EN / 中文) */
+(function(){
+  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
+  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
+  const btn = document.getElementById('langToggle');
+  let zh = false;
+  function apply(){
+    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
+    btn.textContent = zh ? 'EN' : '中';
+    document.documentElement.lang = zh ? 'zh' : 'en';
+  }
+  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
+  apply();
+})();
+</script>
+</body>
+</html>
