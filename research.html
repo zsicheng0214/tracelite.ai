@@ -55,6 +55,16 @@ canvas{display:block;}
 .lang-toggle:active{transform:scale(.94);}
 .narrow-only{display:none;}
 
+/* 导航右侧社交按钮 */
+.nav-cta .soc{display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border:1px solid var(--border);border-radius:7px;padding:0;
+  transition:border-color .25s,background-color .25s,transform .25s var(--ease);}
+.nav-cta .soc:hover{border-color:var(--teal);background:rgba(255,255,255,.7);}
+.nav-cta .soc:active{transform:scale(.94);}
+.nav-cta .soc img{width:15px;height:15px;display:block;
+  filter:grayscale(1) brightness(.35);}   /* 图标原是品牌色，压成中性灰 */
+@media (max-width:767px){ .nav-cta .soc{display:none;} }
+
 /* PAGE HERO */
 .page-hero{position:relative;min-height:clamp(220px,26vh,300px);display:flex;align-items:flex-end;padding-top:108px;padding-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
 .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
@@ -227,9 +237,8 @@ canvas{display:block;}
       <div class="nav-links">
         <a class="lk active" href="research.html" data-i18n="research">Research</a>
         <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
-        <a class="lk" href="contact.html" data-i18n="contact">Contact</a>
       </div>
-      <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a>
+      <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a><a class="soc" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu" title="小红书"><img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" /></a><a class="soc" href="wechat.html" aria-label="WeChat official account" title="微信公众号"><img src="images/social/wechat.svg" alt="" aria-hidden="true" /></a>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
     </div>
   </div>
@@ -416,7 +425,7 @@ canvas{display:block;}
       <div class="f-col">
         <a href="research.html">Research</a>
         <a href="blog.html">Blog</a>
-        <a href="mailto:hello@tracelite.ai">Contact</a>
+        <a href="mailto:contact@tracelite.ai">contact@tracelite.ai</a>
       </div>
     </div>
     <div class="f-bottom">
