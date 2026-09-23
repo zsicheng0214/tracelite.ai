@@ -88,7 +88,7 @@ a{color:inherit;text-decoration:none;}
 .eyebrow{display:block;margin-bottom:14px;}
 h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;letter-spacing:-0.03em;}
 .notes-list{margin-top:16px;}
-.note-row{display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:20px;align-items:stretch;cursor:pointer;padding-top:22px;padding-bottom:22px;border-top:1px solid var(--border);transition:transform .3s var(--ease);}
+.note-row{display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:20px;align-items:stretch;cursor:pointer;padding-top:22px;padding-bottom:22px;border-top:1px solid var(--border);transition:transform .3s var(--ease);scroll-margin-top:100px;}
 .note-row:first-of-type{border-top:none;padding-top:8px;}
 .note-row .note-thumb{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:6px;background:var(--border);}
 .note-row .note-body{display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:2px 0;}
@@ -108,7 +108,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
 .pm-backdrop{position:absolute;inset:0;background:rgba(17,17,17,.42);backdrop-filter:blur(4px);opacity:0;transition:opacity .35s var(--ease);}
 .blog-modal.open .pm-backdrop{opacity:1;}
 .pm-card{
-  position:relative;width:min(720px,100%);max-height:88vh;overflow:auto;
+  position:relative;width:min(720px,100%);max-height:88vh;overflow:auto;overscroll-behavior:contain;
   background:var(--bg);border:1px solid var(--border);border-radius:18px;
   padding:26px;box-shadow:0 40px 90px -30px rgba(17,17,17,.5);
   transform:translateY(28px) scale(.94);opacity:0;
@@ -150,7 +150,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   .nav-cta .ext{display:none;}
   .narrow-only{display:inline-flex;}
   .page-hero{padding-top:104px;padding-bottom:34px;}
-  .note-row{grid-template-columns:auto 1fr;}
+  .note-row{grid-template-columns:1fr;}
   .note-row .na{display:none;}
   .footer .f-top{flex-direction:column;gap:28px;}
 }
@@ -159,8 +159,12 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   .reveal{opacity:1;transform:none;}
 }
 </style>
+<link rel="stylesheet" href="assets/site.css" />
+<link rel="canonical" href="https://tracelite.ai/blog.html" />
+<noscript><style>.reveal{opacity:1;transform:none}.intro{display:none!important}.menu-toggle,.lang-toggle{display:none!important}.note-row .na{display:block!important;grid-column:1/-1;font-size:16px;line-height:1.75;color:var(--text-2)}.note-row{cursor:default}.note-row:hover{transform:none}@media(max-width:767px){.nav .nav-links{display:flex;gap:12px}.nav-cta{gap:8px}.nav .nav-links a.lk{font-size:12px}.nav .brand .logo{max-width:95px;height:auto}}</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#notes" data-en="Skip to content" data-zh="跳转到内容">Skip to content</a>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -168,11 +172,13 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
     <a class="brand" href="index.html" aria-label="TraceLite home">
       <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
     <div class="nav-cta">
-      <div class="nav-links">
+      <div class="nav-links" id="siteMenu">
+        <a class="lk" href="timeline.html" data-i18n="timeline">Timeline</a>
         <a class="lk" href="research.html" data-i18n="research">Research</a>
         <a class="lk active" href="blog.html" data-i18n="blog">Blog</a>
       </div>
       <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a><a class="soc" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu" title="小红书"><img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" /></a><a class="soc" href="wechat.html" aria-label="WeChat official account" title="微信公众号"><img src="images/social/wechat.svg" alt="" aria-hidden="true" /></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu" aria-label="Navigation menu">Menu</button>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
     </div>
   </div>
@@ -224,17 +230,24 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
     <div class="tint"></div>
   </div>
   <div class="wrap hero-content">
-    <span class="mono reveal">FIELD NOTES</span>
-    <h1 class="reveal" data-d="1">Notes from the lab.</h1>
-    <p class="lead reveal" data-d="2">Short writing on benchmarks, synthetic data, and how we measure agent capability.</p>
+    <span class="mono reveal" data-en="FIELD NOTES" data-zh="研究随笔">FIELD NOTES</span>
+    <h1 class="reveal" data-d="1" data-en="Notes from the lab." data-zh="来自实验室的思考。">Notes from the lab.</h1>
+    <p class="lead reveal" data-d="2" data-en="Short writing on benchmarks, synthetic data, and how we measure agent capability." data-zh="关于基准测试、合成数据，以及如何衡量 Agent 能力的简短思考。">Short writing on benchmarks, synthetic data, and how we measure agent capability.</p>
   </div>
 </header>
 
 <!-- FIELD NOTES -->
 <section class="notes" id="notes">
   <div class="wrap">
+    <article class="report-feature" aria-labelledby="trace-note-title">
+      <p class="report-kicker mono" data-en="FROM TRIAL BY TRACE · CASE 02" data-zh="来自 TRIAL BY TRACE · 案例 02">FROM TRIAL BY TRACE · CASE 02</p>
+      <h2 class="report-title" id="trace-note-title" data-en="A correct answer can hide a missing error signal." data-zh="答案正确，错误信号也可能缺失。">A correct answer can hide a missing error signal.</h2>
+      <p class="report-summary" data-en="In a selected comparison using the same model, both agents correctly reported that a command exited with code 23. Yet the post-tool observer recorded a structured failure in one run, while the other had a null exit code and an error flag set to false." data-zh="在使用同一模型的一组选定案例中，两个智能体都正确报告命令以退出码 23 结束。但工具执行后的观测记录显示：一次运行保留了结构化失败状态，另一次的退出码为 null，错误标记为 false。">In a selected comparison using the same model, both agents correctly reported that a command exited with code 23. Yet the post-tool observer recorded a structured failure in one run, while the other had a null exit code and an error flag set to false.</p>
+      <p class="report-summary" data-en="Both task reports passed their checks; the harness assessments differed. This is why TraceTrial-Bench examines the execution evidence alongside the final answer. The case illustrates a distinction, rather than estimating how often it occurs." data-zh="两个任务报告都通过了结果检查，执行框架的评估却不同。因此，TraceTrial-Bench 在检查最终答案的同时，也检查执行证据。这一案例用于展示差异，不代表此类问题的发生频率。">Both task reports passed their checks; the harness assessments differed. This is why TraceTrial-Bench examines the execution evidence alongside the final answer. The case illustrates a distinction, rather than estimating how often it occurs.</p>
+      <a class="report-link" href="trial-by-trace.html#cases" data-en="Read the trace comparison · report p. 68 →" data-zh="阅读轨迹对比 · 报告第 68 页 →">Read the trace comparison · report p. 68 →</a>
+    </article>
     <div class="notes-list">
-      <article class="note-row reveal" tabindex="0" role="button" aria-label="Read: What makes an agent benchmark useful?">
+      <article class="note-row reveal" id="useful-agent-benchmarks" tabindex="-1" aria-label="Read: What makes an agent benchmark useful?">
         <img class="note-thumb" src="images/benchmark.png" alt="Agent benchmark illustration" />
         <div class="note-body">
           <div>
@@ -250,7 +263,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
         <p class="na" hidden>A useful benchmark is one whose rankings move when real capability moves. We build ours around three checks: tasks that resist memorization, scoring that rewards partial progress, and release notes that disclose exactly what changed between versions.</p>
         <p class="na" hidden>The goal is not a higher score on our own leaderboard. It is a number you can trust when deciding whether to ship an agent into production.</p>
       </article>
-      <article class="note-row reveal" tabindex="0" role="button" aria-label="Read: Why synthetic trajectories fail silently">
+      <article class="note-row reveal" id="synthetic-trajectories" tabindex="-1" aria-label="Read: Why synthetic trajectories fail silently">
         <img class="note-thumb" src="images/trajectories.png" alt="Synthetic trajectories illustration" />
         <div class="note-body">
           <div>
@@ -266,7 +279,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
         <p class="na" hidden>The failure is silent because the loss looks fine. The model learns the surface shape of trajectories without the reasoning distribution underneath. It performs well on eval and then stalls on messy, real environments.</p>
         <p class="na" hidden>Our fix is to score synthetic data against a reference of human trajectories on the dimensions that matter: branching, backtracking, and error recovery. Data that looks clean but never diverges gets down-weighted before it reaches training.</p>
       </article>
-      <article class="note-row reveal" tabindex="0" role="button" aria-label="Read: Beyond pass@1: measuring agent capability">
+      <article class="note-row reveal" id="beyond-pass-at-one" tabindex="-1" aria-label="Read: Beyond pass@1: measuring agent capability">
         <img class="note-thumb" src="images/metrics.png" alt="Agent metrics illustration" />
         <div class="note-body">
           <div>
@@ -296,6 +309,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
         <p class="f-tag">Open research for evolving intelligence.</p>
       </div>
       <div class="f-col">
+        <a href="timeline.html" data-i18n="timeline">Timeline</a>
         <a href="research.html">Research</a>
         <a href="blog.html">Blog</a>
         <a href="mailto:contact@tracelite.ai">contact@tracelite.ai</a>
@@ -311,8 +325,8 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
 <!-- BLOG ARTICLE MODAL -->
 <div class="blog-modal" id="blogModal" aria-hidden="true">
   <div class="pm-backdrop" data-close></div>
-  <div class="pm-card" role="dialog" aria-modal="true">
-    <button class="pm-close" data-close aria-label="Close">×</button>
+  <div class="pm-card" role="dialog" aria-modal="true" aria-labelledby="bmTitle" tabindex="-1">
+    <button class="pm-close" type="button" data-close aria-label="Close article" data-aria-en="Close article" data-aria-zh="关闭文章">×</button>
     <img class="pm-cover" id="bmCover" alt="" />
     <h3 id="bmTitle"></h3>
     <div class="pm-meta" id="bmMeta"></div>
@@ -332,60 +346,128 @@ const io = new IntersectionObserver((entries)=>{
 },{threshold:.16, rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* language toggle for nav (EN / 中文) */
-(function(){
-  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
-  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
-  const btn = document.getElementById('langToggle');
-  let zh = false;
-  function apply(){
-    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
-    btn.textContent = zh ? 'EN' : '中';
-    document.documentElement.lang = zh ? 'zh' : 'en';
-  }
-  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
-  apply();
-})();
+
 
 /* ===== Blog article modal ===== */
 (function(){
   const modal = document.getElementById('blogModal');
   if(!modal) return;
+  const card = modal.querySelector('.pm-card');
   const bmCover = document.getElementById('bmCover');
   const bmTitle = document.getElementById('bmTitle');
   const bmMeta = document.getElementById('bmMeta');
   const bmBody = document.getElementById('bmBody');
-  let lastFocus = null;
+  const rows = Array.from(document.querySelectorAll('.note-row[id]'));
+  const articles = new Map(rows.map(row => [row.id, row]));
+  let activeRow = null;
+  let previousOverflow = '';
+  let backgroundState = [];
 
   function open(row){
+    if (activeRow === row) return;
+    if (!activeRow) {
+      previousOverflow = document.body.style.overflow;
+      backgroundState = Array.from(document.body.children)
+        .filter(el => el !== modal && !['SCRIPT', 'STYLE'].includes(el.tagName))
+        .map(el => ({el, inert: el.inert}));
+      backgroundState.forEach(({el}) => { el.inert = true; });
+    }
+    activeRow = row;
     bmTitle.textContent = row.querySelector('.nt')?.textContent || '';
     bmCover.src = row.querySelector('.note-thumb')?.getAttribute('src') || '';
     bmCover.alt = row.querySelector('.note-thumb')?.getAttribute('alt') || '';
     const tags = Array.from(row.querySelectorAll('.tag')).map(t=>t.textContent.trim());
     const date = row.querySelector('.nd')?.textContent.trim() || '';
-    bmMeta.innerHTML = tags.map(t=>`<span>${t}</span>`).join('') + (date?`<span>${date}</span>`:'');
-    bmBody.innerHTML = Array.from(row.querySelectorAll('.na'))
-      .map(p=>`<p>${p.textContent.trim()}</p>`).join('');
+    bmMeta.replaceChildren(...[...tags, ...(date ? [date] : [])].map(text => {
+      const span = document.createElement('span');
+      span.textContent = text;
+      return span;
+    }));
+    bmBody.replaceChildren(...Array.from(row.querySelectorAll('.na')).map(source => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = source.textContent.trim();
+      return paragraph;
+    }));
+    rows.forEach(item => item.setAttribute('aria-expanded', String(item === row)));
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
-    lastFocus = document.activeElement;
-    const c = modal.querySelector('.pm-close'); if(c) c.focus();
-  }
-  function close(){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-    if(lastFocus) lastFocus.focus();
+    card.scrollTop = 0;
+    modal.querySelector('.pm-close').focus({preventScroll:true});
   }
 
-  document.querySelectorAll('.note-row').forEach(row=>{
-    row.addEventListener('click', ()=> open(row));
-    row.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(row); } });
+  function hide(){
+    if (!activeRow) return;
+    const returnFocus = activeRow;
+    activeRow = null;
+    backgroundState.forEach(({el, inert}) => { el.inert = inert; });
+    backgroundState = [];
+    document.body.style.overflow = previousOverflow;
+    rows.forEach(row => row.setAttribute('aria-expanded', 'false'));
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    returnFocus.classList.add('in');
+    returnFocus.focus();
+  }
+
+  function syncFromHash(){
+    let id = '';
+    try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (_) {}
+    const row = articles.get(id);
+    if (row) open(row);
+    else hide();
+  }
+
+  function navigateTo(id){
+    const url = new URL(window.location.href);
+    url.hash = id;
+    if (url.href !== window.location.href) {
+      window.history.pushState(null, '', url);
+    }
+    syncFromHash();
+  }
+
+  rows.forEach(row=>{
+    row.tabIndex = 0;
+    row.setAttribute('role', 'button');
+    row.setAttribute('aria-haspopup', 'dialog');
+    row.setAttribute('aria-controls', 'blogModal');
+    row.setAttribute('aria-expanded', 'false');
+    row.addEventListener('click', ()=> navigateTo(row.id));
+    row.addEventListener('keydown', event=>{
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        navigateTo(row.id);
+      }
+    });
   });
-  modal.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', close));
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
+  modal.querySelectorAll('[data-close]').forEach(el=> el.addEventListener('click', () => navigateTo('')));
+  document.addEventListener('keydown', event=>{
+    if (!activeRow) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      navigateTo('');
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = Array.from(card.querySelectorAll('button, a[href], input, select, textarea, [tabindex="0"]'))
+      .filter(el => !el.disabled && !el.hidden && el.getClientRects().length);
+    const first = focusable[0] || card;
+    const last = focusable[focusable.length - 1] || card;
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === card)) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
+  });
+  document.addEventListener('focusin', event => {
+    if (activeRow && !modal.contains(event.target)) modal.querySelector('.pm-close').focus();
+  });
+  window.addEventListener('hashchange', syncFromHash);
+  window.addEventListener('popstate', syncFromHash);
+  syncFromHash();
 })();
 </script>
+<script src="assets/site.js"></script>
 </body>
 </html>

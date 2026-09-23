@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>TraceLite — Trace the evolution of intelligence.</title>
 <meta name="description" content="TraceLite is an open research organization focused on agent evaluation and synthetic data, connecting evaluation, data, and training to explore the path toward AGI." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TraceLite AI" />
+<meta property="og:title" content="TraceLite AI — Trace the evolution of intelligence" />
+<meta property="og:description" content="Open research in agent evaluation, synthetic data, and training. Explore our reports, papers, and research timeline." />
+<meta property="og:url" content="https://tracelite.ai/" />
+<meta property="og:image" content="https://tracelite.ai/assets/tracelite-hero.png" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/png" href="images/favicon.png" />
 <link rel="apple-touch-icon" href="images/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -321,14 +328,12 @@ html.intro-lock{overflow:hidden;}
   .reveal{opacity:1;transform:none;}
 }
 </style>
+<link rel="stylesheet" href="assets/site.css" />
+<link rel="canonical" href="https://tracelite.ai/" />
+<noscript><style>.reveal{opacity:1;transform:none}.intro{display:none!important}.menu-toggle,.lang-toggle{display:none!important}@media(max-width:767px){.nav .nav-links{display:flex;gap:12px}.nav-cta{gap:8px}.nav .nav-links a.lk{font-size:12px}.nav .brand .logo{max-width:95px;height:auto}}</style></noscript>
 </head>
 <body>
-
-<!-- INTRO — 一句话上墨，播完进站 -->
-<div class="intro" id="intro" hidden aria-hidden="true">
-  <p class="intro-line" id="introLine">We build the instruments that measure progress toward general intelligence.</p>
-  <span class="intro-skip">Click to skip</span>
-</div>
+<a class="skip-link" href="#main" data-en="Skip to content" data-zh="跳转到内容">Skip to content</a>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -336,11 +341,13 @@ html.intro-lock{overflow:hidden;}
     <a class="brand" href="#top" aria-label="TraceLite home">
       <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
     <div class="nav-cta">
-      <div class="nav-links">
+      <div class="nav-links" id="siteMenu">
+        <a class="lk" href="timeline.html" data-i18n="timeline">Timeline</a>
         <a class="lk" href="research.html" data-i18n="research">Research</a>
         <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
       </div>
       <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a><a class="soc" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu" title="小红书"><img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" /></a><a class="soc" href="wechat.html" aria-label="WeChat official account" title="微信公众号"><img src="images/social/wechat.svg" alt="" aria-hidden="true" /></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu" aria-label="Navigation menu">Menu</button>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
     </div>
   </div>
@@ -350,12 +357,16 @@ html.intro-lock{overflow:hidden;}
 <header class="hero" id="top">
   <div class="wrap">
     <div class="hero-copy">
-      <h1 class="reveal" data-d="1">Trace the evolution<br>of <span class="teal">intelligence.</span></h1>
-      <p class="lead reveal" data-d="2">TraceLite is an open research organization focused on agent evaluation and synthetic data, connecting evaluation, data, and training to explore the path toward AGI.</p>
+      <a class="release-eyebrow" href="research.html" data-en="Open research / TraceLite AI" data-zh="开放研究 / TraceLite AI">Open research / TraceLite AI</a>
+      <h1 class="reveal" data-d="1"><span data-en="Trace the evolution" data-zh="追踪演化，">Trace the evolution</span><br><span data-en="of " data-zh="洞察">of </span><span class="teal" data-en="intelligence." data-zh="智能。">intelligence.</span></h1>
+      <p class="lead reveal" data-d="2" data-en="We build evaluations that make agent behavior visible. Through research in evaluation, synthetic data, and training, we study how intelligent systems work—and how they can improve." data-zh="让智能体的行为可观察、可检验。我们通过评测、合成数据与训练研究，理解智能系统如何工作，以及如何持续改进。">We build evaluations that make agent behavior visible. Through research in evaluation, synthetic data, and training, we study how intelligent systems work—and how they can improve.</p>
       <div class="hero-cta reveal" data-d="2">
-        <a class="btn btn-primary" href="research.html">Research <span class="arw">→</span></a>
-        <a class="btn btn-ghost" href="mailto:contact@tracelite.ai">Contact ↗</a>
+        <a class="btn btn-primary" href="research.html"><span data-en="Explore our research" data-zh="探索研究成果">Explore our research</span> <span class="arw" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="timeline.html"><span data-en="Research timeline" data-zh="研究时间线">Research timeline</span> <span aria-hidden="true">↗</span></a>
       </div>
+      <p class="hero-note"><!-- LATEST-REPORT:START -->
+<a href="trial-by-trace.html" data-en="Latest report · Trial by Trace →" data-zh="最新报告 · Trial by Trace →">Latest report · Trial by Trace →</a>
+<!-- LATEST-REPORT:END --></p>
     </div>
     <div class="hero-visual">
       <canvas id="sphere"></canvas>
@@ -364,28 +375,48 @@ html.intro-lock{overflow:hidden;}
 </header>
 
 <!-- HOME EXTENSIONS -->
-<main class="home-ext">
+<main class="home-ext" id="main">
 
-  <!-- Module 1: Core Research Directions -->
-  <section class="ext-module" id="directions">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Our Focus</span>
-        <h2 class="title">Core Research Directions</h2>
+  <section class="ext-module home-timeline" id="updates" aria-labelledby="timelineTitle">
+    <div class="wrap timeline-home-layout">
+      <div class="timeline-home-intro">
+        <span class="eyebrow" data-en="From the lab" data-zh="研究进展">From the lab</span>
+        <h2 class="title" id="timelineTitle" data-en="A record of progress." data-zh="研究，持续向前。">A record of progress.</h2>
+        <p data-en="Reports, papers, and moments that move our work forward." data-zh="记录每一份报告、每一篇论文，以及研究沿途的重要时刻。">Reports, papers, and moments that move our work forward.</p>
+        <a class="out-link" href="timeline.html"><span data-en="View the full timeline" data-zh="查看完整时间线">View the full timeline</span><span aria-hidden="true">→</span></a>
       </div>
-      <div class="dir-grid dir-grid-single">
-        <!-- ↓↓↓ 排行榜地址还没给：把 href="#" 换成真实网址即可（外链会新开标签页） -->
-        <a class="dir-card glass reveal focus-card" href="#" data-d="1">
-          <div class="dir-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
-          </div>
-          <div class="fc-text">
-            <span class="fc-eyebrow">Leaderboard</span>
-            <h3>Placeholder Leaderboard Name</h3>
-            <p>Placeholder description text.</p>
-          </div>
-          <span class="fc-go" aria-hidden="true">→</span>
-        </a>
+      <div class="timeline-home-entries">
+        <!-- TIMELINE-PREVIEW:START -->
+<ol class="timeline-list">
+<li class="timeline-entry" id="latest-trial-by-trace" data-type="report" data-year="2026">
+  <div class="entry-date"><time datetime="2026-09-17" data-en="Sep 17, 2026" data-zh="2026.09.17">Sep 17, 2026</time><span class="date-context" data-en="Report dated" data-zh="报告日期">Report dated</span></div>
+  <article class="entry-body" aria-labelledby="latest-trial-by-trace-title">
+    <div class="entry-meta"><span class="entry-type" data-en="Technical report" data-zh="技术报告">Technical report</span><span class="entry-venue">TraceTrial-Bench</span></div>
+    <h3 class="entry-title" id="latest-trial-by-trace-title" data-en="Trial by Trace" data-zh="Trial by Trace">Trial by Trace</h3>
+    <p class="entry-summary" data-en="Benchmarking AI agent harnesses for reliability and failure attribution. TraceTrial-Bench examines 95 tasks across four harnesses and nine model configurations." data-zh="AI Agent 运行框架的可靠性评测与故障归因。TraceTrial-Bench 覆盖 95 个任务、4 个运行框架与 9 种模型配置。">Benchmarking AI agent harnesses for reliability and failure attribution. TraceTrial-Bench examines 95 tasks across four harnesses and nine model configurations.</p>
+    <div class="entry-links"><a href="trial-by-trace.html"><span data-en="Explore the report" data-zh="了解报告">Explore the report </span><span aria-hidden="true">→</span></a><a href="https://github.com/TraceLite-AI/Harness-Benchmark" target="_blank" rel="noopener noreferrer"><span data-en="Code" data-zh="代码">Code </span><span aria-hidden="true">↗</span></a></div>
+  </article>
+</li>
+<li class="timeline-entry" id="latest-infoq-aicon-2026" data-type="media" data-year="2026">
+  <div class="entry-date"><time datetime="2026-09-04" data-en="Sep 4, 2026" data-zh="2026.09.04">Sep 4, 2026</time><span class="date-context" data-en="Article published" data-zh="文章发布">Article published</span></div>
+  <article class="entry-body" aria-labelledby="latest-infoq-aicon-2026-title">
+    <div class="entry-meta"><span class="entry-type" data-en="Media" data-zh="媒体动态">Media</span><span class="entry-venue">InfoQ</span></div>
+    <h3 class="entry-title" id="latest-infoq-aicon-2026-title" data-en="TraceLite AI in InfoQ’s AICon Shenzhen recap" data-zh="InfoQ · AICon 深圳大会回顾提及 TraceLite AI">TraceLite AI in InfoQ’s AICon Shenzhen recap</h3>
+    <p class="entry-summary" data-en="InfoQ’s conference recap lists TraceLite AI among the organizations represented by speakers at AICon Shenzhen 2026." data-zh="InfoQ 大会回顾将 TraceLite AI 列于 AICon 深圳 2026 技术分享嘉宾所属企业名单。">InfoQ’s conference recap lists TraceLite AI among the organizations represented by speakers at AICon Shenzhen 2026.</p>
+    <div class="entry-links"><a href="https://www.infoq.cn/news/6EYVBX5UD2Cb0PWYsPCq" target="_blank" rel="noopener noreferrer"><span data-en="Read the recap" data-zh="阅读大会回顾">Read the recap </span><span aria-hidden="true">↗</span></a></div>
+  </article>
+</li>
+<li class="timeline-entry" id="latest-simrpd-acl-2026" data-type="paper" data-year="2026">
+  <div class="entry-date"><time datetime="2026-07" data-en="July 2026" data-zh="2026 年 7 月">July 2026</time><span class="date-context" data-en="Proceedings" data-zh="论文集收录">Proceedings</span></div>
+  <article class="entry-body" aria-labelledby="latest-simrpd-acl-2026-title">
+    <div class="entry-meta"><span class="entry-type" data-en="Paper" data-zh="论文">Paper</span><span class="entry-venue">ACL 2026 · Industry Track</span></div>
+    <h3 class="entry-title" id="latest-simrpd-acl-2026-title" data-en="SimRPD" data-zh="SimRPD">SimRPD</h3>
+    <p class="entry-summary" data-en="Optimizing recruitment proactive dialogue agents through simulator-based data evaluation and selection." data-zh="通过基于模拟器的数据评估与筛选，优化招聘场景中的主动对话智能体。">Optimizing recruitment proactive dialogue agents through simulator-based data evaluation and selection.</p>
+    <div class="entry-links"><a href="https://aclanthology.org/2026.acl-industry.95/" target="_blank" rel="noopener noreferrer"><span data-en="Read the paper" data-zh="阅读论文">Read the paper </span><span aria-hidden="true">↗</span></a></div>
+  </article>
+</li>
+</ol>
+<!-- TIMELINE-PREVIEW:END -->
       </div>
     </div>
   </section>
@@ -394,13 +425,29 @@ html.intro-lock{overflow:hidden;}
   <section class="ext-module" id="outputs">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Featured Work</span>
-        <h2 class="title">Research Output</h2>
+        <span class="eyebrow" data-en="Featured work" data-zh="精选研究">Featured work</span>
+        <h2 class="title" data-en="Research output" data-zh="研究成果">Research output</h2>
       </div>
       <div class="out-grid">
         <div class="out-col reveal" data-d="1">
-          <h3 class="sub">Papers</h3>
+          <h3 class="sub" data-en="Papers" data-zh="论文">Papers</h3>
           <div class="paper-items">
+            <div class="item home-item" id="featured-mm-verirubric" tabindex="0" role="button" aria-label="Read: MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models">
+              <img class="ph-thumb" src="images/papers/mm-verirubric.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h4>
+                <div class="it-meta">EMNLP 2026 · Multimodal · Reward Models</div>
+                <p>Most multimodal reward models emit only an outcome reward, which is sparse and misses the structure of human preference. MM-VeriRubric builds training data for multimodal rubric generation at scale: task-aware visual clue extraction grounds rubrics in task-relevant image evidence, and rubric-aligned rejected responses with controlled error dimensions let each rubric be verified through consistency checking. The verified data trains both a rubric generator and a rubric-based reward model, improving preference judgment by 16.4% on VL-RewardBench and Best-of-5 selection by 13.1% on MMMU-Pro.</p>
+              </div>
+            </div>
+            <div class="item home-item" id="featured-disentangled-privileged-states" tabindex="0" role="button" aria-label="Read: Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training">
+              <img class="ph-thumb" src="images/papers/dps.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h4>
+                <div class="it-meta">EMNLP 2026 · Dialogue Policy · Simulators</div>
+                <p>Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.</p>
+              </div>
+            </div>
             <div class="item home-item" tabindex="0" role="button" aria-label="Read: Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning">
               <img class="ph-thumb" src="images/papers/earl-select-less.jpg" alt="" loading="lazy" />
               <div class="it-body">
@@ -434,7 +481,7 @@ html.intro-lock{overflow:hidden;}
               </div>
             </div>
           </div>
-          <a class="out-link" href="papers.html">View all papers →</a>
+          <a class="out-link" href="papers.html" data-en="View all papers →" data-zh="查看全部论文 →">View all papers →</a>
         </div>
         <div class="out-col reveal" data-d="2" data-masked="products">
           <h3 class="sub">Products</h3>
@@ -460,45 +507,57 @@ html.intro-lock{overflow:hidden;}
     </div>
   </section>
 
-  <!-- Module 3: Latest Updates -->
-  <section class="ext-module" id="updates">
+  <section class="ext-module home-blog" id="blog" aria-labelledby="blogTitle">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Insights</span>
-        <h2 class="title">Latest Insights</h2>
+      <div class="blog-section-heading">
+        <div class="section-head">
+          <span class="eyebrow">Blog</span>
+          <h2 class="title" id="blogTitle" data-en="Notes from the lab." data-zh="研究手记。">Notes from the lab.</h2>
+          <p class="blog-section-lead" data-en="Ideas, methods, and lessons from building intelligent systems." data-zh="记录构建智能系统过程中的想法、方法与实践心得。">Ideas, methods, and lessons from building intelligent systems.</p>
+        </div>
+        <a class="out-link blog-all-link" href="blog.html"><span data-en="Explore the blog" data-zh="查看全部文章">Explore the blog</span><span aria-hidden="true">→</span></a>
       </div>
       <div class="blog-prev-grid">
-        <article class="blog-prev glass reveal home-item" data-d="1" tabindex="0" role="button" aria-label="Read: Placeholder Article Title">
-          <div class="ph-cover" aria-hidden="true"></div>
+        <a class="blog-prev glass reveal" href="blog.html#useful-agent-benchmarks" data-d="1">
+          <div class="blog-preview-image"><img src="images/benchmark.png" alt="" loading="lazy" decoding="async" width="640" height="360"></div>
           <div class="bp-body">
-            <div class="bp-date">Placeholder Date</div>
-            <h4>Placeholder Article Title</h4>
-            <p>Placeholder excerpt text.</p>
+            <span class="bp-topic" data-en="Evaluation / Agents" data-zh="评测 / 智能体">Evaluation / Agents</span>
+            <h3 data-en="What makes an agent benchmark useful?" data-zh="什么样的 Agent 评测才有用？">What makes an agent benchmark useful?</h3>
+            <p data-en="Designing evaluations that reveal how agents handle real tasks." data-zh="如何设计评测，才能看见智能体处理真实任务的能力。">Designing evaluations that reveal how agents handle real tasks.</p>
+            <span class="blog-read"><span data-en="Read the note" data-zh="阅读文章">Read the note</span><span aria-hidden="true">↗</span></span>
           </div>
-        </article>
-        <article class="blog-prev glass reveal home-item" data-d="2" tabindex="0" role="button" aria-label="Read: Placeholder Article Title">
-          <div class="ph-cover" aria-hidden="true"></div>
+        </a>
+        <a class="blog-prev glass reveal" href="blog.html#synthetic-trajectories" data-d="2">
+          <div class="blog-preview-image"><img src="images/trajectories.png" alt="" loading="lazy" decoding="async" width="640" height="360"></div>
           <div class="bp-body">
-            <div class="bp-date">Placeholder Date</div>
-            <h4>Placeholder Article Title</h4>
-            <p>Placeholder excerpt text.</p>
+            <span class="bp-topic" data-en="Synthetic data / Training" data-zh="合成数据 / 训练">Synthetic data / Training</span>
+            <h3 data-en="Why synthetic trajectories fail silently" data-zh="合成轨迹为何会悄然失效？">Why synthetic trajectories fail silently</h3>
+            <p data-en="A plausible sequence of actions can still miss the reasoning that training needs." data-zh="看似合理的行动序列，也可能缺少训练真正需要的推理过程。">A plausible sequence of actions can still miss the reasoning that training needs.</p>
+            <span class="blog-read"><span data-en="Read the note" data-zh="阅读文章">Read the note</span><span aria-hidden="true">↗</span></span>
           </div>
-        </article>
-        <article class="blog-prev glass reveal home-item" data-d="3" tabindex="0" role="button" aria-label="Read: Placeholder Article Title">
-          <div class="ph-cover" aria-hidden="true"></div>
+        </a>
+        <a class="blog-prev glass reveal" href="blog.html#beyond-pass-at-one" data-d="3">
+          <div class="blog-preview-image"><img src="images/metrics.png" alt="" loading="lazy" decoding="async" width="640" height="360"></div>
           <div class="bp-body">
-            <div class="bp-date">Placeholder Date</div>
-            <h4>Placeholder Article Title</h4>
-            <p>Placeholder excerpt text.</p>
+            <span class="bp-topic" data-en="Metrics / Evaluation" data-zh="指标 / 评测">Metrics / Evaluation</span>
+            <h3 data-en="Beyond pass@1: measuring agent capability" data-zh="超越 pass@1：如何衡量智能体能力">Beyond pass@1: measuring agent capability</h3>
+            <p data-en="Looking at recovery, cost, and consistency alongside first-attempt success." data-zh="除了首次成功率，还要观察失败恢复、成本与持续表现。">Looking at recovery, cost, and consistency alongside first-attempt success.</p>
+            <span class="blog-read"><span data-en="Read the note" data-zh="阅读文章">Read the note</span><span aria-hidden="true">↗</span></span>
           </div>
-        </article>
-      </div>
-      <div class="blog-prev-foot">
-        <a class="ext-btn" href="blog.html">Visit Blog →</a>
+        </a>
       </div>
     </div>
   </section>
 
+  <section class="ext-module coverage-section" id="media" aria-labelledby="mediaTitle">
+    <div class="wrap">
+      <div class="coverage-strip">
+        <div class="coverage-source">InfoQ<span>2026.09.04</span></div>
+        <div class="coverage-copy"><h3 id="mediaTitle" data-en="TraceLite AI at AICon Shenzhen 2026" data-zh="TraceLite AI 参与 AICon 深圳 2026">TraceLite AI at AICon Shenzhen 2026</h3><p data-en="InfoQ’s conference recap lists TraceLite AI among the organizations represented by speakers at AICon Shenzhen 2026." data-zh="InfoQ 大会回顾提及 TraceLite AI，列于本届大会技术分享嘉宾所属企业名单。">InfoQ’s conference recap lists TraceLite AI among the organizations represented by speakers at AICon Shenzhen 2026.</p></div>
+        <a class="coverage-link" href="https://www.infoq.cn/news/6EYVBX5UD2Cb0PWYsPCq" target="_blank" rel="noopener" data-en="Read the recap ↗" data-zh="阅读大会回顾 ↗">Read the recap ↗</a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <!-- HOME-EXT ITEM MODAL -->
@@ -524,6 +583,7 @@ html.intro-lock{overflow:hidden;}
         <p class="f-tag">Open research for evolving intelligence.</p>
       </div>
       <div class="f-col">
+        <a href="timeline.html" data-i18n="timeline">Timeline</a>
         <a href="research.html">Research</a>
         <a href="blog.html">Blog</a>
         <a href="mailto:contact@tracelite.ai">contact@tracelite.ai</a>
@@ -553,267 +613,7 @@ const io = new IntersectionObserver((entries)=>{
 },{threshold:.16, rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ===== HERO — Trace Sphere (slow rotate + flowing trajectories + gentle mouse) ===== */
-(function(){
-  const cv = document.getElementById('sphere'); const ctx = cv.getContext('2d');
-  let W,H,DPR,cx,cy,R,points=[],rimPoints=[],orbits=[],birth=null,flow=0;
-  const mouse={x:0,y:0,tx:0,ty:0,prox:0,tprox:0};
-  function resize(){
-    const r=cv.getBoundingClientRect(); DPR=Math.min(window.devicePixelRatio||1,2);
-    W=r.width;H=r.height; cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
-    cx=W/2;cy=H/2;R=Math.min(W,H)*0.36; build();
-  }
-  function build(){
-    points=[];rimPoints=[];orbits=[];
-    const N = window.innerWidth<768 ? 110 : 240;
-    for(let i=0;i<N;i++){
-      const phi=Math.acos(1-2*(i+0.5)/N); const theta=Math.PI*(1+Math.sqrt(5))*i;
-      const x=Math.sin(phi)*Math.cos(theta), y=Math.sin(phi)*Math.sin(theta), z=Math.cos(phi);
-      const k=Math.random();
-      const isBright = k<0.16;
-      let color;
-      if(isBright){
-        color = Math.random()<0.65 ? '#8A8A8A' : '#2B2B2B';
-      } else {
-        const r = Math.random();
-        color = r<0.45 ? '#8A8A8A' : (r<0.88 ? '#2B2B2B' : '#9A9A9A');
-      }
-      points.push({x,y,z,type:isBright?'bright':'p',
-        color:color,
-        size:isBright?rand(1.6,2.6):rand(0.5,1.3), phase:Math.random()*TAU, sp:rand(0.2,0.7)});
-    }
-    // subtle rim dots — sparse small points that lightly trace the silhouette
-    const M = window.innerWidth<768 ? 8 : 12;
-    for(let i=0;i<M;i++){
-      const a = (i/M)*TAU + rand(-0.05,0.05);
-      const rr = rand(0.96,0.99);            // sit just inside the outer edge
-      rimPoints.push({x:Math.cos(a)*rr, y:Math.sin(a)*rr, z:Math.sqrt(Math.max(0,1-rr*rr))*(Math.random()<0.5?-1:1),
-        color:'#2B2B2B', size:rand(0.9,1.4), phase:Math.random()*TAU, sp:rand(0.3,0.8)});
-    }
-    const rings = window.innerWidth<768 ? 3 : 5;
-    for(let i=0;i<rings;i++) orbits.push({axis:(i/rings)*Math.PI,tilt:-0.55+1.1*(i/Math.max(1,rings-1)),rad:0.72+0.055*i,sp:rand(0.35,0.6),off:(i/rings)*TAU,color:i%2?'#8A8A8A':'#2B2B2B',alpha:0.11});
-  }
-  function rot(p,ax,ay){
-    let x=p.x*Math.cos(ax)-p.z*Math.sin(ax), z=p.x*Math.sin(ax)+p.z*Math.cos(ax);
-    let y=p.y*Math.cos(ay)-z*Math.sin(ay), z2=p.y*Math.sin(ay)+z*Math.cos(ay);
-    return {x:x,y:y,z:z2};
-  }
-  function project(p){ const persp=1.8, s=persp/(persp-p.z); return {sx:cx+p.x*R*s, sy:cy+p.y*R*s}; }
-  let angX=0.18, angY=0, loopT=0;
-  // word loop: EVALUATE -> SYNTHESIZE -> TRAIN -> EVOLVE -> (loop)
-  const wordLoop=[
-    {word:'EVALUATE', a:0},
-    {word:'SYNTHESIZE', a:TAU*0.25},
-    {word:'TRAIN', a:TAU*0.5},
-    {word:'EVOLVE', a:TAU*0.75}
-  ];
-
-  function drawStar(cx0,cy0,Rx,Ry,rot){
-    // slender four-point star (concave sparkle), sharper notch for a daintier look
-    const rix=Rx*0.18, riy=Ry*0.18;
-    const c=Math.cos(rot||0), s=Math.sin(rot||0);
-    const pts=[[0,-Ry],[rix,-riy],[Rx,0],[rix,riy],[0,Ry],[-rix,riy],[-Rx,0],[-rix,-riy]];
-    ctx.beginPath();
-    pts.forEach((p,i)=>{
-      const x=cx0 + p[0]*c - p[1]*s;
-      const y=cy0 + p[0]*s + p[1]*c;
-      i? ctx.lineTo(x,y) : ctx.moveTo(x,y);
-    });
-    ctx.closePath();
-  }
-
-  function drawWordLoop(rotFn, glow, ts){
-    const rad=0.86; // word ring sits well outside the core sphere
-    // slightly thicker orbit track so words clearly belong to a ring
-    ctx.beginPath();
-    for(let i=0;i<=260;i++){ const a=(i/260)*TAU - Math.PI/2;
-      let rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.03*Math.sin(a*2)});
-      const pr=project(rp); if(i===0)ctx.moveTo(pr.sx,pr.sy); else ctx.lineTo(pr.sx,pr.sy);
-    }
-    ctx.strokeStyle='rgba(43,43,43,0.38)'; ctx.lineWidth=1.4; ctx.stroke();
-
-    // words + node dots — each word hangs from its node on the orbit via a short stem
-    wordLoop.forEach((w,idx)=>{
-      const a=w.a - Math.PI/2;
-      const rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.02});
-      const pr=project(rp); const depth=(rp.z+1)/2;
-      const b=glow[idx];
-
-      // compute outward normal of the orbit at this point (in screen space)
-      const da=0.025;
-      const p1=project(rotFn({x:Math.cos(a-da)*rad,y:Math.sin(a-da)*rad,z:0.02}));
-      const p2=project(rotFn({x:Math.cos(a+da)*rad,y:Math.sin(a+da)*rad,z:0.02}));
-      let nx=-(p2.sy-p1.sy), ny=(p2.sx-p1.sx);
-      const nl=Math.sqrt(nx*nx+ny*ny)||1; nx/=nl; ny/=nl;
-      // ensure label stays on the outer side of the ring
-      const outward = (nx*(pr.sx-cx)+ny*(pr.sy-cy)) < 0 ? -1 : 1;
-      nx*=outward; ny*=outward;
-      // when a node sits on the left/right extreme, push the label vertically
-      // (not radially) so long words like SYNTHESIZE never run off-canvas
-      if(Math.abs(nx) > Math.abs(ny)){
-        ny = (pr.sy < cy) ? -1 : 1;
-        nx = 0;
-      }
-
-      const stem=18 + b*3;
-      const lx=pr.sx+nx*stem, ly=pr.sy+ny*stem;
-
-      // stem from orbit to label
-      ctx.globalAlpha=0.35+depth*0.45; ctx.strokeStyle='#2B2B2B'; ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(pr.sx,pr.sy); ctx.lineTo(lx,ly); ctx.stroke();
-
-      // node dot on the orbit (skip for EVALUATE node — the four-point star anchors it)
-      const dotR=2.8+b*2.6;
-      if(idx!==0){
-        ctx.globalAlpha=0.45+depth*0.45;
-        ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR,0,TAU); ctx.fillStyle='#2B2B2B'; ctx.fill();
-        if(b>0.02){
-          ctx.globalAlpha=0.18*b; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR*3.2,0,TAU); ctx.fillStyle='#2B2B2B'; ctx.fill();
-        }
-      }
-
-      // four-pointed star at the EVALUATE node (idx 0) — slender sparkle, twinkling glow
-      if(idx===0){
-        // rotate 90° so the long axis is horizontal and clears the EVALUATE word,
-        // nudge down a touch so the word never overlaps a star arm.
-        const sy = pr.sy + 3;
-        // pulse-star: 2.2s loop. The GLOW flares (brightens + swells) like a star;
-        // the solid core only subtly scales so movement stays natural, no hard "square" jump.
-        const t = ((ts||0) % 2200) / 2200;            // 0..1 over 2.2s
-        const f = 0.5 - 0.5*Math.cos(t*Math.PI*2);     // 0 at 0%, 1 at 50%, 0 at 100%
-        const coreScale = 0.95 + 0.12*f;              // 0.95 -> 1.07 -> 0.95 (gentle)
-        const glowScale = 0.85 + 0.4*f;               // 0.85 -> 1.25 -> 0.85 (glow swells = twinkle)
-        const glowAlpha = 0.16 + 0.34*f;              // 0.16 -> 0.5 -> 0.16 (tighter, softer)
-        const coreAlpha = 0.74 + 0.26*f;              // 0.74 -> 1 -> 0.74 (core also flickers)
-        const baseR = (9 + depth*2) * 1.3;             // 1.3x larger than normal dots (visual anchor)
-        const Rx = baseR * 1.5 * coreScale;            // long horizontal half-axis (after 90° rotation)
-        const Ry = baseR * 0.82 * coreScale;           // short vertical half-axis
-        const rot = Math.PI/2;                         // rotate 90°: vertical sparkle -> horizontal
-        // soft outer glow halo — this is what "twinkles" (kept compact)
-        ctx.save();
-        ctx.globalCompositeOperation='lighter';
-        const haloR = baseR*1.3*glowScale + baseR*0.7;
-        const g0=ctx.createRadialGradient(pr.sx,sy,0,pr.sx,sy,haloR);
-        g0.addColorStop(0,`rgba(63,63,63,${0.5*glowAlpha})`);
-        g0.addColorStop(0.45,`rgba(63,63,63,${0.28*glowAlpha})`);
-        g0.addColorStop(1,'rgba(63,63,63,0)');
-        ctx.globalAlpha=1; ctx.fillStyle=g0;
-        ctx.beginPath(); ctx.arc(pr.sx,sy,haloR,0,TAU); ctx.fill();
-        ctx.restore();
-        // star body — slender four-point star, solid teal (no white center), soft falloff
-        const sg=ctx.createRadialGradient(pr.sx,sy,0,pr.sx,sy,Ry);
-        sg.addColorStop(0,'#3F3F3F');
-        sg.addColorStop(0.45,'#3F3F3F');
-        sg.addColorStop(1,'rgba(63,63,63,0.82)');
-        ctx.globalAlpha=coreAlpha;
-        ctx.fillStyle=sg;
-        drawStar(pr.sx,sy,Rx,Ry,rot); ctx.fill();
-        ctx.globalAlpha=1;
-      }
-
-      // word label (always horizontal for readability)
-      ctx.font='600 15px "IBM Plex Mono", monospace';
-      const tw=ctx.measureText(w.word).width;
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      let fx=lx;
-      const margin=10;
-      if(fx - tw/2 < margin) fx = margin + tw/2;
-      if(fx + tw/2 > W - margin) fx = W - margin - tw/2;
-      ctx.fillStyle = idx===0 ? '#111111' : '#4A4A4A';
-      ctx.globalAlpha=0.65 + depth*0.35 + b*0.35;
-      ctx.fillText(w.word, fx, ly);
-    });
-    ctx.globalAlpha=1;
-
-    // traveling light dot — enlarged 1.3x, teal (#9A9A9A) with bright white core for visibility
-    const t=loopT;
-    const a = t - Math.PI/2;
-    let rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.04*Math.sin(a*2)});
-    const pr=project(rp); const depth=(rp.z+1)/2;
-    const R0=3.4; // ~2.6 * 1.3
-    ctx.globalAlpha=0.18 + depth*0.32; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*2.6,0,TAU); ctx.fillStyle='#9A9A9A'; ctx.fill();
-    ctx.globalAlpha=0.9 + depth*0.1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0,0,TAU); ctx.fillStyle='#9A9A9A'; ctx.fill();
-    ctx.globalAlpha=1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*0.45,0,TAU); ctx.fillStyle='#FFFFFF'; ctx.fill();
-    ctx.globalAlpha=1;
-  }
-
-  function frame(ts){
-    if(!birth) birth=ts;
-    const grow = REDUCED ? 1 : Math.min((ts-birth)/2600/1,1);
-    flow += 0.0010; // trajectory flow speed
-    mouse.x=lerp(mouse.x,mouse.tx,0.06); mouse.y=lerp(mouse.y,mouse.ty,0.06);
-    mouse.prox=lerp(mouse.prox,mouse.tprox,0.06);
-    // far = faster free spin, near = slower (held) + gentle mouse pull
-    const baseSpin = lerp(0.0011, 0.00018, mouse.prox);
-    angY += baseSpin;
-    angX = 0.18 + mouse.y*(0.03*mouse.prox);
-    angY += mouse.x*(0.03*mouse.prox);
-
-    // traveling light dot + restrained node glow as it passes
-    loopT = (loopT + 0.0032) % TAU;
-    const glow = wordLoop.map((w,idx)=>{
-      const wa = w.a; // 0, .25, .5, .75 TAU
-      let d = Math.abs(loopT - wa); d = Math.min(d, TAU-d);
-      return Math.max(0, 1 - d/0.22); // sharp but soft falloff
-    });
-    ctx.clearRect(0,0,W,H);
-
-    const worldRot = p=>rot(rot(p,angY,angX),0,0);
-
-    // orbits (flowing trajectories) — use flow offset to animate dashed motion
-    orbits.forEach(o=>{
-      o.off += 0.004*o.sp;
-      ctx.beginPath(); const seg=160;
-      for(let i=0;i<=seg;i++){ const a=(i/seg)*TAU;
-        let rp=rot({x:Math.cos(a)*o.rad,y:Math.sin(a)*o.rad*o.tilt,z:Math.sin(a)*o.rad*0.15}, o.off,o.axis);
-        rp=rot(rp,angY,angX); const pr=project(rp);
-        if(i===0) ctx.moveTo(pr.sx,pr.sy); else ctx.lineTo(pr.sx,pr.sy);
-      }
-      ctx.strokeStyle=o.color; ctx.globalAlpha=o.alpha*grow; ctx.lineWidth=0.6; ctx.stroke(); ctx.globalAlpha=1;
-    });
-
-    // word loop on sphere surface
-    drawWordLoop(worldRot, glow, ts);
-
-    // points
-    const sorted=points.map(p=>({p,rp:rot(p,angY,angX)})).sort((a,b)=>a.rp.z-b.rp.z);
-    sorted.forEach(({p,rp})=>{
-      const pr=project(rp); const depth=(rp.z+1)/2;
-      const appear=Math.min(Math.max((grow-depth*0.4)/0.6,0),1); if(appear<=0) return;
-      const pulse=p.type==='bright'?1+Math.sin(ts*0.002*p.sp*6+p.phase)*0.16:1;
-      const sz=p.size*pulse*appear*(0.5+depth*0.7);
-      ctx.globalAlpha=(0.22+depth*0.7)*appear; ctx.fillStyle=p.color;
-      ctx.beginPath(); ctx.arc(pr.sx,pr.sy,sz,0,TAU); ctx.fill();
-      if(p.type==='bright'){ ctx.globalAlpha=0.16*appear; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,sz*3,0,TAU); ctx.fill(); }
-    });
-
-    // rim dots — small, plain points tracing the silhouette (no glow)
-    const rimSorted = rimPoints.map(p=>({p,rp:rot(p,angY,angX)})).sort((a,b)=>a.rp.z-b.rp.z);
-    rimSorted.forEach(({p,rp})=>{
-      const pr=project(rp); const depth=(rp.z+1)/2;
-      const appear=Math.min(Math.max((grow-depth*0.4)/0.6,0),1); if(appear<=0) return;
-      const sz=p.size*appear;
-      ctx.globalAlpha=(0.35+depth*0.5)*appear; ctx.fillStyle=p.color;
-      ctx.beginPath(); ctx.arc(pr.sx,pr.sy,sz,0,TAU); ctx.fill();
-    });
-    ctx.globalAlpha=1; requestAnimationFrame(frame);
-  }
-  resize(); window.addEventListener('resize',resize);
-  if(!REDUCED){
-    window.addEventListener('mousemove', e=>{
-      const r=cv.getBoundingClientRect();
-      const nx=((e.clientX-r.left)/r.width-0.5)*2;   // -1..1 within element
-      const ny=((e.clientY-r.top)/r.height-0.5)*2;
-      // distance from sphere center (element center), normalized to element size
-      const dist=Math.hypot(nx,ny);
-      const RANGE=1.15;                                // influence radius (element units)
-      mouse.tprox = Math.max(0, 1 - dist/RANGE);       // 1 at center .. 0 beyond range
-      mouse.tx=nx*4; mouse.ty=ny*4;
-    });
-    window.addEventListener('mouseleave', ()=>{ mouse.tprox=0; });
-  }
-  requestAnimationFrame(frame);
-})();
+/* Hero sphere is shared with the timeline via assets/trace-sphere.js. */
 
 /* ===== RESEARCH row hover trajectory ===== */
 (function(){
@@ -843,20 +643,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   });
 })();
 
-/* language toggle for nav (EN / 中文) */
-(function(){
-  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
-  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
-  const btn = document.getElementById('langToggle');
-  let zh = false;
-  function apply(){
-    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
-    btn.textContent = zh ? 'EN' : '中';
-    document.documentElement.lang = zh ? 'zh' : 'en';
-  }
-  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
-  apply();
-})();
+
 
 /* ===== HOME-EXT item modal (papers / products / insights) ===== */
 (function(){
@@ -927,51 +714,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
 })();
 </script>
-<script>
-/* 进站动画：逐词上墨 → 停一拍 → 淡出。一个会话只播一次，随时可点掉。 */
-(function(){
-  var intro = document.getElementById('intro');
-  var line  = document.getElementById('introLine');
-  if(!intro || !line) return;
-
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen   = false;
-  try { seen = sessionStorage.getItem('tl-intro') === '1'; } catch(e){}
-  if(reduce || seen){ intro.remove(); return; }
-
-  var WORD_MS = 105,      // 每个词点亮的间隔
-      HOLD_MS = 2000,     // 整句写完后停留多久（改这里调长短）
-      FADE_MS = 950;      // 幕布上提时长（要和 CSS 里 .intro 的 transition 对齐）
-  var words = line.textContent.trim().split(/\s+/);
-  line.innerHTML = words.map(function(w){ return '<span class="w">' + w + '</span>'; }).join(' ');
-  var spans = line.querySelectorAll('.w');
-
-  intro.hidden = false;
-  document.documentElement.classList.add('intro-lock');
-  try { sessionStorage.setItem('tl-intro', '1'); } catch(e){}
-
-  var timers = [];
-  var ended = false;
-  function end(){
-    if(ended) return;
-    ended = true;
-    timers.forEach(clearTimeout);
-    intro.classList.add('done');
-    document.documentElement.classList.remove('intro-lock');
-    setTimeout(function(){ intro.remove(); }, FADE_MS);
-  }
-
-  spans.forEach(function(sp, i){
-    timers.push(setTimeout(function(){ sp.classList.add('on'); }, 260 + i * WORD_MS));
-  });
-  timers.push(setTimeout(function(){ intro.classList.add('hint'); }, 900));
-  timers.push(setTimeout(end, 260 + spans.length * WORD_MS + HOLD_MS));
-
-  intro.addEventListener('click', end);
-  window.addEventListener('keydown', end, {once:true});
-  window.addEventListener('wheel', end, {once:true, passive:true});
-  window.addEventListener('touchstart', end, {once:true, passive:true});
-})();
-</script>
+<script src="assets/trace-sphere.js" defer></script>
+<script src="assets/site.js"></script>
 </body>
 </html>

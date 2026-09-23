@@ -1,0 +1,201 @@
+[
+  {
+    "id": "trial-by-trace",
+    "type": "report",
+    "date": "2026-09-17",
+    "dateKind": "document",
+    "title": {
+      "en": "Trial by Trace",
+      "zh": "Trial by Trace"
+    },
+    "summary": {
+      "en": "Benchmarking AI agent harnesses for reliability and failure attribution. TraceTrial-Bench examines 95 tasks across four harnesses and nine model configurations.",
+      "zh": "AI Agent 运行框架的可靠性评测与故障归因。TraceTrial-Bench 覆盖 95 个任务、4 个运行框架与 9 种模型配置。"
+    },
+    "venue": "TraceTrial-Bench",
+    "links": [
+      {
+        "href": "trial-by-trace.html",
+        "label": {
+          "en": "Explore the report",
+          "zh": "了解报告"
+        }
+      },
+      {
+        "href": "https://github.com/TraceLite-AI/Harness-Benchmark",
+        "label": {
+          "en": "Code",
+          "zh": "代码"
+        }
+      }
+    ]
+  },
+  {
+    "id": "infoq-aicon-2026",
+    "type": "media",
+    "date": "2026-09-04",
+    "dateKind": "article",
+    "title": {
+      "en": "TraceLite AI in InfoQ’s AICon Shenzhen recap",
+      "zh": "InfoQ · AICon 深圳大会回顾提及 TraceLite AI"
+    },
+    "summary": {
+      "en": "InfoQ’s conference recap lists TraceLite AI among the organizations represented by speakers at AICon Shenzhen 2026.",
+      "zh": "InfoQ 大会回顾将 TraceLite AI 列于 AICon 深圳 2026 技术分享嘉宾所属企业名单。"
+    },
+    "venue": "InfoQ",
+    "links": [
+      {
+        "href": "https://www.infoq.cn/news/6EYVBX5UD2Cb0PWYsPCq",
+        "label": {
+          "en": "Read the recap",
+          "zh": "阅读大会回顾"
+        }
+      }
+    ]
+  },
+  {
+    "id": "simrpd-acl-2026",
+    "type": "paper",
+    "date": "2026-07",
+    "dateKind": "proceedings",
+    "title": {
+      "en": "SimRPD",
+      "zh": "SimRPD"
+    },
+    "summary": {
+      "en": "Optimizing recruitment proactive dialogue agents through simulator-based data evaluation and selection.",
+      "zh": "通过基于模拟器的数据评估与筛选，优化招聘场景中的主动对话智能体。"
+    },
+    "venue": "ACL 2026 · Industry Track",
+    "links": [
+      {
+        "href": "https://aclanthology.org/2026.acl-industry.95/",
+        "label": {
+          "en": "Read the paper",
+          "zh": "阅读论文"
+        }
+      }
+    ]
+  },
+  {
+    "id": "look-less-reason-more",
+    "type": "paper",
+    "date": "2026-07",
+    "dateKind": "proceedings",
+    "title": {
+      "en": "Look Less, Reason More",
+      "zh": "Look Less, Reason More"
+    },
+    "summary": {
+      "en": "Rollout-Guided Adaptive Pixel-Space Reasoning.",
+      "zh": "以 rollout 引导自适应像素空间推理。"
+    },
+    "venue": "ACL 2026",
+    "links": [
+      {
+        "href": "https://aclanthology.org/2026.acl-long.225/",
+        "label": {
+          "en": "Read the paper",
+          "zh": "阅读论文"
+        }
+      }
+    ]
+  },
+  {
+    "id": "causalstep-v1",
+    "type": "paper",
+    "date": "2025-07-22",
+    "dateKind": "submission",
+    "title": {
+      "en": "CausalStep",
+      "zh": "CausalStep"
+    },
+    "summary": {
+      "en": "A Benchmark for Explicit Stepwise Causal Reasoning in Videos.",
+      "zh": "面向视频中显式逐步因果推理的评测基准。"
+    },
+    "venue": "arXiv · Preprint",
+    "links": [
+      {
+        "href": "https://arxiv.org/abs/2507.16878",
+        "label": {
+          "en": "Read the preprint",
+          "zh": "阅读预印本"
+        }
+      }
+    ]
+  },
+  {
+    "id": "mm-verirubric-emnlp-2026",
+    "type": "paper",
+    "date": "2026",
+    "dateKind": "conference",
+    "title": {
+      "en": "MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models",
+      "zh": "MM-VeriRubric：基于可验证多模态证据的奖励模型评分准则"
+    },
+    "summary": {
+      "en": "Grounding multimodal reward-model rubrics in task-relevant visual evidence and verifying their consistency.",
+      "zh": "将多模态奖励模型的评分准则建立在任务相关视觉证据之上，并验证其一致性。"
+    },
+    "venue": "EMNLP 2026",
+    "links": [
+      {
+        "href": "research.html#mm-verirubric",
+        "label": {
+          "en": "Research overview",
+          "zh": "研究介绍"
+        }
+      }
+    ]
+  },
+  {
+    "id": "disentangled-privileged-states-emnlp-2026",
+    "type": "paper",
+    "date": "2026",
+    "dateKind": "conference",
+    "title": {
+      "en": "Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training",
+      "zh": "Disentangled Privileged States：用于模拟器辅助多轮对话策略训练的解耦特权状态"
+    },
+    "summary": {
+      "en": "Separating privileged state tracking from simulated user utterances to support multi-turn dialogue policy training.",
+      "zh": "将特权状态跟踪与模拟用户的话语生成解耦，用于支持多轮对话策略训练。"
+    },
+    "venue": "EMNLP 2026",
+    "links": [
+      {
+        "href": "research.html#disentangled-privileged-states",
+        "label": {
+          "en": "Research overview",
+          "zh": "研究介绍"
+        }
+      }
+    ]
+  },
+  {
+    "id": "select-less-reason-more-cvpr-2026",
+    "type": "paper",
+    "date": "2026",
+    "dateKind": "conference",
+    "title": {
+      "en": "Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning",
+      "zh": "Select Less, Reason More：优先考虑证据纯度的视频推理"
+    },
+    "summary": {
+      "en": "Selecting relevant frames and resampling visual evidence for video reasoning.",
+      "zh": "通过选择相关帧并重新采样视觉证据，提升视频推理能力。"
+    },
+    "venue": "CVPR 2026",
+    "links": [
+      {
+        "href": "research.html#select-less-reason-more",
+        "label": {
+          "en": "Research overview",
+          "zh": "研究介绍"
+        }
+      }
+    ]
+  }
+]

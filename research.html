@@ -147,6 +147,8 @@ canvas{display:block;}
   color:var(--teal);background:rgba(63,63,63,.10);border-radius:5px;padding:3px 8px;
 }
 
+.paper-card[id]{scroll-margin-top:100px;}
+
 /* BLOCK 3 — Products (compact vertical list, no dividers) */
 .prod-list{display:flex;flex-direction:column;gap:14px;}
 .prod-item{display:flex;gap:14px;align-items:flex-start;}
@@ -225,8 +227,12 @@ canvas{display:block;}
   .reveal{opacity:1;transform:none;}
 }
 </style>
+<link rel="stylesheet" href="assets/site.css" />
+<link rel="canonical" href="https://tracelite.ai/research.html" />
+<noscript><style>.reveal{opacity:1;transform:none}.intro{display:none!important}.menu-toggle,.lang-toggle{display:none!important}@media(max-width:767px){.nav .nav-links{display:flex;gap:12px}.nav-cta{gap:8px}.nav .nav-links a.lk{font-size:12px}.nav .brand .logo{max-width:95px;height:auto}}</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#research" data-en="Skip to content" data-zh="跳转到内容">Skip to content</a>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -234,11 +240,13 @@ canvas{display:block;}
     <a class="brand" href="index.html" aria-label="TraceLite home">
       <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
     <div class="nav-cta">
-      <div class="nav-links">
+      <div class="nav-links" id="siteMenu">
+        <a class="lk" href="timeline.html" data-i18n="timeline">Timeline</a>
         <a class="lk active" href="research.html" data-i18n="research">Research</a>
         <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
       </div>
       <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a><a class="soc" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu" title="小红书"><img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" /></a><a class="soc" href="wechat.html" aria-label="WeChat official account" title="微信公众号"><img src="images/social/wechat.svg" alt="" aria-hidden="true" /></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu" aria-label="Navigation menu">Menu</button>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
     </div>
   </div>
@@ -290,9 +298,9 @@ canvas{display:block;}
     <div class="tint"></div>
   </div>
   <div class="wrap hero-content">
-    <span class="mono reveal">RESEARCH</span>
-    <h1 class="reveal" data-d="1">What we work on.</h1>
-    <p class="lead reveal" data-d="2">Evaluation, data, and training — connected to trace the path toward more capable agents.</p>
+    <span class="mono reveal" data-en="RESEARCH" data-zh="研究">RESEARCH</span>
+    <h1 class="reveal" data-d="1" data-en="What we work on." data-zh="我们的研究。">What we work on.</h1>
+    <p class="lead reveal" data-d="2" data-en="Evaluation, data, and training — connected to trace the path toward more capable agents." data-zh="连接评测、数据与训练，探索更有能力的智能体。">Evaluation, data, and training — connected to trace the path toward more capable agents.</p>
   </div>
 </header>
 
@@ -301,19 +309,26 @@ canvas{display:block;}
   <div class="wrap">
     <div class="research-stack">
 
+      <article class="report-feature r-block" aria-labelledby="research-report-title">
+        <p class="report-kicker mono" data-en="TECHNICAL REPORT · TRACETRIAL-BENCH" data-zh="技术报告 · TRACETRIAL-BENCH">TECHNICAL REPORT · TRACETRIAL-BENCH</p>
+        <h2 class="report-title" id="research-report-title" data-en="Task success is only part of the story." data-zh="任务成功，只是评测的一部分。">Task success is only part of the story.</h2>
+        <p class="report-summary" data-en="Trial by Trace evaluates task outcomes and the execution framework around an AI agent separately. The report examines 95 mechanism-oriented tasks across seven reliability dimensions, using traces to make the evidence inspectable." data-zh="Trial by Trace 分别评估 AI Agent 的任务结果与执行框架。报告围绕七个可靠性维度设计了 95 项机制导向任务，通过执行轨迹提供可供检查的证据。">Trial by Trace evaluates task outcomes and the execution framework around an AI agent separately. The report examines 95 mechanism-oriented tasks across seven reliability dimensions, using traces to make the evidence inspectable.</p>
+        <a class="report-link col-link" href="trial-by-trace.html" data-en="Explore Trial by Trace →" data-zh="阅读 Trial by Trace 专题 →">Explore Trial by Trace →</a>
+      </article>
+
       <!-- BLOCK 1 — Research Directions -->
-      <div class="r-block" data-masked="directions">
+      <div class="r-block" id="research-directions">
         <div class="r-head">
           <svg class="c-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>
-          <h2>Research Directions</h2>
+          <h2 data-en="Research Directions" data-zh="研究方向">Research Directions</h2>
         </div>
         <div class="dir-list">
-          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
-          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
-          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
-          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3>Placeholder Direction</h3><p>Placeholder description text.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><div class="d-text"><h3 data-en="Agent harness evaluation" data-zh="智能体执行框架评测">Agent harness evaluation</h3><p data-en="Measure task outcomes and harness obligations separately, and study how observed behavior varies across model and harness configurations." data-zh="分别评估任务结果与执行框架应满足的要求，研究不同模型与框架配置下的行为差异。">Measure task outcomes and harness obligations separately, and study how observed behavior varies across model and harness configurations.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/><circle cx="8" cy="5" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="19" r="2"/></svg><div class="d-text"><h3 data-en="Execution traces and evidence" data-zh="执行轨迹与证据">Execution traces and evidence</h3><p data-en="Connect model-visible information, native harness records, and environment observations while preserving their sources and visibility limits." data-zh="关联模型可见信息、原生框架记录与环境观测，保留各自的证据来源和可观测边界。">Connect model-visible information, native harness records, and environment observations while preserving their sources and visibility limits.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17h7M17.5 14v7"/></svg><div class="d-text"><h3 data-en="Mechanism-oriented task design" data-zh="机制导向的任务设计">Mechanism-oriented task design</h3><p data-en="Design tasks that exercise specific mechanisms, from output recovery to tool execution and session handoffs, with explicit evidence contracts." data-zh="围绕输出恢复、工具执行与会话交接等具体机制设计任务，并明确判定所需的证据。">Design tasks that exercise specific mechanisms, from output recovery to tool execution and session handoffs, with explicit evidence contracts.</p></div></div>
+          <div class="dir-item"><svg class="d-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12h4l6-7M11 12l6 7"/></svg><div class="d-text"><h3 data-en="Failure diagnosis and attribution" data-zh="故障诊断与归因">Failure diagnosis and attribution</h3><p data-en="Use declared mechanism chains to identify candidate failure links, keeping observed co-occurrence distinct from validated causal claims." data-zh="借助预先定义的机制链识别候选故障关联，区分同时发生的评测失败与经过验证的因果结论。">Use declared mechanism chains to identify candidate failure links, keeping observed co-occurrence distinct from validated causal claims.</p></div></div>
         </div>
-        <a class="col-link" href="#">Explore all directions →</a>
+        <a class="col-link" href="trial-by-trace.html" data-en="See these directions in TraceTrial-Bench →" data-zh="在 TraceTrial-Bench 中了解这些研究方向 →">See these directions in TraceTrial-Bench →</a>
       </div>
 
       <!-- BLOCK 2 — Papers -->
@@ -323,17 +338,27 @@ canvas{display:block;}
           <h2>Papers</h2>
         </div>
         <div class="papers-strip">
-          <article class="paper-card is-oral" data-year="ACL 2026 Industry" data-tags="Dialogue Agents · Synthetic Data" data-fig="images/papers/simrpd.jpg" data-oral="1" data-abstract="Proactive dialogue agents steer recruitment conversations toward concrete business outcomes, but training them is bottlenecked by the scarcity of high-quality, goal-oriented domain data. SimRPD is a three-stage framework: a high-fidelity user simulator synthesizes large-scale multi-turn conversations, a Chain-of-Intention evaluation framework assesses the simulator and selects high-quality data using both global-level and instance-level metrics, and the agent is then trained on that selection. In a real-world recruitment scenario SimRPD outperforms existing simulator-based data selection strategies.">
+          <article class="paper-card" id="mm-verirubric" data-year="EMNLP 2026" data-tags="Multimodal · Reward Models" data-fig="images/papers/mm-verirubric.jpg" data-abstract="Most multimodal reward models emit only an outcome reward, which is sparse and misses the structure of human preference. MM-VeriRubric builds training data for multimodal rubric generation at scale: task-aware visual clue extraction grounds rubrics in task-relevant image evidence, and rubric-aligned rejected responses with controlled error dimensions let each rubric be verified through consistency checking. The verified data trains both a rubric generator and a rubric-based reward model, improving preference judgment by 16.4% on VL-RewardBench and Best-of-5 selection by 13.1% on MMMU-Pro.">
+            <div class="pc-visual"><img src="images/papers/mm-verirubric.jpg" alt="Main figure — MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models" loading="lazy" /></div>
+            <h3>MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
+            <div class="pc-meta"><span>EMNLP 2026</span><span>Multimodal</span><span>Reward Models</span></div>
+          </article>
+          <article class="paper-card" id="disentangled-privileged-states" data-year="EMNLP 2026" data-tags="Dialogue Policy · Simulators" data-fig="images/papers/dps.jpg" data-abstract="Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.">
+            <div class="pc-visual"><img src="images/papers/dps.jpg" alt="Main figure — Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training" loading="lazy" /></div>
+            <h3>Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
+            <div class="pc-meta"><span>EMNLP 2026</span><span>Dialogue Policy</span><span>Simulators</span></div>
+          </article>
+          <article class="paper-card is-oral" id="simrpd" data-year="ACL 2026 Industry" data-tags="Dialogue Agents · Synthetic Data" data-fig="images/papers/simrpd.jpg" data-oral="1" data-abstract="Proactive dialogue agents steer recruitment conversations toward concrete business outcomes, but training them is bottlenecked by the scarcity of high-quality, goal-oriented domain data. SimRPD is a three-stage framework: a high-fidelity user simulator synthesizes large-scale multi-turn conversations, a Chain-of-Intention evaluation framework assesses the simulator and selects high-quality data using both global-level and instance-level metrics, and the agent is then trained on that selection. In a real-world recruitment scenario SimRPD outperforms existing simulator-based data selection strategies.">
             <div class="pc-visual"><img src="images/papers/simrpd.jpg" alt="Main figure — SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection" loading="lazy" /></div>
             <h3>SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection</h3>
             <div class="pc-meta"><span class="tag-oral">Oral</span><span>ACL 2026 Industry</span><span>Dialogue Agents</span><span>Synthetic Data</span></div>
           </article>
-          <article class="paper-card" data-year="CVPR 2026" data-tags="Video Reasoning · Reinforcement Learning" data-fig="images/papers/earl-select-less.jpg" data-abstract="Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.">
+          <article class="paper-card" id="select-less-reason-more" data-year="CVPR 2026" data-tags="Video Reasoning · Reinforcement Learning" data-fig="images/papers/earl-select-less.jpg" data-abstract="Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.">
             <div class="pc-visual"><img src="images/papers/earl-select-less.jpg" alt="Main figure — Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning" loading="lazy" /></div>
             <h3>Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h3>
             <div class="pc-meta"><span>CVPR 2026</span><span>Video Reasoning</span><span>Reinforcement Learning</span></div>
           </article>
-          <article class="paper-card" data-year="ACL 2026" data-tags="Vision-Language · Reinforcement Learning" data-fig="images/papers/adaptive-pixel-reasoning.jpg" data-abstract="Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.">
+          <article class="paper-card" id="look-less-reason-more" data-year="ACL 2026" data-tags="Vision-Language · Reinforcement Learning" data-fig="images/papers/adaptive-pixel-reasoning.jpg" data-abstract="Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.">
             <div class="pc-visual"><img src="images/papers/adaptive-pixel-reasoning.jpg" alt="Main figure — Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning" loading="lazy" /></div>
             <h3>Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h3>
             <div class="pc-meta"><span>ACL 2026</span><span>Vision-Language</span><span>Reinforcement Learning</span></div>
@@ -347,26 +372,6 @@ canvas{display:block;}
             <div class="pc-visual"><img src="images/papers/causalstep.jpg" alt="Main figure — CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos" loading="lazy" /></div>
             <h3>CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos</h3>
             <div class="pc-meta"><span>arXiv 2025</span><span>Benchmark</span><span>Video Reasoning</span></div>
-          </article>
-          <article class="paper-card" data-year="Manuscript" data-tags="Genomics · Foundation Models" data-fig="images/papers/fishcaduceus.jpg" data-abstract="Genetic improvement in aquaculture depends on resolving functional elements in fish genomes, yet most farmed species lack experimental annotation. FishCaduceus is a single-nucleotide DNA language model pretrained on eight cyprinid genomes, combining a bidirectional Mamba architecture with reverse-complement equivariance and a stratified sampling strategy that offsets differences in genome size and repeat content. Classifiers trained solely on labelled zebrafish data transfer across phylogenetically diverse freshwater and marine fishes at a mean AUPRC of 0.957. In a goldfish twin-tail GWAS region the model prioritizes 24 high-impact candidates out of 4,653 variants and independently identifies the known chdS E127X stop-gain mutation as strongly deleterious.">
-            <div class="pc-visual"><img src="images/papers/fishcaduceus.jpg" alt="Main figure — FishCaduceus: A DNA Language Model for Cyprinid Genomics at Single-Nucleotide Resolution" loading="lazy" /></div>
-            <h3>FishCaduceus: A DNA Language Model for Cyprinid Genomics at Single-Nucleotide Resolution</h3>
-            <div class="pc-meta"><span>Manuscript</span><span>Genomics</span><span>Foundation Models</span></div>
-          </article>
-          <article class="paper-card" data-year="Manuscript" data-tags="Genomics · Benchmark" data-fig="images/papers/fishnalm.jpg" data-abstract="Fish functional genomics has lacked lineage-specific foundation models. FishNALM is a family of DNA foundation language models pretrained on genomes from 8 core cyprinid species and 20 diverse fish species, released alongside FishGUE — a fish genomics benchmark of 17 tasks spanning chromatin features, transcription factor binding sites, promoter identification and splice-site recognition. FishNALM-8L reaches an average MCC of 0.853, performs particularly well on chromatin-related regulatory tasks, and generalizes across species on splice-site prediction. In zero-shot analyses it captures signals associated with mutational consequences and prioritizes low-frequency variants in real population data.">
-            <div class="pc-visual"><img src="images/papers/fishnalm.jpg" alt="Main figure — FishNALM: A Foundation DNA Language Model for Fish Genomes" loading="lazy" /></div>
-            <h3>FishNALM: A Foundation DNA Language Model for Fish Genomes</h3>
-            <div class="pc-meta"><span>Manuscript</span><span>Genomics</span><span>Benchmark</span></div>
-          </article>
-          <article class="paper-card" data-year="Under Review" data-tags="Multimodal · Reward Models" data-fig="images/papers/mm-verirubric.jpg" data-abstract="Most multimodal reward models emit only an outcome reward, which is sparse and misses the structure of human preference. MM-VeriRubric builds training data for multimodal rubric generation at scale: task-aware visual clue extraction grounds rubrics in task-relevant image evidence, and rubric-aligned rejected responses with controlled error dimensions let each rubric be verified through consistency checking. The verified data trains both a rubric generator and a rubric-based reward model, improving preference judgment by 16.4% on VL-RewardBench and Best-of-5 selection by 13.1% on MMMU-Pro.">
-            <div class="pc-visual"><img src="images/papers/mm-verirubric.jpg" alt="Main figure — MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models" loading="lazy" /></div>
-            <h3>MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
-            <div class="pc-meta"><span>Under Review</span><span>Multimodal</span><span>Reward Models</span></div>
-          </article>
-          <article class="paper-card" data-year="Under Review" data-tags="Dialogue Policy · Simulators" data-fig="images/papers/dps.jpg" data-abstract="Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.">
-            <div class="pc-visual"><img src="images/papers/dps.jpg" alt="Main figure — Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training" loading="lazy" /></div>
-            <h3>Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
-            <div class="pc-meta"><span>Under Review</span><span>Dialogue Policy</span><span>Simulators</span></div>
           </article>
           <article class="paper-card" data-year="Under Review" data-tags="Embodied Agents · Planning" data-fig="images/papers/eviseek.jpg" data-abstract="Embodied agents can acquire the evidence a task needs through interaction rather than waiting for it to appear in passive observation — the hard part is knowing what evidence is required and turning that into something to go do. EviSeek is a training-free framework with three parts: Evidence-Demand Planning derives explicit, answer-agnostic evidence demands and matching acquisition goals; Evidence-Seeking Interaction pursues them through viewpoint changes or physical intervention; and Evidence-Oriented Memory retains demand-linked evidence and tracks coverage, with the final answer generated solely from what was retained. It substantially improves answer and grounded accuracy on ESI-Bench and achieves the best path-weighted correctness on EXPRESS-Bench.">
             <div class="pc-visual"><img src="images/papers/eviseek.jpg" alt="Main figure — EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking" loading="lazy" /></div>
@@ -423,6 +428,7 @@ canvas{display:block;}
         <p class="f-tag">Open research for evolving intelligence.</p>
       </div>
       <div class="f-col">
+        <a href="timeline.html" data-i18n="timeline">Timeline</a>
         <a href="research.html">Research</a>
         <a href="blog.html">Blog</a>
         <a href="mailto:contact@tracelite.ai">contact@tracelite.ai</a>
@@ -465,7 +471,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     pmTitle.textContent = card.querySelector('h3')?.textContent || '';
     const year = card.dataset.year || '';
     const tags = (card.dataset.tags || '').split('·').map(s=>s.trim()).filter(Boolean);
-    pmMeta.innerHTML = (year?`<span>${year}</span>`:'') + tags.map(t=>`<span>${t}</span>`).join('');
+    const oralBadge = card.querySelector('.tag-oral')?.outerHTML || '';
+    pmMeta.innerHTML = (year?`<span>${year}</span>`:'') + oralBadge + tags.map(t=>`<span>${t}</span>`).join('');
     pmAbstract.textContent = card.dataset.abstract || '';
     const fig = card.dataset.fig || '';
     const figWrap = pmFig.parentElement;
@@ -491,20 +498,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
 })();
 
-/* language toggle for nav (EN / 中文) */
-(function(){
-  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
-  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
-  const btn = document.getElementById('langToggle');
-  let zh = false;
-  function apply(){
-    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
-    btn.textContent = zh ? 'EN' : '中';
-    document.documentElement.lang = zh ? 'zh' : 'en';
-  }
-  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
-  apply();
-})();
+
 </script>
+<script src="assets/site.js"></script>
 </body>
 </html>

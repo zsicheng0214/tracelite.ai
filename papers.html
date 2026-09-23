@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Papers — TraceLite</title>
-<meta name="description" content="Publications from TraceLite — agent evaluation, multimodal reasoning, dialogue agents and fish genomics." />
+<meta name="description" content="Publications from TraceLite — agent evaluation, multimodal reasoning, and dialogue agents." />
 <link rel="icon" type="image/png" href="images/favicon.png" />
 <link rel="apple-touch-icon" href="images/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -207,8 +207,12 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   .reveal{opacity:1;transform:none;}
 }
 </style>
+<link rel="stylesheet" href="assets/site.css" />
+<link rel="canonical" href="https://tracelite.ai/papers.html" />
+<noscript><style>.reveal{opacity:1;transform:none}.intro{display:none!important}.menu-toggle,.lang-toggle{display:none!important}@media(max-width:767px){.nav .nav-links{display:flex;gap:12px}.nav-cta{gap:8px}.nav .nav-links a.lk{font-size:12px}.nav .brand .logo{max-width:95px;height:auto}}</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#papers" data-en="Skip to content" data-zh="跳转到内容">Skip to content</a>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -216,11 +220,13 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
     <a class="brand" href="index.html" aria-label="TraceLite home">
       <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
     <div class="nav-cta">
-      <div class="nav-links">
+      <div class="nav-links" id="siteMenu">
+        <a class="lk" href="timeline.html" data-i18n="timeline">Timeline</a>
         <a class="lk active" href="research.html" data-i18n="research">Research</a>
         <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
       </div>
       <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a><a class="soc" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu" title="小红书"><img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" /></a><a class="soc" href="wechat.html" aria-label="WeChat official account" title="微信公众号"><img src="images/social/wechat.svg" alt="" aria-hidden="true" /></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu" aria-label="Navigation menu">Menu</button>
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
     </div>
   </div>
@@ -274,7 +280,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   <div class="wrap hero-content">
     <span class="mono reveal">PUBLICATIONS</span>
     <h1 class="reveal" data-d="1">Papers.</h1>
-    <p class="lead reveal" data-d="2">Work from the TraceLite team on agent evaluation, multimodal reasoning, dialogue agents, and genomics.</p>
+    <p class="lead reveal" data-d="2">Work from the TraceLite team on agent evaluation, multimodal reasoning, and dialogue agents.</p>
   </div>
 </header>
 
@@ -282,6 +288,27 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
 <section class="paper-list" id="papers">
   <div class="wrap">
     <ol class="pl-list" id="plList">
+      <li class="pl-item has-link">
+        <a class="pl-hit" href="trial-by-trace.html" aria-labelledby="trial-paper-title"></a>
+        <div class="pl-main">
+          <h3 class="pl-title" id="trial-paper-title" data-en="Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution" data-zh="Trial by Trace：AI Agent 执行框架的可靠性评测与故障归因">Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution</h3>
+          <p class="pl-authors" data-en="TraceLite AI" data-zh="TraceLite AI">TraceLite AI</p>
+          <p class="pl-authors" data-en="TraceTrial-Bench · 95 tasks across seven harness reliability dimensions, with separate task-outcome and harness assessments." data-zh="TraceTrial-Bench · 95 项任务覆盖七个执行框架可靠性维度，分别评估任务结果与框架表现。">TraceTrial-Bench · 95 tasks across seven harness reliability dimensions, with separate task-outcome and harness assessments.</p>
+        </div>
+        <div class="pl-side"><span class="pl-badge" data-en="Technical report" data-zh="技术报告">Technical report</span><span class="pl-venue" data-en="September 2026" data-zh="2026 年 9 月">September 2026</span></div>
+      </li>
+      <li class="pl-item">
+        <div class="pl-main">
+          <h3 class="pl-title">MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
+        </div>
+        <div class="pl-side"><span class="pl-venue">EMNLP 2026</span></div>
+      </li>
+      <li class="pl-item">
+        <div class="pl-main">
+          <h3 class="pl-title">Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
+        </div>
+        <div class="pl-side"><span class="pl-venue">EMNLP 2026</span></div>
+      </li>
       <li class="pl-item is-oral has-link">
         <a class="pl-hit" href="https://aclanthology.org/2026.acl-industry.95/" target="_blank" rel="noopener" aria-label="SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection"></a>
         <div class="pl-main">
@@ -323,34 +350,6 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
       </li>
       <li class="pl-item">
         <div class="pl-main">
-          <h3 class="pl-title">FishCaduceus: A DNA Language Model for Cyprinid Genomics at Single-Nucleotide Resolution</h3>
-          <p class="pl-authors">Bo Wang, Zhiyong Cao, Qi Fang, Jintao Li, Zhi Yang, Yiliang Wei, Changyu Fan, Wanting Zhang, Yingyin Cheng, Yonghua Sun, Mijuan Shi, Xiao-Qin Xia</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Manuscript</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
-          <h3 class="pl-title">FishNALM: A Foundation DNA Language Model for Fish Genomes</h3>
-          <p class="pl-authors">Bo Wang, Zhiyong Cao, Qi Fang, Shuo Wang, Yiliang Wei, Wanting Zhang, Yingyin Cheng, Yonghua Sun, Mijuan Shi, Xiao-Qin Xia</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Manuscript</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
-          <h3 class="pl-title">MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
-          <p class="pl-authors"><span class="pl-anon">Anonymous submission</span></p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Under Review</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
-          <h3 class="pl-title">Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
-          <p class="pl-authors"><span class="pl-anon">Anonymous submission</span></p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Under Review</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
           <h3 class="pl-title">EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking</h3>
           <p class="pl-authors"><span class="pl-anon">Anonymous submission</span></p>
         </div>
@@ -378,6 +377,7 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
         <p class="f-tag">Open research for evolving intelligence.</p>
       </div>
       <div class="f-col">
+        <a href="timeline.html" data-i18n="timeline">Timeline</a>
         <a href="research.html">Research</a>
         <a href="blog.html">Blog</a>
         <a href="mailto:contact@tracelite.ai">contact@tracelite.ai</a>
@@ -414,20 +414,7 @@ const io = new IntersectionObserver((entries)=>{
 },{threshold:.16, rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* language toggle for nav (EN / 中文) */
-(function(){
-  const dict = { research:['Research','研究'], blog:['Blog','博客'], contact:['Contact','联系'] };
-  const navItems = Array.from(document.querySelectorAll('[data-i18n]'));
-  const btn = document.getElementById('langToggle');
-  let zh = false;
-  function apply(){
-    navItems.forEach(el=>{ const k=el.dataset.i18n; el.textContent = dict[k][zh?1:0]; });
-    btn.textContent = zh ? 'EN' : '中';
-    document.documentElement.lang = zh ? 'zh' : 'en';
-  }
-  btn.addEventListener('click', ()=>{ zh=!zh; apply(); });
-  apply();
-})();
+
 
 /* ===== Blog article modal ===== */
 (function(){
@@ -508,5 +495,6 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   render();
 })();
 </script>
+<script src="assets/site.js"></script>
 </body>
 </html>
