@@ -33,10 +33,10 @@
       const isBright = k<0.16;
       let color;
       if(isBright){
-        color = Math.random()<0.65 ? '#7FA9A2' : '#0E5E54';
+        color = Math.random()<0.65 ? '#A8A8A8' : '#3A3A3A';
       } else {
         const r = Math.random();
-        color = r<0.45 ? '#7FA9A2' : (r<0.88 ? '#0E5E54' : '#14A08E');
+        color = r<0.45 ? '#A8A8A8' : (r<0.88 ? '#3A3A3A' : '#555555');
       }
       points.push({x,y,z,type:isBright?'bright':'p',
         color:color,
@@ -48,10 +48,10 @@
       const a = (i/M)*TAU + rand(-0.05,0.05);
       const rr = rand(0.96,0.99);            // sit just inside the outer edge
       rimPoints.push({x:Math.cos(a)*rr, y:Math.sin(a)*rr, z:Math.sqrt(Math.max(0,1-rr*rr))*(Math.random()<0.5?-1:1),
-        color:'#0E5E54', size:rand(0.9,1.4), phase:Math.random()*TAU, sp:rand(0.3,0.8)});
+        color:'#3A3A3A', size:rand(0.9,1.4), phase:Math.random()*TAU, sp:rand(0.3,0.8)});
     }
     const rings = window.innerWidth<768 ? 3 : 5;
-    for(let i=0;i<rings;i++) orbits.push({axis:(i/rings)*Math.PI,tilt:-0.55+1.1*(i/Math.max(1,rings-1)),rad:0.72+0.055*i,sp:rand(0.35,0.6),off:(i/rings)*TAU,color:i%2?'#7FA9A2':'#0E5E54',alpha:0.11});
+    for(let i=0;i<rings;i++) orbits.push({axis:(i/rings)*Math.PI,tilt:-0.55+1.1*(i/Math.max(1,rings-1)),rad:0.72+0.055*i,sp:rand(0.35,0.6),off:(i/rings)*TAU,color:i%2?'#A8A8A8':'#3A3A3A',alpha:0.11});
   }
   function rot(p,ax,ay){
     let x=p.x*Math.cos(ax)-p.z*Math.sin(ax), z=p.x*Math.sin(ax)+p.z*Math.cos(ax);
@@ -90,7 +90,7 @@
       let rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.03*Math.sin(a*2)});
       const pr=project(rp); if(i===0)ctx.moveTo(pr.sx,pr.sy); else ctx.lineTo(pr.sx,pr.sy);
     }
-    ctx.strokeStyle='rgba(14,94,84,0.38)'; ctx.lineWidth=1.4; ctx.stroke();
+    ctx.strokeStyle='rgba(58,58,58,0.38)'; ctx.lineWidth=1.4; ctx.stroke();
 
     // words + node dots — each word hangs from its node on the orbit via a short stem
     wordLoop.forEach((w,idx)=>{
@@ -119,16 +119,16 @@
       const lx=pr.sx+nx*stem, ly=pr.sy+ny*stem;
 
       // stem from orbit to label
-      ctx.globalAlpha=0.35+depth*0.45; ctx.strokeStyle='#0E5E54'; ctx.lineWidth=1;
+      ctx.globalAlpha=0.35+depth*0.45; ctx.strokeStyle='#3A3A3A'; ctx.lineWidth=1;
       ctx.beginPath(); ctx.moveTo(pr.sx,pr.sy); ctx.lineTo(lx,ly); ctx.stroke();
 
       // node dot on the orbit (skip for EVALUATE node — the four-point star anchors it)
       const dotR=2.8+b*2.6;
       if(idx!==0){
         ctx.globalAlpha=0.45+depth*0.45;
-        ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR,0,TAU); ctx.fillStyle='#0E5E54'; ctx.fill();
+        ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR,0,TAU); ctx.fillStyle='#3A3A3A'; ctx.fill();
         if(b>0.02){
-          ctx.globalAlpha=0.18*b; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR*3.2,0,TAU); ctx.fillStyle='#0E5E54'; ctx.fill();
+          ctx.globalAlpha=0.18*b; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,dotR*3.2,0,TAU); ctx.fillStyle='#3A3A3A'; ctx.fill();
         }
       }
 
@@ -154,17 +154,17 @@
         ctx.globalCompositeOperation='lighter';
         const haloR = baseR*1.3*glowScale + baseR*0.7;
         const g0=ctx.createRadialGradient(pr.sx,sy,0,pr.sx,sy,haloR);
-        g0.addColorStop(0,`rgba(12,122,108,${0.5*glowAlpha})`);
-        g0.addColorStop(0.45,`rgba(12,122,108,${0.28*glowAlpha})`);
-        g0.addColorStop(1,'rgba(12,122,108,0)');
+        g0.addColorStop(0,`rgba(43,43,43,${0.5*glowAlpha})`);
+        g0.addColorStop(0.45,`rgba(43,43,43,${0.28*glowAlpha})`);
+        g0.addColorStop(1,'rgba(43,43,43,0)');
         ctx.globalAlpha=1; ctx.fillStyle=g0;
         ctx.beginPath(); ctx.arc(pr.sx,sy,haloR,0,TAU); ctx.fill();
         ctx.restore();
         // star body — slender four-point star, solid teal (no white center), soft falloff
         const sg=ctx.createRadialGradient(pr.sx,sy,0,pr.sx,sy,Ry);
-        sg.addColorStop(0,'#0C7A6C');
-        sg.addColorStop(0.45,'#0C7A6C');
-        sg.addColorStop(1,'rgba(12,122,108,0.82)');
+        sg.addColorStop(0,'#2B2B2B');
+        sg.addColorStop(0.45,'#2B2B2B');
+        sg.addColorStop(1,'rgba(43,43,43,0.82)');
         ctx.globalAlpha=coreAlpha;
         ctx.fillStyle=sg;
         drawStar(pr.sx,sy,Rx,Ry,rot); ctx.fill();
@@ -179,7 +179,7 @@
       const margin=10;
       if(fx - tw/2 < margin) fx = margin + tw/2;
       if(fx + tw/2 > W - margin) fx = W - margin - tw/2;
-      ctx.fillStyle = idx===0 ? '#0B1D23' : '#3E5A5F';
+      ctx.fillStyle = idx===0 ? '#111111' : '#4A4A4A';
       ctx.globalAlpha=0.65 + depth*0.35 + b*0.35;
       ctx.fillText(w.word, fx, ly);
     });
@@ -191,8 +191,8 @@
     let rp=rotFn({x:Math.cos(a)*rad,y:Math.sin(a)*rad,z:0.04*Math.sin(a*2)});
     const pr=project(rp); const depth=(rp.z+1)/2;
     const R0=3.4; // ~2.6 * 1.3
-    ctx.globalAlpha=0.18 + depth*0.32; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*2.6,0,TAU); ctx.fillStyle='#14A08E'; ctx.fill();
-    ctx.globalAlpha=0.9 + depth*0.1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0,0,TAU); ctx.fillStyle='#14A08E'; ctx.fill();
+    ctx.globalAlpha=0.18 + depth*0.32; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*2.6,0,TAU); ctx.fillStyle='#555555'; ctx.fill();
+    ctx.globalAlpha=0.9 + depth*0.1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0,0,TAU); ctx.fillStyle='#555555'; ctx.fill();
     ctx.globalAlpha=1; ctx.beginPath(); ctx.arc(pr.sx,pr.sy,R0*0.45,0,TAU); ctx.fillStyle='#FFFFFF'; ctx.fill();
     ctx.globalAlpha=1;
   }
