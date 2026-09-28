@@ -61,11 +61,44 @@
 /* Homepage timeline: drift slowly through all entries; pause on hover, focus or touch. */
 (() => {
   const box = document.querySelector('.timeline-home-entries');
-  if (!box || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!box) return;
+  // Always-visible custom rail + controls (macOS hides native scrollbars).
+  const frame = document.createElement('div'); frame.className = 'tl-frame';
+  box.parentNode.insertBefore(frame, box); frame.appendChild(box);
+  const rail = document.createElement('div'); rail.className = 'tl-rail';
+  const thumb = document.createElement('div'); thumb.className = 'tl-thumb'; rail.appendChild(thumb);
+  frame.appendChild(rail);
+  const zh = document.documentElement.lang === 'zh-CN';
+  const n = box.querySelectorAll('.timeline-home-entry, article, li').length || '';
+  const bar = document.createElement('div'); bar.className = 'tl-controls';
+  const mk = (cls, en, zhTxt, label) => { const b = document.createElement('button'); b.type = 'button'; b.className = cls; b.textContent = label; b.setAttribute('aria-label', zh ? zhTxt : en); return b; };
+  const up = mk('tl-btn', 'Scroll up', '向上滚动', '\u2191');
+  const down = mk('tl-btn', 'Scroll down', '向下滚动', '\u2193');
+  const hint = document.createElement('span'); hint.className = 'tl-hint';
+  hint.dataset.en = 'Scroll to see all entries'; hint.dataset.zh = '滚动查看全部条目';
+  hint.textContent = zh ? hint.dataset.zh : hint.dataset.en;
+  bar.append(up, down, hint); frame.appendChild(bar);
+  function sync() {
+    const max = box.scrollHeight - box.clientHeight;
+    const h = Math.max(36, rail.clientHeight * box.clientHeight / box.scrollHeight);
+    thumb.style.height = h + 'px';
+    thumb.style.transform = 'translateY(' + (max > 0 ? (rail.clientHeight - h) * box.scrollTop / max : 0) + 'px)';
+    frame.classList.toggle('no-overflow', max <= 4);
+    up.disabled = box.scrollTop <= 2; down.disabled = box.scrollTop >= max - 2;
+  }
+  box.addEventListener('scroll', sync, {passive:true}); window.addEventListener('resize', sync); sync();
   let paused = false, last = 0, wait = 0, pos = 0;
+  const nudge = d => { paused = true; box.scrollBy({top: d * box.clientHeight * 0.6, behavior: 'smooth'}); setTimeout(() => { pos = box.scrollTop; }, 600); };
+  up.addEventListener('click', () => nudge(-1)); down.addEventListener('click', () => nudge(1));
+  rail.addEventListener('click', e => { if (e.target === thumb) return; const r = rail.getBoundingClientRect(); paused = true; box.scrollTo({top: (e.clientY - r.top) / r.height * (box.scrollHeight - box.clientHeight), behavior: 'smooth'}); });
+  let drag = null;
+  thumb.addEventListener('pointerdown', e => { drag = {y: e.clientY, top: box.scrollTop}; paused = true; thumb.setPointerCapture(e.pointerId); e.preventDefault(); });
+  thumb.addEventListener('pointermove', e => { if (!drag) return; const ratio = (box.scrollHeight - box.clientHeight) / (rail.clientHeight - thumb.offsetHeight); box.scrollTop = drag.top + (e.clientY - drag.y) * ratio; });
+  thumb.addEventListener('pointerup', () => { drag = null; pos = box.scrollTop; });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const pause = () => { paused = true; };
   const resume = () => { paused = false; pos = box.scrollTop; };
-  box.addEventListener('mouseenter', pause); box.addEventListener('mouseleave', resume);
+  frame.addEventListener('mouseenter', pause); frame.addEventListener('mouseleave', resume);
   box.addEventListener('focusin', pause); box.addEventListener('focusout', resume);
   box.addEventListener('touchstart', pause, {passive:true}); box.addEventListener('touchend', () => setTimeout(resume, 2500), {passive:true});
   box.addEventListener('wheel', () => { pos = box.scrollTop; }, {passive:true});

@@ -70,9 +70,18 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .note-row .note-thumb{background:#E4ECEA;}
 
 /* Homepage timeline: scrolling panel with slow auto-scroll */
-.timeline-home-entries{position:relative;max-height:560px;overflow-y:auto;overscroll-behavior:contain;padding-right:12px;padding-left:8px;scrollbar-width:auto;scrollbar-color:rgba(12,122,108,.6) rgba(11,29,35,.06);scrollbar-gutter:stable;
+.timeline-home-entries{position:relative;max-height:560px;overflow-y:auto;overscroll-behavior:contain;padding-right:12px;padding-left:8px;scrollbar-width:none;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 28px,#000 calc(100% - 64px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 28px,#000 calc(100% - 64px),transparent 100%);padding-top:14px;padding-bottom:48px;}
-.timeline-home-entries::-webkit-scrollbar{width:8px;}
-.timeline-home-entries::-webkit-scrollbar-track{background:rgba(11,29,35,.06);border-radius:4px;}
-.timeline-home-entries::-webkit-scrollbar-thumb{background:rgba(12,122,108,.6);border-radius:4px;}
+.timeline-home-entries::-webkit-scrollbar{display:none;}
 @media(max-width:767px){.timeline-home-entries{max-height:480px;}}
+
+.tl-frame{position:relative;padding-right:22px;min-width:0;}
+.tl-rail{position:absolute;top:14px;right:0;bottom:62px;width:6px;border-radius:3px;background:rgba(11,29,35,.10);cursor:pointer;}
+.tl-thumb{position:absolute;left:0;top:0;width:100%;border-radius:3px;background:var(--teal,#0C7A6C);cursor:grab;touch-action:none;}
+.tl-thumb:active{cursor:grabbing;}
+.tl-controls{display:flex;align-items:center;gap:10px;margin-top:14px;padding-left:8px;}
+.tl-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(12,122,108,.45);background:transparent;color:var(--teal,#0C7A6C);font-size:16px;line-height:1;cursor:pointer;transition:background .15s,color .15s,opacity .15s;}
+.tl-btn:hover:not(:disabled){background:var(--teal,#0C7A6C);color:#fff;}
+.tl-btn:disabled{opacity:.3;cursor:default;}
+.tl-hint{font-size:13px;color:var(--muted,#5b6b70);letter-spacing:.02em;}
+.tl-frame.no-overflow .tl-rail,.tl-frame.no-overflow .tl-controls{display:none;}
