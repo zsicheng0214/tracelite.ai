@@ -70,8 +70,9 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .note-row .note-thumb{background:#E4ECEA;}
 
 /* Homepage timeline: scrolling panel with slow auto-scroll */
-.timeline-home-entries{position:relative;max-height:560px;overflow-y:auto;overscroll-behavior:contain;padding-right:12px;padding-left:8px;scrollbar-width:thin;scrollbar-color:rgba(12,122,108,.35) transparent;
+.timeline-home-entries{position:relative;max-height:560px;overflow-y:auto;overscroll-behavior:contain;padding-right:12px;padding-left:8px;scrollbar-width:auto;scrollbar-color:rgba(12,122,108,.6) rgba(11,29,35,.06);scrollbar-gutter:stable;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 28px,#000 calc(100% - 64px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 28px,#000 calc(100% - 64px),transparent 100%);padding-top:14px;padding-bottom:48px;}
-.timeline-home-entries::-webkit-scrollbar{width:6px;}
-.timeline-home-entries::-webkit-scrollbar-thumb{background:rgba(12,122,108,.35);border-radius:3px;}
+.timeline-home-entries::-webkit-scrollbar{width:8px;}
+.timeline-home-entries::-webkit-scrollbar-track{background:rgba(11,29,35,.06);border-radius:4px;}
+.timeline-home-entries::-webkit-scrollbar-thumb{background:rgba(12,122,108,.6);border-radius:4px;}
 @media(max-width:767px){.timeline-home-entries{max-height:480px;}}
