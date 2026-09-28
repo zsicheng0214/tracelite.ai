@@ -174,10 +174,10 @@
     "venue": "CVPR 2026",
     "links": [
       {
-        "href": "https://arxiv.org/abs/2510.15440",
+        "href": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Select_Less_Reason_More_Prioritizing_Evidence_Purity_for_Video_Reasoning_CVPR_2026_paper.html",
         "label": {
-          "en": "Read on arXiv",
-          "zh": "arXiv 论文"
+          "en": "Read the paper",
+          "zh": "阅读论文"
         }
       }
     ]
