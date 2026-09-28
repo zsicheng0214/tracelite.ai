@@ -62,7 +62,7 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .blog-preview-image img{filter:none!important;}
 
 /* Footer */
-.footer{background:var(--ocean);}
+.footer:not(.wrap){background:var(--ocean);}
 .footer .f-bottom{border-top-color:rgba(255,255,255,.14);}
 
 /* Blog list: roadmap badge */
