@@ -139,13 +139,10 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   align-items:start;padding:22px 4px;border-top:1px solid var(--border);
   transition:background-color .25s var(--ease-soft),padding-left .25s var(--ease);}
 .pl-item:last-child{border-bottom:1px solid var(--border);}
-.pl-item.is-oral{background:linear-gradient(90deg,rgba(255,255,255,.55),rgba(255,255,255,0));
-  box-shadow:inset 3px 0 0 var(--teal);padding-left:16px;}
 /* 整行热区：铺满这一行，点哪儿都跳 */
 .pl-hit{position:absolute;inset:0;z-index:1;}
 .pl-item.has-link{cursor:pointer;}
 .pl-item.has-link:hover{background-color:rgba(255,255,255,.62);padding-left:12px;}
-.pl-item.has-link.is-oral:hover{padding-left:22px;}
 .pl-item.has-link:hover .pl-title{color:var(--teal);}
 .pl-item.has-link:focus-within{outline:2px solid var(--teal);outline-offset:2px;}
 .pl-title{transition:color .25s var(--ease-soft);}
