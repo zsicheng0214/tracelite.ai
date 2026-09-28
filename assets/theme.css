@@ -125,3 +125,18 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .home-ext .out-link{color:var(--text);}
 @media(max-width:900px){.home-ext .paper-items{grid-template-columns:1fr;}}
 @media(max-width:520px){.home-ext .item .ph-thumb{width:96px;height:68px;}}
+
+/* ---- Motion layer (assets/motion.js) ---- */
+.mo-progress{position:fixed;left:0;top:0;right:0;height:2px;background:#111;transform-origin:0 50%;transform:scaleX(0);z-index:200;pointer-events:none;}
+.mo .mo-rise{opacity:0;transform:translateY(28px);filter:blur(6px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s ease;transition-delay:calc(var(--mo-i,0) * 70ms);}
+.mo .mo-rise.mo-in{opacity:1;transform:none;filter:none;}
+.mo .hero h1 .mo-line{display:inline-block;white-space:pre;opacity:0;transform:translateY(.45em);filter:blur(10px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1),filter 1s ease;transition-delay:calc(.15s + var(--mo-i,0) * 140ms);}
+.mo .hero h1.mo-go .mo-line{opacity:1;transform:none;filter:none;}
+.hero .mo-field{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.hero>.wrap{position:relative;z-index:1;}
+.mo-tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s;will-change:transform;position:relative;}
+.mo-tilt:hover{transition:transform .12s linear,box-shadow .3s,border-color .3s;}
+.mo-tilt::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(420px circle at var(--sx,50%) var(--sy,50%),rgba(255,255,255,.55),rgba(255,255,255,0) 45%);}
+.mo-tilt:hover::after{opacity:1;}
+.home-ext .blog-prev.mo-tilt:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-4px);}
+.hero-cta .btn{transition:transform .35s cubic-bezier(.2,.7,.2,1),background .3s,color .3s,border-color .3s;}
