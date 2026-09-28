@@ -154,3 +154,9 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
   .ev-date{grid-column:1/-1;}
   .ev-link{justify-self:start;}
 }
+/* Timeline page: same compact header as the other sub-pages */
+.timeline-hero.is-compact{padding-block:56px 28px;}
+.timeline-hero.is-compact .hero-heading{display:block;min-height:0;}
+.timeline-hero.is-compact .timeline-hero-copy{padding-block:0;}
+.timeline-hero.is-compact .timeline-visual,.timeline-hero.is-compact .timeline-jump{display:none;}
+.timeline-hero.is-compact .hero-description{margin-top:10px;font-size:15px;line-height:1.6;max-width:none;}
