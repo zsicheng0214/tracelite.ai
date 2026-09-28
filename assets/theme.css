@@ -96,3 +96,10 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
   .page-hero .hero-content{grid-template-columns:1fr;}
   .page-hero p.lead{margin-top:16px;}
 }
+/* Compact header: no big title, just the gray line */
+.page-hero.is-compact{padding-top:128px;padding-bottom:28px;}
+.page-hero.is-compact .hero-content{grid-template-columns:1fr;}
+.page-hero.is-compact .hero-content>.mono{margin-bottom:10px;}
+.page-hero.is-compact p.lead{margin:0;font-size:15px;line-height:1.6;color:var(--text-2);}
+.page-hero.is-compact{border-bottom:0;padding-bottom:8px;}
+.page-hero.is-compact + .paper-list{padding-top:24px;}
