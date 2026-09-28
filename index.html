@@ -331,6 +331,8 @@ html.intro-lock{overflow:hidden;}
 <link rel="stylesheet" href="assets/site.css" />
 <link rel="canonical" href="https://tracelite.ai/" />
 <noscript><style>.reveal{opacity:1;transform:none}.intro{display:none!important}.menu-toggle,.lang-toggle{display:none!important}@media(max-width:767px){.nav .nav-links{display:flex;gap:12px}.nav-cta{gap:8px}.nav .nav-links a.lk{font-size:12px}.nav .brand .logo{max-width:95px;height:auto}}</style></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/theme.css" />
 </head>
 <body>
 <a class="skip-link" href="#main" data-en="Skip to content" data-zh="跳转到内容">Skip to content</a>
@@ -513,35 +515,35 @@ html.intro-lock{overflow:hidden;}
         <div class="section-head">
           <span class="eyebrow">Blog</span>
           <h2 class="title" id="blogTitle" data-en="Notes from the lab." data-zh="研究手记。">Notes from the lab.</h2>
-          <p class="blog-section-lead" data-en="Ideas, methods, and lessons from building intelligent systems." data-zh="记录构建智能系统过程中的想法、方法与实践心得。">Ideas, methods, and lessons from building intelligent systems.</p>
+          <p class="blog-section-lead" data-en="What we are working on, and what we plan to build next." data-zh="我们在做什么，接下来打算做什么。">What we are working on, and what we plan to build next.</p>
         </div>
         <a class="out-link blog-all-link" href="blog.html"><span data-en="Explore the blog" data-zh="查看全部文章">Explore the blog</span><span aria-hidden="true">→</span></a>
       </div>
       <div class="blog-prev-grid">
-        <a class="blog-prev glass reveal" href="blog.html#useful-agent-benchmarks" data-d="1">
-          <div class="blog-preview-image"><img src="images/benchmark.png" alt="" loading="lazy" decoding="async" width="640" height="360"></div>
+        <a class="blog-prev glass reveal" href="blog.html#environment-dimensions" data-d="1">
+          <div class="blog-preview-image"><img src="images/blog/environment.svg" alt="" loading="lazy" decoding="async" width="640" height="400"></div>
           <div class="bp-body">
-            <span class="bp-topic" data-en="Evaluation / Agents" data-zh="评测 / 智能体">Evaluation / Agents</span>
-            <h3 data-en="What makes an agent benchmark useful?" data-zh="什么样的 Agent 评测才有用？">What makes an agent benchmark useful?</h3>
-            <p data-en="Designing evaluations that reveal how agents handle real tasks." data-zh="如何设计评测，才能看见智能体处理真实任务的能力。">Designing evaluations that reveal how agents handle real tasks.</p>
+            <span class="bp-topic" data-en="Roadmap / Environment" data-zh="路线图 / 环境">Roadmap / Environment</span>
+            <h3 data-en="What is an agent&#x27;s environment made of?" data-zh="Agent 的环境到底由什么组成">What is an agent&#x27;s environment made of?</h3>
+            <p data-en="We want to describe an environment the way we describe a model: by listing the factors that change what the right move is." data-zh="我们想像描述模型一样描述环境：列出那些会改变正确做法的因素。">We want to describe an environment the way we describe a model: by listing the factors that change what the right move is.</p>
             <span class="blog-read"><span data-en="Read the note" data-zh="阅读文章">Read the note</span><span aria-hidden="true">↗</span></span>
           </div>
         </a>
-        <a class="blog-prev glass reveal" href="blog.html#synthetic-trajectories" data-d="2">
-          <div class="blog-preview-image"><img src="images/trajectories.png" alt="" loading="lazy" decoding="async" width="640" height="360"></div>
+        <a class="blog-prev glass reveal" href="blog.html#evaluating-harnesses" data-d="2">
+          <div class="blog-preview-image"><img src="images/blog/harness.svg" alt="" loading="lazy" decoding="async" width="640" height="400"></div>
           <div class="bp-body">
-            <span class="bp-topic" data-en="Synthetic data / Training" data-zh="合成数据 / 训练">Synthetic data / Training</span>
-            <h3 data-en="Why synthetic trajectories fail silently" data-zh="合成轨迹为何会悄然失效？">Why synthetic trajectories fail silently</h3>
-            <p data-en="A plausible sequence of actions can still miss the reasoning that training needs." data-zh="看似合理的行动序列，也可能缺少训练真正需要的推理过程。">A plausible sequence of actions can still miss the reasoning that training needs.</p>
+            <span class="bp-topic" data-en="Roadmap / Evaluation" data-zh="路线图 / 评测">Roadmap / Evaluation</span>
+            <h3 data-en="Evaluating the harness, not just the model" data-zh="评测运行框架，而不只是模型">Evaluating the harness, not just the model</h3>
+            <p data-en="The same model can behave very differently inside different agent harnesses. We want that difference to be measurable." data-zh="同一个模型放进不同的运行框架，表现可以差很多。我们想让这个差别能被量出来。">The same model can behave very differently inside different agent harnesses. We want that difference to be measurable.</p>
             <span class="blog-read"><span data-en="Read the note" data-zh="阅读文章">Read the note</span><span aria-hidden="true">↗</span></span>
           </div>
         </a>
-        <a class="blog-prev glass reveal" href="blog.html#beyond-pass-at-one" data-d="3">
-          <div class="blog-preview-image"><img src="images/metrics.png" alt="" loading="lazy" decoding="async" width="640" height="360"></div>
+        <a class="blog-prev glass reveal" href="blog.html#failures-to-training-data" data-d="3">
+          <div class="blog-preview-image"><img src="images/blog/failures.svg" alt="" loading="lazy" decoding="async" width="640" height="400"></div>
           <div class="bp-body">
-            <span class="bp-topic" data-en="Metrics / Evaluation" data-zh="指标 / 评测">Metrics / Evaluation</span>
-            <h3 data-en="Beyond pass@1: measuring agent capability" data-zh="超越 pass@1：如何衡量智能体能力">Beyond pass@1: measuring agent capability</h3>
-            <p data-en="Looking at recovery, cost, and consistency alongside first-attempt success." data-zh="除了首次成功率，还要观察失败恢复、成本与持续表现。">Looking at recovery, cost, and consistency alongside first-attempt success.</p>
+            <span class="bp-topic" data-en="Roadmap / Training data" data-zh="路线图 / 训练数据">Roadmap / Training data</span>
+            <h3 data-en="Turning failures into training data" data-zh="把失败变成训练数据">Turning failures into training data</h3>
+            <p data-en="Agents fail all the time on real tasks, and most of those failures are thrown away. We want to keep the useful ones." data-zh="Agent 在真实任务里经常失败，这些失败大多被扔掉了。我们想把有用的留下来。">Agents fail all the time on real tasks, and most of those failures are thrown away. We want to keep the useful ones.</p>
             <span class="blog-read"><span data-en="Read the note" data-zh="阅读文章">Read the note</span><span aria-hidden="true">↗</span></span>
           </div>
         </a>
