@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Papers — TraceLite</title>
-<meta name="description" content="Publications from TraceLite — agent evaluation, multimodal reasoning, and dialogue agents." />
+<title>Leaderboard — TraceLite</title>
+<meta name="description" content="TraceTrial-Bench leaderboard: nine models across four agent harnesses on the same 95 tasks, from the Trial by Trace report." />
 <link rel="icon" type="image/png" href="images/favicon.png" />
 <link rel="apple-touch-icon" href="images/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -221,9 +221,9 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
     <div class="nav-cta">
       <div class="nav-links" id="siteMenu">
         <a class="lk" href="timeline.html" data-i18n="timeline">Timeline</a>
-        <a class="lk active" href="research.html" data-i18n="research">Research</a>
+        <a class="lk" href="research.html" data-i18n="research">Research</a>
         <a class="lk" href="blog.html" data-i18n="blog">Blog</a>
-        <a class="lk" href="leaderboard.html" data-i18n="leaderboard">Leaderboard</a>
+        <a class="lk active" href="leaderboard.html" data-i18n="leaderboard">Leaderboard</a>
       </div>
       <a class="ext" href="https://github.com/TraceLite-AI" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a><a class="soc" href="https://xhslink.com/m/AEbUDTpH0iG" target="_blank" rel="noopener" aria-label="Xiaohongshu" title="小红书"><img src="images/social/xiaohongshu.svg" alt="" aria-hidden="true" /></a><a class="soc" href="wechat.html" aria-label="WeChat official account" title="微信公众号"><img src="images/social/wechat.svg" alt="" aria-hidden="true" /></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteMenu" aria-label="Navigation menu">Menu</button>
@@ -234,137 +234,44 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
 
 <!-- PAGE HERO -->
 <header class="page-hero is-compact" id="top">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <svg class="hero-lines" viewBox="0 0 1440 300" preserveAspectRatio="none">
-      <path d="M-60 260 C 120 220, 300 130, 520 180 S 900 280, 1100 140 S 1340 60, 1520 110" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.3"/>
-      <path d="M-40 290 C 160 260, 340 170, 560 200 S 940 250, 1160 120 S 1380 70, 1540 100" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.204"/>
-      <path d="M-80 230 C 100 200, 260 140, 480 160 S 860 230, 1080 130 S 1300 50, 1500 90" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="6 8"/>
-      <path d="M-100 150 C 80 120, 280 90, 500 110 S 920 170, 1120 80 S 1360 40, 1540 70" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.272"/>
-      <path d="M-60 300 C 140 280, 360 210, 580 240 S 980 300, 1180 180 S 1400 110, 1560 150" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.238" stroke-dasharray="4 10"/>
-      <path d="M-120 200 C 60 175, 280 130, 540 150 S 980 230, 1200 120 S 1380 60, 1560 100" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.221"/>
-      <path d="M-40 100 C 120 80, 320 60, 560 75 S 960 130, 1180 60 S 1400 30, 1540 55" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204" stroke-dasharray="2 7"/>
-      <path d="M-90 250 C 90 230, 300 180, 520 205 S 900 270, 1120 160 S 1380 90, 1560 130" fill="none" stroke="var(--teal)" stroke-width="1" stroke-opacity="0.255"/>
-      <path d="M-70 60 C 110 45, 320 30, 560 45 S 980 95, 1200 40 S 1420 20, 1560 40" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204" stroke-dasharray="3 9"/>
-      <path d="M-110 175 C 70 155, 280 115, 520 135 S 940 205, 1160 110 S 1380 55, 1560 95" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.187"/>
-      <path d="M-50 280 C 130 260, 360 195, 580 220 S 980 280, 1200 165 S 1420 100, 1560 140" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.17" stroke-dasharray="5 11"/>
-      <path d="M-130 120 C 50 100, 260 70, 480 90 S 900 150, 1120 70 S 1360 35, 1540 60" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.187" stroke-dasharray="3 8"/>
-      <path d="M-60 220 C 120 200, 320 150, 540 175 S 940 240, 1160 140 S 1380 80, 1560 120" fill="none" stroke="var(--teal)" stroke-width="0.9" stroke-opacity="0.204"/>
-      <path d="M-100 80 C 80 60, 300 40, 520 55 S 940 110, 1160 50 S 1400 25, 1560 45" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="4 9"/>
-      <path d="M-40 310 C 160 290, 360 230, 600 255 S 980 305, 1200 195 S 1420 130, 1560 165" fill="none" stroke="var(--teal)" stroke-width="0.85" stroke-opacity="0.187" stroke-dasharray="6 10"/>
-      <path d="M-120 270 C 60 250, 300 200, 520 225 S 900 285, 1120 175 S 1380 110, 1560 150" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.204" stroke-dasharray="2 6"/>
-      <path d="M-70 160 C 110 140, 320 105, 540 125 S 940 185, 1160 100 S 1400 55, 1560 90" fill="none" stroke="var(--teal)" stroke-width="0.8" stroke-opacity="0.17" stroke-dasharray="5 12"/>
-      <path d="M-90 40 C 90 28, 320 18, 560 30 S 980 75, 1200 35 S 1420 18, 1560 32" fill="none" stroke="var(--teal)" stroke-width="0.7" stroke-opacity="0.153" stroke-dasharray="3 7"/>
-      <path d="M-110 230 C 70 210, 280 165, 500 190 S 920 250, 1140 145 S 1380 85, 1560 125" fill="none" stroke="var(--teal)" stroke-width="0.85" stroke-opacity="0.187"/>
-      <path d="M-50 130 C 130 110, 340 80, 560 100 S 960 155, 1180 90 S 1400 50, 1540 80" fill="none" stroke="var(--teal)" stroke-width="0.75" stroke-opacity="0.17" stroke-dasharray="4 8"/>
-      <circle cx="520" cy="180" r="3" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="1100" cy="140" r="3" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="340" cy="170" r="2.5" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="1160" cy="120" r="2.5" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="500" cy="110" r="2.5" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="1120" cy="80" r="2.5" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="540" cy="150" r="2" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="1180" cy="180" r="2" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="480" cy="90" r="2" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="1080" cy="70" r="2" fill="var(--teal)" opacity="0.3"/>
-      <circle cx="600" cy="255" r="2" fill="var(--teal)" opacity="0.272"/>
-      <circle cx="1200" cy="195" r="2" fill="var(--teal)" opacity="0.272"/>
-      <circle cx="520" cy="125" r="1.8" fill="var(--teal)" opacity="0.255"/>
-      <circle cx="1140" cy="145" r="1.8" fill="var(--teal)" opacity="0.255"/>
-      <circle cx="560" cy="100" r="1.8" fill="var(--teal)" opacity="0.238"/>
-      <circle cx="1180" cy="90" r="1.8" fill="var(--teal)" opacity="0.238"/>
-    </svg>
-    <div class="tint"></div>
-  </div>
   <div class="wrap hero-content">
-    <span class="mono reveal">PUBLICATIONS</span>
-    <p class="lead reveal" data-d="2">Work from the TraceLite team on agent evaluation, multimodal reasoning, and dialogue agents.</p>
+    <span class="mono reveal" data-en="LEADERBOARD · TRACETRIAL-BENCH" data-zh="排行榜 · TRACETRIAL-BENCH">LEADERBOARD · TRACETRIAL-BENCH</span>
+    <p class="lead reveal" data-d="2" data-en="Nine models, four agent harnesses, the same 95 tasks. Every number is taken from Table 7 of the Trial by Trace report." data-zh="9 个模型、4 个 Agent 运行框架、同一套 95 道题。所有数字取自 Trial by Trace 报告表 7。">Nine models, four agent harnesses, the same 95 tasks. Every number is taken from Table 7 of the Trial by Trace report.</p>
   </div>
 </header>
 
-<!-- ALL PAPERS -->
-<section class="paper-list" id="papers">
+<section class="lb" id="leaderboard">
   <div class="wrap">
-    <ol class="pl-list" id="plList">
-      <li class="pl-item has-link">
-        <a class="pl-hit" href="trial-by-trace.html" aria-labelledby="trial-paper-title"></a>
-        <div class="pl-main">
-          <h3 class="pl-title" id="trial-paper-title" data-en="Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution" data-zh="Trial by Trace：AI Agent 执行框架的可靠性评测与故障归因">Trial by Trace: Benchmarking AI Agent Harnesses for Reliability and Failure Attribution</h3>
-          <p class="pl-authors" data-en="TraceLite AI" data-zh="TraceLite AI">TraceLite AI</p>
-          <p class="pl-authors" data-en="TraceTrial-Bench · 95 tasks across seven harness reliability dimensions, with separate task-outcome and harness assessments." data-zh="TraceTrial-Bench · 95 项任务覆盖七个执行框架可靠性维度，分别评估任务结果与框架表现。">TraceTrial-Bench · 95 tasks across seven harness reliability dimensions, with separate task-outcome and harness assessments.</p>
-        </div>
-        <div class="pl-side"><span class="pl-badge" data-en="Technical report" data-zh="技术报告">Technical report</span><span class="pl-venue" data-en="September 2026" data-zh="2026 年 9 月">September 2026</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
-          <h3 class="pl-title">MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
-        </div>
-        <div class="pl-side"><span class="pl-venue">EMNLP 2026</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
-          <h3 class="pl-title">Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
-        </div>
-        <div class="pl-side"><span class="pl-venue">EMNLP 2026</span></div>
-      </li>
-      <li class="pl-item is-oral has-link">
-        <a class="pl-hit" href="https://aclanthology.org/2026.acl-industry.95/" target="_blank" rel="noopener" aria-label="SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection"></a>
-        <div class="pl-main">
-          <h3 class="pl-title">SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection</h3>
-          <p class="pl-authors">Zhiyong Cao, Dunqiang Liu, Qi Dai, Haojun Xu, Huai Yuen Khor, Hao Wang, Huan He, Yafei Liu, Ke Ma, Ruqian Shi, Sicheng Zhou, Sijia Yao</p>
-        </div>
-        <div class="pl-side"><span class="pl-badge">Oral</span><span class="pl-venue">ACL 2026</span></div>
-      </li>
-      <li class="pl-item has-link">
-        <a class="pl-hit" href="https://doi.org/10.1016/j.aaf.2026.08.005" target="_blank" rel="noopener" aria-label="STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method"></a>
-        <div class="pl-main">
-          <h3 class="pl-title">STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method</h3>
-          <p class="pl-authors">Bo Wang, Zhiyong Cao, Kailong Yan, Danying Cao, Qi Fang, Wanting Zhang, Yingyin Cheng, Yongming Li, Yaping Wang, Mijuan Shi, Xiao-Qin Xia</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Aquaculture and Fisheries 2026</span></div>
-      </li>
-      <li class="pl-item has-link">
-        <a class="pl-hit" href="https://aclanthology.org/2026.acl-long.225/" target="_blank" rel="noopener" aria-label="Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning"></a>
-        <div class="pl-main">
-          <h3 class="pl-title">Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h3>
-          <p class="pl-authors">Xuchen Li, Xuzhao Li, Jiahui Gao, Renjie Pi, Shiyu Hu, Wentao Zhang</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">ACL 2026</span></div>
-      </li>
-      <li class="pl-item has-link">
-        <a class="pl-hit" href="https://openaccess.thecvf.com/content/CVPR2026/html/Li_Select_Less_Reason_More_Prioritizing_Evidence_Purity_for_Video_Reasoning_CVPR_2026_paper.html" target="_blank" rel="noopener" aria-label="Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning"></a>
-        <div class="pl-main">
-          <h3 class="pl-title">Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h3>
-          <p class="pl-authors">Xuchen Li, Xuzhao Li, Shiyu Hu, Kaiqi Huang</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">CVPR 2026</span></div>
-      </li>
-      <li class="pl-item has-link">
-        <a class="pl-hit" href="https://arxiv.org/abs/2507.16878" target="_blank" rel="noopener" aria-label="CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos"></a>
-        <div class="pl-main">
-          <h3 class="pl-title">CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos</h3>
-          <p class="pl-authors">Xuchen Li, Xuzhao Li, Shiyu Hu, Kaiqi Huang, Wentao Zhang</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">arXiv 2025</span></div>
-      </li>
-      <li class="pl-item">
-        <div class="pl-main">
-          <h3 class="pl-title">EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking</h3>
-          <p class="pl-authors"><span class="pl-anon">Anonymous submission</span></p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Under Review</span></div>
-      </li>
-      <li class="pl-item has-link">
-        <a class="pl-hit" href="https://arxiv.org/abs/2608.24010" target="_blank" rel="noopener" aria-label="Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing"></a>
-        <div class="pl-main">
-          <h3 class="pl-title">Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing</h3>
-          <p class="pl-authors">Hengjie Zhu, Dayan Wu, Zihao Zhang, Xinze Liu, Jingxuan Yu, Peng Fu, Zheng Lin, Weiping Wang</p>
-        </div>
-        <div class="pl-side"><span class="pl-venue">Under Review</span></div>
-      </li>
-    </ol>
-    <nav class="pl-pager" id="plPager" aria-label="Pagination"></nav>
+    <div class="lb-bar">
+      <div class="lb-seg" role="tablist" aria-label="View">
+        <button type="button" class="lb-tab is-on" data-view="harness" role="tab" aria-selected="true" data-en="By harness" data-zh="按运行框架">By harness</button>
+        <button type="button" class="lb-tab" data-view="cells" role="tab" aria-selected="false" data-en="Model × Harness" data-zh="模型 × 运行框架">Model × Harness</button>
+      </div>
+      <label class="lb-filter" hidden><span data-en="Model" data-zh="模型">Model</span>
+        <select id="lbModel"></select>
+      </label>
+    </div>
+    <div class="lb-scroll">
+      <table class="lb-table" id="lbTable">
+        <thead><tr>
+          <th class="c-rank">#</th>
+          <th class="c-name" data-key="name" data-en="Harness" data-zh="运行框架">Harness</th>
+          <th class="c-num sortable is-sorted" data-key="layered" aria-sort="descending"><span data-en="Layered score" data-zh="综合分">Layered score</span></th>
+          <th class="c-num sortable" data-key="pass"><span data-en="Task pass %" data-zh="任务通过率">Task pass %</span></th>
+          <th class="c-num sortable" data-key="score"><span data-en="Agent score" data-zh="Agent 得分">Agent score</span></th>
+          <th class="c-num sortable" data-key="macro"><span data-en="Harness macro %" data-zh="框架达标率">Harness macro %</span></th>
+          <th class="c-num sortable" data-key="clean"><span data-en="Both clean %" data-zh="双层全过">Both clean %</span></th>
+          <th class="c-num sortable" data-key="total_k"><span data-en="Tokens / run (k)" data-zh="每次 Token（千）">Tokens / run (k)</span></th>
+          <th class="c-num sortable" data-key="cost"><span data-en="Cost / run ($)" data-zh="每次成本（美元）">Cost / run ($)</span></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="lb-notes">
+      <p data-en="Layered score is the 50/50 mean of the Agent layer (did the task get done) and the Harness layer (did the harness meet its obligations). Task pass requires every Agent criterion; Both clean requires every criterion in both layers. Each cell is one scored run per task under high reasoning." data-zh="综合分 = Agent 层（任务有没有做成）与 Harness 层（运行框架有没有尽到职责）各占一半。任务通过要求所有 Agent 判据都过；双层全过要求两层判据全部通过。每格为每道题一次计分运行，推理强度 high。">Layered score is the 50/50 mean of the Agent layer (did the task get done) and the Harness layer (did the harness meet its obligations). Task pass requires every Agent criterion; Both clean requires every criterion in both layers. Each cell is one scored run per task under high reasoning.</p>
+      <p data-en="These are descriptive results on the selected executions, not significance claims. Cost is the estimated Agent cost at frozen gateway prices, judge cost excluded." data-zh="以上是对所选运行的描述性结果，不构成显著性结论。成本为按冻结网关价格估算的 Agent 成本，不含判官成本。">These are descriptive results on the selected executions, not significance claims. Cost is the estimated Agent cost at frozen gateway prices, judge cost excluded.</p>
+      <a class="lb-src" href="trial-by-trace.html" data-en="Read the Trial by Trace report →" data-zh="阅读 Trial by Trace 报告 →">Read the Trial by Trace report →</a>
+    </div>
   </div>
 </section>
 
@@ -458,42 +365,56 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 })();
 </script>
 <script>
-/* 论文列表分页：每页 10 条，超出自动出页码 */
-(function(){
-  const PER_PAGE = 10;
-  const list = document.getElementById('plList');
-  const pager = document.getElementById('plPager');
-  if(!list || !pager) return;
-  const items = Array.from(list.children);
-  const pages = Math.ceil(items.length / PER_PAGE);
-  if(pages < 2){ pager.hidden = true; return; }
-  let cur = 1;
-
-  function btn(label, page, disabled, active, aria){
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'pg' + (active ? ' is-active' : '');
-    b.textContent = label;
-    if(aria) b.setAttribute('aria-label', aria);
-    if(active) b.setAttribute('aria-current', 'page');
-    if(disabled){ b.disabled = true; }
-    else b.addEventListener('click', function(){
-      cur = page; render();
-      list.scrollIntoView({behavior:'smooth', block:'start'});
-    });
-    return b;
+(() => {
+  const ROWS = [{"pass":44.0,"score":75.9,"micro":71.5,"macro":71.2,"clean":9.1,"link":22.7,"abs":34.9,"layered":73.5,"in_k":569.4,"out_k":9.5,"total_k":578.8,"cost":0.436,"model":"All models","harness":"Claude Code"},{"pass":35.8,"score":70.7,"micro":60.2,"macro":59.8,"clean":2.8,"link":28.1,"abs":33.0,"layered":65.2,"in_k":606.9,"out_k":10.2,"total_k":617.2,"cost":0.595,"model":"All models","harness":"Codex"},{"pass":40.0,"score":73.3,"micro":69.5,"macro":68.8,"clean":9.8,"link":21.8,"abs":30.2,"layered":71.0,"in_k":361.5,"out_k":11.2,"total_k":372.7,"cost":0.446,"model":"All models","harness":"DeepSeek Harness"},{"pass":38.2,"score":71.7,"micro":71.9,"macro":72.0,"clean":11.7,"link":26.0,"abs":26.5,"layered":71.8,"in_k":670.8,"out_k":9.2,"total_k":680.0,"cost":0.633,"model":"All models","harness":"OpenClaw"},{"pass":39.5,"score":72.9,"micro":68.3,"macro":67.9,"clean":8.4,"link":24.6,"abs":31.1,"layered":70.4,"in_k":552.1,"out_k":10.0,"total_k":562.1,"cost":0.528,"model":"All models","harness":"All Harnesses"},{"pass":43.2,"score":72.5,"micro":71.6,"macro":71.2,"clean":8.4,"link":22.1,"abs":34.7,"layered":71.9,"in_k":603.5,"out_k":12.9,"total_k":616.5,"cost":0.115,"model":"DeepSeek-V4-Pro","harness":"Claude Code"},{"pass":30.5,"score":68.4,"micro":59.9,"macro":59.3,"clean":0.0,"link":27.4,"abs":30.5,"layered":63.8,"in_k":580.1,"out_k":13.0,"total_k":593.1,"cost":0.046,"model":"DeepSeek-V4-Pro","harness":"Codex"},{"pass":37.9,"score":69.9,"micro":68.6,"macro":67.9,"clean":10.5,"link":25.3,"abs":27.4,"layered":68.9,"in_k":325.0,"out_k":11.4,"total_k":336.4,"cost":0.043,"model":"DeepSeek-V4-Pro","harness":"DeepSeek Harness"},{"pass":38.9,"score":72.0,"micro":71.9,"macro":71.9,"clean":11.6,"link":25.3,"abs":27.4,"layered":72.0,"in_k":605.0,"out_k":10.8,"total_k":615.8,"cost":0.094,"model":"DeepSeek-V4-Pro","harness":"OpenClaw"},{"pass":40.0,"score":74.1,"micro":70.4,"macro":69.7,"clean":8.4,"link":21.1,"abs":31.6,"layered":71.9,"in_k":590.7,"out_k":10.3,"total_k":601.0,"cost":0.247,"model":"Gemini 3.7 Flash","harness":"Claude Code"},{"pass":38.9,"score":73.8,"micro":62.5,"macro":62.0,"clean":7.4,"link":23.2,"abs":31.6,"layered":67.9,"in_k":622.2,"out_k":13.1,"total_k":635.3,"cost":0.226,"model":"Gemini 3.7 Flash","harness":"Codex"},{"pass":44.2,"score":74.6,"micro":70.8,"macro":70.0,"clean":8.4,"link":25.3,"abs":35.8,"layered":72.3,"in_k":496.0,"out_k":11.6,"total_k":507.6,"cost":0.416,"model":"Gemini 3.7 Flash","harness":"DeepSeek Harness"},{"pass":38.9,"score":74.2,"micro":75.1,"macro":74.8,"clean":10.5,"link":26.3,"abs":28.4,"layered":74.5,"in_k":975.9,"out_k":10.6,"total_k":986.5,"cost":0.772,"model":"Gemini 3.7 Flash","harness":"OpenClaw"},{"pass":43.2,"score":76.0,"micro":73.7,"macro":73.1,"clean":9.5,"link":21.1,"abs":33.7,"layered":74.6,"in_k":639.3,"out_k":13.9,"total_k":653.2,"cost":0.408,"model":"GLM-5.3","harness":"Claude Code"},{"pass":28.4,"score":68.6,"micro":59.1,"macro":59.3,"clean":2.1,"link":28.4,"abs":26.3,"layered":63.9,"in_k":627.1,"out_k":8.2,"total_k":635.3,"cost":0.189,"model":"GLM-5.3","harness":"Codex"},{"pass":44.2,"score":75.5,"micro":71.4,"macro":70.5,"clean":9.5,"link":17.9,"abs":34.7,"layered":73.0,"in_k":380.6,"out_k":14.5,"total_k":395.1,"cost":0.226,"model":"GLM-5.3","harness":"DeepSeek Harness"},{"pass":41.1,"score":67.5,"micro":69.7,"macro":70.1,"clean":12.6,"link":25.3,"abs":28.4,"layered":68.8,"in_k":606.1,"out_k":10.2,"total_k":616.3,"cost":0.18,"model":"GLM-5.3","harness":"OpenClaw"},{"pass":44.2,"score":79.6,"micro":72.8,"macro":72.6,"clean":11.6,"link":21.1,"abs":32.6,"layered":76.1,"in_k":559.5,"out_k":4.7,"total_k":564.2,"cost":0.814,"model":"GPT-5.6-Sol","harness":"Claude Code"},{"pass":41.1,"score":71.8,"micro":57.6,"macro":56.4,"clean":3.2,"link":25.3,"abs":37.9,"layered":64.1,"in_k":1427.8,"out_k":10.9,"total_k":1438.7,"cost":1.649,"model":"GPT-5.6-Sol","harness":"Codex"},{"pass":36.8,"score":73.2,"micro":71.3,"macro":70.4,"clean":11.6,"link":22.1,"abs":25.3,"layered":71.8,"in_k":298.3,"out_k":2.6,"total_k":300.9,"cost":0.361,"model":"GPT-5.6-Sol","harness":"DeepSeek Harness"},{"pass":42.1,"score":71.5,"micro":71.1,"macro":71.2,"clean":14.7,"link":29.5,"abs":27.4,"layered":71.4,"in_k":606.7,"out_k":5.1,"total_k":611.8,"cost":0.974,"model":"GPT-5.6-Sol","harness":"OpenClaw"},{"pass":55.8,"score":81.6,"micro":71.9,"macro":71.9,"clean":10.5,"link":18.9,"abs":45.3,"layered":76.7,"in_k":531.1,"out_k":7.2,"total_k":538.3,"cost":0.509,"model":"Grok-4.6","harness":"Claude Code"},{"pass":44.2,"score":72.9,"micro":59.6,"macro":59.5,"clean":5.3,"link":21.1,"abs":38.9,"layered":66.2,"in_k":292.6,"out_k":4.2,"total_k":296.9,"cost":0.462,"model":"Grok-4.6","harness":"Codex"},{"pass":43.2,"score":75.6,"micro":71.4,"macro":70.6,"clean":10.5,"link":18.9,"abs":32.6,"layered":73.1,"in_k":315.7,"out_k":11.9,"total_k":327.6,"cost":0.378,"model":"Grok-4.6","harness":"DeepSeek Harness"},{"pass":33.7,"score":70.8,"micro":68.5,"macro":69.0,"clean":8.4,"link":24.2,"abs":25.3,"layered":69.9,"in_k":541.6,"out_k":4.4,"total_k":546.0,"cost":0.822,"model":"Grok-4.6","harness":"OpenClaw"},{"pass":32.6,"score":69.5,"micro":69.7,"macro":69.2,"clean":6.3,"link":30.5,"abs":26.3,"layered":69.3,"in_k":798.9,"out_k":15.0,"total_k":813.9,"cost":0.044,"model":"HY3","harness":"Claude Code"},{"pass":30.5,"score":64.2,"micro":59.3,"macro":59.0,"clean":1.1,"link":35.8,"abs":29.5,"layered":61.6,"in_k":415.9,"out_k":13.7,"total_k":429.6,"cost":0.026,"model":"HY3","harness":"Codex"},{"pass":28.4,"score":64.8,"micro":65.8,"macro":65.7,"clean":6.3,"link":30.5,"abs":22.1,"layered":65.2,"in_k":247.0,"out_k":11.2,"total_k":258.2,"cost":0.018,"model":"HY3","harness":"DeepSeek Harness"},{"pass":29.5,"score":70.0,"micro":72.7,"macro":72.7,"clean":11.6,"link":29.5,"abs":17.9,"layered":71.4,"in_k":659.5,"out_k":18.5,"total_k":678.0,"cost":0.041,"model":"HY3","harness":"OpenClaw"},{"pass":49.5,"score":78.2,"micro":71.1,"macro":70.6,"clean":11.6,"link":21.1,"abs":37.9,"layered":74.4,"in_k":358.1,"out_k":4.8,"total_k":362.9,"cost":0.613,"model":"Kimi K3","harness":"Claude Code"},{"pass":42.1,"score":74.0,"micro":61.3,"macro":60.9,"clean":2.1,"link":28.4,"abs":40.0,"layered":67.4,"in_k":573.9,"out_k":7.7,"total_k":581.6,"cost":0.379,"model":"Kimi K3","harness":"Codex"},{"pass":43.2,"score":74.4,"micro":71.5,"macro":70.5,"clean":10.5,"link":16.8,"abs":32.6,"layered":72.4,"in_k":281.7,"out_k":6.1,"total_k":287.8,"cost":0.225,"model":"Kimi K3","harness":"DeepSeek Harness"},{"pass":40.0,"score":73.8,"micro":73.6,"macro":73.5,"clean":10.5,"link":22.1,"abs":29.5,"layered":73.7,"in_k":580.8,"out_k":5.7,"total_k":586.6,"cost":0.351,"model":"Kimi K3","harness":"OpenClaw"},{"pass":53.7,"score":83.4,"micro":71.8,"macro":71.9,"clean":7.4,"link":16.8,"abs":46.3,"layered":77.6,"in_k":379.4,"out_k":3.7,"total_k":383.1,"cost":0.66,"model":"Opus 5","harness":"Claude Code"},{"pass":30.5,"score":70.3,"micro":60.8,"macro":60.5,"clean":2.1,"link":34.7,"abs":28.4,"layered":65.4,"in_k":482.8,"out_k":7.6,"total_k":490.4,"cost":2.121,"model":"Opus 5","harness":"Codex"},{"pass":49.5,"score":79.3,"micro":72.3,"macro":71.4,"clean":13.7,"link":17.9,"abs":35.8,"layered":75.4,"in_k":551.5,"out_k":16.9,"total_k":568.5,"cost":2.071,"model":"Opus 5","harness":"DeepSeek Harness"},{"pass":41.1,"score":76.1,"micro":73.8,"macro":73.9,"clean":11.6,"link":23.2,"abs":29.5,"layered":75.0,"in_k":822.3,"out_k":7.7,"total_k":830.0,"cost":2.168,"model":"Opus 5","harness":"OpenClaw"},{"pass":33.7,"score":68.3,"micro":70.5,"macro":70.2,"clean":8.4,"link":31.6,"abs":25.3,"layered":69.3,"in_k":663.8,"out_k":12.6,"total_k":676.4,"cost":0.517,"model":"Qwen3.8-Max","harness":"Claude Code"},{"pass":35.8,"score":72.1,"micro":61.4,"macro":61.0,"clean":2.1,"link":28.4,"abs":33.7,"layered":66.5,"in_k":436.7,"out_k":13.4,"total_k":450.2,"cost":0.258,"model":"Qwen3.8-Max","harness":"Codex"},{"pass":32.6,"score":71.8,"micro":62.5,"macro":62.6,"clean":7.4,"link":21.1,"abs":25.3,"layered":67.2,"in_k":357.9,"out_k":14.2,"total_k":372.1,"cost":0.279,"model":"Qwen3.8-Max","harness":"DeepSeek Harness"},{"pass":38.9,"score":69.0,"micro":70.6,"macro":70.9,"clean":13.7,"link":28.4,"abs":25.3,"layered":70.0,"in_k":638.8,"out_k":9.7,"total_k":648.5,"cost":0.29,"model":"Qwen3.8-Max","harness":"OpenClaw"}];
+  const tbody = document.querySelector('#lbTable tbody');
+  const nameTh = document.querySelector('#lbTable th.c-name');
+  const filter = document.querySelector('.lb-filter'), sel = document.getElementById('lbModel');
+  let view = 'harness', key = 'layered', dir = -1, model = 'all';
+  const models = [...new Set(ROWS.filter(r => r.model !== 'All models').map(r => r.model))];
+  const zh = () => document.documentElement.lang === 'zh-CN';
+  function fillSelect() {
+    sel.innerHTML = '<option value="all">' + (zh() ? '全部模型' : 'All models') + '</option>' +
+      models.map(m => '<option value="' + m + '"' + (m === model ? ' selected' : '') + '>' + m + '</option>').join('');
   }
-
-  function render(){
-    items.forEach(function(el, i){
-      el.hidden = (Math.floor(i / PER_PAGE) + 1) !== cur;
-    });
-    pager.innerHTML = '';
-    pager.appendChild(btn('←', cur - 1, cur === 1, false, 'Previous page'));
-    for(let p = 1; p <= pages; p++) pager.appendChild(btn(String(p), p, false, p === cur));
-    pager.appendChild(btn('→', cur + 1, cur === pages, false, 'Next page'));
+  const fmt = (k, v) => k === 'cost' ? v.toFixed(3) : k === 'total_k' ? v.toFixed(1) : v.toFixed(1);
+  function render() {
+    let rs = view === 'harness'
+      ? ROWS.filter(r => r.model === 'All models' && r.harness !== 'All Harnesses')
+      : ROWS.filter(r => r.model !== 'All models' && r.harness !== 'All Harnesses' && (model === 'all' || r.model === model));
+    const nameOf = r => view === 'harness' ? r.harness : r.model + ' · ' + r.harness;
+    rs = rs.slice().sort((a, b) => key === 'name' ? dir * nameOf(a).localeCompare(nameOf(b)) : dir * (a[key] - b[key]));
+    const max = Math.max(...rs.map(r => r.layered));
+    nameTh.textContent = view === 'harness' ? (zh() ? '运行框架' : 'Harness') : (zh() ? '模型 · 运行框架' : 'Model · Harness');
+    tbody.innerHTML = rs.map((r, i) => {
+      const name = view === 'harness'
+        ? '<span class="lb-h">' + r.harness + '</span><span class="lb-sub">' + (zh() ? '9 个模型 · 855 次运行' : '9 models · 855 runs') + '</span>'
+        : '<span class="lb-h">' + r.model + '</span><span class="lb-sub">' + r.harness + '</span>';
+      const w = (r.layered / max).toFixed(3);
+      return '<tr style="--mo-i:' + Math.min(i, 12) + '">' +
+        '<td class="c-rank">' + (i + 1) + '</td>' +
+        '<td class="c-name">' + name + '</td>' +
+        '<td class="c-num c-lay"><span class="lb-bar-v" style="--w:' + w + '"></span><b>' + fmt('layered', r.layered) + '</b></td>' +
+        ['pass', 'score', 'macro', 'clean', 'total_k', 'cost'].map(k => '<td class="c-num' + (k === key ? ' is-key' : '') + '">' + fmt(k, r[k]) + '</td>').join('') +
+        '</tr>';
+    }).join('');
+    tbody.classList.remove('is-in'); requestAnimationFrame(() => requestAnimationFrame(() => tbody.classList.add('is-in')));
   }
-  render();
+  document.querySelectorAll('.lb-tab').forEach(b => b.addEventListener('click', () => {
+    view = b.dataset.view;
+    document.querySelectorAll('.lb-tab').forEach(x => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', on); });
+    filter.hidden = view !== 'cells'; render();
+  }));
+  sel.addEventListener('change', () => { model = sel.value; render(); });
+  document.querySelectorAll('#lbTable th.sortable, #lbTable th.c-name').forEach(th => th.addEventListener('click', () => {
+    const k = th.dataset.key;
+    if (k === key) dir = -dir; else { key = k; dir = (k === 'name' || k === 'cost' || k === 'total_k') ? 1 : -1; }
+    document.querySelectorAll('#lbTable th').forEach(x => { x.classList.remove('is-sorted'); x.removeAttribute('aria-sort'); });
+    th.classList.add('is-sorted'); th.setAttribute('aria-sort', dir < 0 ? 'descending' : 'ascending');
+    render();
+  }));
+  document.addEventListener('tracelite:language', () => { fillSelect(); render(); });
+  fillSelect(); render();
 })();
 </script>
 <script src="assets/site.js?v=20260928n"></script>

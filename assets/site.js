@@ -3,7 +3,7 @@
   const key = 'tracelite-lang';
   const dictionary = {
     research: ['Research', '研究'], blog: ['Blog', '博客'],
-    contact: ['Contact', '联系'], timeline: ['Timeline', '时间线']
+    contact: ['Contact', '联系'], timeline: ['Timeline', '时间线'], leaderboard: ['Leaderboard', '排行榜']
   };
   const button = document.getElementById('langToggle');
   const menuButton = document.querySelector('.menu-toggle');
