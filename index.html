@@ -83,7 +83,7 @@ canvas{display:block;}
 .btn-ghost:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
 
 /* HERO */
-.hero{position:relative;min-height:clamp(680px,90vh,900px);display:flex;align-items:center;padding-top:74px;overflow:hidden;}
+.hero{position:relative;min-height:0;display:flex;align-items:center;padding-top:132px;padding-bottom:96px;overflow:hidden;}
 .hero::before{content:"";position:absolute;right:calc(50% - 45vw - 38px);top:50%;transform:translateY(-50%);width:min(90vw,760px);height:min(90vw,760px);background:radial-gradient(circle, rgba(17,17,17,0.09) 0%, rgba(17,17,17,0.05) 32%, rgba(17,17,17,0.02) 55%, rgba(17,17,17,0) 72%);pointer-events:none;}
 .hero .wrap{display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;width:100%;}
 .hero-copy{max-width:660px;}
@@ -222,8 +222,6 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
 @media (max-width:767px){.home-ext .out-col .paper-items{grid-template-columns:1fr;}}
 
 /* --- Oral 论文高亮 --- */
-.home-ext .item.is-oral{background-color:rgba(255,255,255,.62);
-  box-shadow:0 8px 26px -18px rgba(0,0,0,.34);}
 .home-ext .item .it-meta .it-oral{display:inline-block;background:var(--text);color:var(--bg);
   border-radius:4px;padding:1px 6px;margin-right:6px;letter-spacing:.06em;}
 
@@ -383,7 +381,7 @@ html.intro-lock{overflow:hidden;}
     <div class="wrap timeline-home-layout">
       <div class="timeline-home-intro">
         <span class="eyebrow" data-en="From the lab" data-zh="研究进展">From the lab</span>
-        <h2 class="title" id="timelineTitle" data-en="A record of progress." data-zh="研究，持续向前。">A record of progress.</h2>
+        <h2 class="title" id="timelineTitle" data-en="Milestones" data-zh="里程碑">Milestones</h2>
         <p data-en="Reports, papers, and moments that move our work forward." data-zh="记录每一份报告、每一篇论文，以及研究沿途的重要时刻。">Reports, papers, and moments that move our work forward.</p>
         <a class="out-link" href="timeline.html"><span data-en="View the full timeline" data-zh="查看完整时间线">View the full timeline</span><span aria-hidden="true">→</span></a>
       </div>
@@ -493,22 +491,6 @@ html.intro-lock{overflow:hidden;}
                 <h4>Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h4>
                 <div class="it-meta">EMNLP 2026 · Dialogue Policy · Simulators</div>
                 <p>Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.</p>
-              </div>
-            </div>
-            <div class="item home-item" tabindex="0" role="button" aria-label="Read: Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning">
-              <img class="ph-thumb" src="images/papers/earl-select-less.jpg" alt="" loading="lazy" />
-              <div class="it-body">
-                <h4>Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h4>
-                <div class="it-meta">CVPR 2026 · Video Reasoning · Reinforcement Learning</div>
-                <p>Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.</p>
-              </div>
-            </div>
-            <div class="item home-item" tabindex="0" role="button" aria-label="Read: Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning">
-              <img class="ph-thumb" src="images/papers/adaptive-pixel-reasoning.jpg" alt="" loading="lazy" />
-              <div class="it-body">
-                <h4>Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h4>
-                <div class="it-meta">ACL 2026 · Vision-Language · Reinforcement Learning</div>
-                <p>Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.</p>
               </div>
             </div>
             <div class="item home-item is-oral" tabindex="0" role="button" aria-label="Read: SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection" data-oral="1">
