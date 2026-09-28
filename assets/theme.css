@@ -103,3 +103,25 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .page-hero.is-compact p.lead{margin:0;font-size:15px;line-height:1.6;color:var(--text-2);}
 .page-hero.is-compact{border-bottom:0;padding-bottom:8px;}
 .page-hero.is-compact + .paper-list{padding-top:24px;}
+
+/* ---- Homepage cleanup: flat background, one rhythm, no decorative washes ---- */
+.hero::before,.home-ext .ext-module::before{display:none;}
+.home-ext .section-head::before,.home-ext .section-head::after{display:none;}
+.home-ext .ext-module{padding-block:clamp(64px,7vw,104px);border-top:1px solid var(--border);background:transparent;}
+.home-ext .home-timeline{padding-block:clamp(64px,7vw,104px);}
+.home-ext h2.title{font-size:clamp(30px,3.4vw,44px);letter-spacing:-.02em;}
+.home-ext .eyebrow{color:var(--text-2);letter-spacing:.16em;}
+.home-ext .coverage-section{display:none;}  /* duplicate of the InfoQ entry in Milestones */
+/* papers: calmer list, larger figures */
+.home-ext .out-grid{margin-top:36px;gap:8px 48px;}
+.home-ext .out-col h3.sub{display:none;}
+.home-ext .paper-items{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;}
+.home-ext .item{padding:24px 0;border-radius:0;border-top:1px solid var(--border);gap:22px;}
+.home-ext .item+.item{margin-top:0;}
+.home-ext .item:hover,.home-ext .item.home-item:hover{background:transparent;box-shadow:none;transform:none;}
+.home-ext .item .ph-thumb{width:132px;height:92px;border-radius:8px;padding:6px;background:#fff;}
+.home-ext .item .it-body h4{font-size:17px;line-height:1.35;}
+.home-ext .item .it-body p{font-size:14.5px;-webkit-line-clamp:2;}
+.home-ext .out-link{color:var(--text);}
+@media(max-width:900px){.home-ext .paper-items{grid-template-columns:1fr;}}
+@media(max-width:520px){.home-ext .item .ph-thumb{width:96px;height:68px;}}
