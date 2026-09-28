@@ -111,7 +111,6 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .home-ext .home-timeline{padding-block:clamp(64px,7vw,104px);}
 .home-ext h2.title{font-size:clamp(30px,3.4vw,44px);letter-spacing:-.02em;}
 .home-ext .eyebrow{color:var(--text-2);letter-spacing:.16em;}
-.home-ext .coverage-section{display:none;}  /* duplicate of the InfoQ entry in Milestones */
 /* papers: calmer list, larger figures */
 .home-ext .out-grid{margin-top:36px;gap:8px 48px;}
 .home-ext .out-col h3.sub{display:none;}
@@ -140,3 +139,18 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .mo-tilt:hover::after{opacity:1;}
 .home-ext .blog-prev.mo-tilt:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-4px);}
 .hero-cta .btn{transition:transform .35s cubic-bezier(.2,.7,.2,1),background .3s,color .3s,border-color .3s;}
+
+/* Conferences list */
+.event-list{list-style:none;margin:36px 0 0;padding:0;border-top:1px solid var(--border);}
+.event-row{display:grid;grid-template-columns:110px minmax(0,1fr) auto 110px;gap:28px;align-items:center;padding:26px 0;border-bottom:1px solid var(--border);transition:padding-left .35s cubic-bezier(.2,.7,.2,1);}
+.event-row:hover{padding-left:10px;}
+.ev-date{font:12px var(--font-mono);letter-spacing:.06em;color:var(--text-2);}
+.ev-name{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.015em;line-height:1.2;}
+.ev-what{margin-top:6px;font-size:14.5px;line-height:1.55;color:var(--text-2);max-width:62ch;}
+.ev-tag{font:11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text);border:1px solid var(--border);border-radius:999px;padding:5px 11px;white-space:nowrap;}
+.ev-link{justify-self:end;font-size:14px;white-space:nowrap;border-bottom:1px solid rgba(43,43,43,.45);padding-bottom:3px;}
+@media(max-width:767px){
+  .event-row{grid-template-columns:1fr auto;gap:10px 16px;}
+  .ev-date{grid-column:1/-1;}
+  .ev-link{justify-self:start;}
+}

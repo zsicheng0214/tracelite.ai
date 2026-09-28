@@ -19,7 +19,7 @@
 
   // 2. Staggered reveal for lists and cards
   const groups = [
-    '.home-ext .paper-items > .item', '.home-ext .blog-prev', '.note-row', '.pl-item',
+    '.home-ext .paper-items > .item', '.home-ext .blog-prev', '.note-row', '.pl-item', '.event-row',
     '.paper-card'
   ];
   const targets = [];
