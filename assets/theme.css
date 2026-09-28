@@ -82,3 +82,17 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .tl-rail:hover .tl-thumb,.tl-thumb:active{width:4px;left:-1px;}
 .tl-controls{display:none;}
 .tl-frame.no-overflow .tl-rail{display:none;}
+
+/* Inner-page header: plain, aligned to the content column, no decorative lines */
+.page-hero{min-height:0;padding-top:148px;padding-bottom:44px;background:var(--bg);}
+.page-hero .hero-bg{display:none;}
+.page-hero .hero-content{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);column-gap:64px;align-items:end;}
+.page-hero .hero-content>.mono{grid-column:1/-1;margin-bottom:18px;color:var(--text-2);letter-spacing:.16em;}
+.page-hero .hero-content>.mono::before{content:"";display:inline-block;width:18px;height:1px;background:currentColor;vertical-align:middle;margin-right:10px;}
+.page-hero h1{margin:0;max-width:none;font-size:clamp(44px,6.4vw,88px);line-height:1;}
+.page-hero p.lead{margin:0 0 8px;max-width:none;font-size:16.5px;color:var(--text-2);}
+@media(max-width:767px){
+  .page-hero{padding-top:112px;padding-bottom:32px;}
+  .page-hero .hero-content{grid-template-columns:1fr;}
+  .page-hero p.lead{margin-top:16px;}
+}
