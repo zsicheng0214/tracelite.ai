@@ -14,9 +14,9 @@ Open `http://127.0.0.1:8765/` for the homepage, `http://127.0.0.1:8765/timeline.
 
 ## Adding reports and milestones / 后续新增报告
 
-The homepage presents the organization, a latest-report link, and the three most recent timeline entries. `timeline.html` contains the complete selected history with type and year filters. Every report keeps its own permanent project page; PDF links can be added when a PDF release is requested. Both views are generated from **`data/timeline.json`**; do not edit the generated HTML blocks by hand.
+The homepage presents the organization, a latest-report link, and every visible timeline entry in a scrolling panel. `timeline.html` contains the complete selected history with type and year filters. Every report keeps its own permanent project page; PDF links can be added when a PDF release is requested. Both views are generated from **`data/timeline.json`**; do not edit the generated HTML blocks by hand.
 
-新增报告时，在 `data/timeline.json` 中复制一条记录，填写中英文标题、简介、日期和链接，然后运行以下命令。首页最近三条、最新报告入口、完整时间线与年份选项会同步更新，无需改页面布局。
+新增报告时，在 `data/timeline.json` 中复制一条记录，填写中英文标题、简介、日期和链接，然后运行以下命令。首页滚动时间线、最新报告入口、完整时间线与年份选项会同步更新，无需改页面布局。
 
 ```sh
 python3 scripts/build_timeline.py

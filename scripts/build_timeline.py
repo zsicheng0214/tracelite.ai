@@ -127,7 +127,7 @@ def generate(entries):
     options += "\n".join('<option value="{0}">{0}</option>'.format(year) for year in years)
     timeline = replace_section(timeline, "TIMELINE-YEARS", options)
     home = (ROOT / "index.html").read_text()
-    home = replace_section(home, "TIMELINE-PREVIEW", '<ol class="timeline-list">\n' + "\n".join(render_entry(entry, True) for entry in entries[:3]) + '\n</ol>')
+    home = replace_section(home, "TIMELINE-PREVIEW", '<ol class="timeline-list">\n' + "\n".join(render_entry(entry, True) for entry in entries) + '\n</ol>')
     latest = next((entry for entry in entries if entry["type"] == "report"), None)
     note = ""
     if latest:
@@ -153,7 +153,7 @@ def main():
                 path.write_text(content)
     if args.check and stale:
         parser.exit(1, "Run python3 scripts/build_timeline.py to update: " + ", ".join(stale) + "\n")
-    print("Timeline {}: {} entries; homepage shows {}.".format("verified" if args.check else "generated", len(entries), min(len(entries), 3)))
+    print("Timeline {}: {} entries; homepage scrolls through all of them.".format("verified" if args.check else "generated", len(entries)))
 
 
 if __name__ == "__main__":

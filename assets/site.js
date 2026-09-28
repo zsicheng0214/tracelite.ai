@@ -57,3 +57,26 @@
   });
   applyLanguage();
 })();
+
+/* Homepage timeline: drift slowly through all entries; pause on hover, focus or touch. */
+(() => {
+  const box = document.querySelector('.timeline-home-entries');
+  if (!box || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let paused = false, last = 0, wait = 0, pos = 0;
+  const pause = () => { paused = true; };
+  const resume = () => { paused = false; pos = box.scrollTop; };
+  box.addEventListener('mouseenter', pause); box.addEventListener('mouseleave', resume);
+  box.addEventListener('focusin', pause); box.addEventListener('focusout', resume);
+  box.addEventListener('touchstart', pause, {passive:true}); box.addEventListener('touchend', () => setTimeout(resume, 2500), {passive:true});
+  box.addEventListener('wheel', () => { pos = box.scrollTop; }, {passive:true});
+  function step(t) {
+    const dt = last ? Math.min(t - last, 64) : 0; last = t;
+    if (!paused && box.scrollHeight > box.clientHeight + 4) {
+      if (wait > 0) { wait -= dt; }
+      else if (box.scrollTop + box.clientHeight >= box.scrollHeight - 2) { wait = 2500; pos = 0; box.scrollTo({top: 0, behavior: 'smooth'}); }
+      else { pos += dt * 0.018; box.scrollTop = pos; }
+    }
+    requestAnimationFrame(step);
+  }
+  wait = 2000; requestAnimationFrame(step);
+})();
