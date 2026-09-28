@@ -140,15 +140,7 @@
       "zh": "将多模态奖励模型的评分准则建立在任务相关视觉证据之上，并验证其一致性。"
     },
     "venue": "EMNLP 2026",
-    "links": [
-      {
-        "href": "research.html#mm-verirubric",
-        "label": {
-          "en": "Research overview",
-          "zh": "研究介绍"
-        }
-      }
-    ]
+    "links": []
   },
   {
     "id": "disentangled-privileged-states-emnlp-2026",
@@ -164,15 +156,7 @@
       "zh": "将特权状态跟踪与模拟用户的话语生成解耦，用于支持多轮对话策略训练。"
     },
     "venue": "EMNLP 2026",
-    "links": [
-      {
-        "href": "research.html#disentangled-privileged-states",
-        "label": {
-          "en": "Research overview",
-          "zh": "研究介绍"
-        }
-      }
-    ]
+    "links": []
   },
   {
     "id": "select-less-reason-more-cvpr-2026",
@@ -190,10 +174,10 @@
     "venue": "CVPR 2026",
     "links": [
       {
-        "href": "research.html#select-less-reason-more",
+        "href": "https://arxiv.org/abs/2510.15440",
         "label": {
-          "en": "Research overview",
-          "zh": "研究介绍"
+          "en": "Read on arXiv",
+          "zh": "arXiv 论文"
         }
       }
     ]

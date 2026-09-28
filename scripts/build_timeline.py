@@ -53,8 +53,8 @@ def validate(entries):
         datetime.date.fromisoformat(date + {4: "-01-01", 7: "-01", 10: ""}[len(date)])
         if not isinstance(entry.get("visible", True), bool):
             raise ValueError("visible must be a boolean: " + slug)
-        if not entry["links"]:
-            raise ValueError("At least one link is required: " + slug)
+        if not isinstance(entry.get("links"), list):
+            raise ValueError("links must be a list (may be empty): " + slug)
         for value in [entry["title"], entry["summary"]] + [link["label"] for link in entry["links"]]:
             if any(not isinstance(value.get(lang), str) or not value[lang].strip() for lang in ("en", "zh")):
                 raise ValueError("English and Chinese text required: " + slug)
@@ -97,13 +97,13 @@ def render_entry(entry, compact=False):
     <div class="entry-meta"><span class="entry-type" {type_label}</span>{venue}</div>
     <h3 class="entry-title" id="{prefix}{id}-title" {title}</h3>
     <p class="entry-summary" {summary}</p>
-    <div class="entry-links">{links}</div>
+{links}
   </article>
 </li>'''.format(prefix=prefix, id=entry["id"], type=entry["type"], year=entry["date"][:4],
                date=entry["date"], date_label=bilingual(format_date(entry["date"])),
                context=bilingual(DATE_KINDS[entry["dateKind"]]), type_label=bilingual(TYPES[entry["type"]]),
                venue=venue, title=bilingual(entry["title"]), summary=bilingual(entry["summary"]),
-               links="".join(render_link(link) for link in entry["links"]))
+               links=('    <div class="entry-links">' + "".join(render_link(link) for link in entry["links"]) + '</div>') if entry["links"] else "")
 
 
 def replace_section(source, marker, content):
