@@ -196,3 +196,13 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .lb-notes p{font-size:13.5px;line-height:1.7;color:var(--text-2);}
 .lb-notes p+p{margin-top:8px;}
 .lb-src{display:inline-block;margin-top:16px;font-size:14px;color:var(--text);border-bottom:1px solid rgba(43,43,43,.45);padding-bottom:3px;}
+
+/* Nav icon buttons: one size, one shape */
+.nav-cta .soc,.nav-cta .ext,.nav-cta .lang-toggle{width:auto!important;display:inline-flex!important;align-items:center;justify-content:center;height:34px;min-width:34px;padding:0 9px!important;border:1px solid var(--border)!important;border-radius:8px!important;background:transparent;color:var(--text)!important;line-height:1;box-sizing:border-box;transition:border-color .2s,background-color .2s;}
+.nav-cta .soc:hover,.nav-cta .ext:hover,.nav-cta .lang-toggle:hover{border-color:#111!important;background:rgba(255,255,255,.7);}
+.nav-cta .ext{font-size:0!important;gap:0!important;}
+.nav-cta .ext svg{width:17px;height:17px;}
+.nav-cta .soc img{width:18px!important;height:18px!important;}
+.nav-cta .soc-txt{font-size:12.5px;font-weight:700;letter-spacing:.02em;color:#333;white-space:nowrap;}
+.nav-cta .lang-toggle{font-size:13px!important;font-weight:600;}
+@media(max-width:767px){.nav-cta .ext,.nav-cta .soc{display:none!important;}}
