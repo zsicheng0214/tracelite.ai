@@ -50,7 +50,10 @@ The homepage has a separate `#blog` section after the research output, with thre
 
 ## Research release
 
-- `trial-by-trace.html` and `assets/trial-by-trace.{css,js}` contain the bilingual report page, three interactive trace cases, and citation copying.
+- `trial-by-trace.html` is a standalone bilingual academic project page, with manuscript figures, five paired trace cases, image enlargement, and BibTeX copying. It uses `assets/report.{css,js}` and shared language handling in `assets/site.js`. The older `assets/trial-by-trace.{css,js}` are retained legacy assets and are not loaded by this page.
+- Edit `scripts/report_main.html` for content and `scripts/report_shell.html` for the page shell. Run `python3 scripts/build_report.py`, then `python3 scripts/build_report.py --check`. The generator no longer derives the page shell from `papers.html`.
+- `assets/report/*.webp` are web exports of the supplied LaTeX manuscript figures. Main figures were rendered at 1,800 pixels on the longest edge, case-study figures at 2,000 pixels, then encoded as WebP at quality 92. Keep the manuscript source separate from the deployed page. The layout references the Academic Project Page Template, credited in the footer.
+- The page uses the 23-author list supplied by the team, in its original order. The first four authors are marked as core contributors; Ruqian Shi, Baihua Xiao, and Sicheng Zhou are marked as corresponding authors. BibTeX and author metadata use the same list. TraceLite AI remains the team link; no conference acceptance or paper publication date is claimed. It retains the existing public repository link; the manuscript’s anonymous review URL is not substituted into the public page.
 - The supplied `papers/Trial_by_Trace.pdf` stays local and is excluded by `.gitignore`. It is not part of the repository or deployment, and public pages offer no PDF download. Citations link to the HTML project page. The report's internal document date is September 17, 2026; the website does not invent a public release date.
 - `assets/site.{css,js}` provide shared timeline navigation, persistent language selection, and mobile navigation. The storage key is `tracelite-lang`, with values `en` and `zh-CN`.
 - Retained papers and blog articles keep their original content. The new report material is bilingual; existing paper titles and abstracts are not newly translated.
@@ -58,10 +61,27 @@ The homepage has a separate `#blog` section after the research output, with thre
 
 ## Editorial handoff
 
-The supplied PDF contains inconsistent figures: its abstract and conclusion say 30.9%, while Table 9 gives 1,065 / 3,420 (31.1% rounded). Figure 7 also differs from Table 9. The page avoids those aggregate percentages and instead uses the report's study dimensions and three selected appendix cases. Reconcile the PDF before any separately authorized PDF release; publishing the website does not authorize uploading that file.
+The earlier supplied PDF had inconsistent aggregate figures. The September 29 website revision instead follows the newly supplied LaTeX manuscript: its abstract, experiments, contingency table, and background figure agree on 1,065 / 3,420 (31.1%) successful Agent runs with at least one failed Harness criterion. Figures and five case studies come from that manuscript. The older PDF is still not a public download.
 
 The InfoQ item links to the verified September 4, 2026 AICon Shenzhen conference recap: <https://www.infoq.cn/news/6EYVBX5UD2Cb0PWYsPCq>. It is labeled as a conference mention, not a dedicated feature, award, or endorsement. If the team supplies its separate InfoQ feature, add its actual title and link to the timeline data and update the homepage `#media` card.
 
 The benchmark repository URL follows the report: <https://github.com/TraceLite-AI/Harness-Benchmark>. Confirm access to the materials intended for release before promoting the page.
 
 The website deploys as static files. Releasing a PDF is a separate editorial decision from publishing the website code.
+
+## Report content expansion
+
+The report page borrows the content organization of https://www.harness-bench.ai/ (task anatomy, execution protocol, metric explanations, and inspection resources). Its new descriptions are grounded in the supplied Trial by Trace manuscript, especially `content/tracetrialbench.tex`, `content/appendix_A.tex`, and `content/experiments.tex`. Harness Bench is a different benchmark: its 106 tasks, eight workflow categories, trajectory counts, and Completion/Process definitions are not TraceTrial-Bench results and are not imported. This update uses existing HTML classes without changing CSS or JavaScript. The GitHub link is the URL confirmed by the team: https://github.com/TraceLite-AI/Harness-Benchmark. Public access returned HTTP 404 during the content review; repository availability and file-level links have not been assumed.
+
+## Leaderboard maintenance
+
+`leaderboard.html` shares the academic project page’s typography, colors, navigation, and footer through `assets/report.css`. Its comparison chart, searchable ranking table, and controls use `assets/leaderboard.{css,js}`. Content organization references the Agents’ Last Exam leaderboard at https://agents-last-exam.org/leaderboard; the metrics, populations, and results remain those of TraceTrial-Bench.
+
+`data/leaderboard.json` is the single source for all 41 stored records (four harness aggregates, 36 model–harness pairs, and one overall aggregate). Edit the JSON, then run:
+
+```sh
+python3 scripts/build_leaderboard.py
+python3 scripts/build_leaderboard.py --check
+```
+
+The generator embeds the data and a readable four-harness chart/table fallback in the page. Without JavaScript, the aggregates and JSON download remain available. The interactive chart shows at most eight filtered entries, ranked by its explicitly selected metric on a fixed 0–100 scale. The table shows every filtered entry and supports independent column sorting; numeric ties share ranks. CSV export contains the filtered table in its current order, with metric keys and units matching the source JSON (`*_k` = thousands of tokens; cost = mean USD per run). Rounded input/output figures and total tokens are preserved as reported rather than recomputed. No runtime, effort, task-split, or best-per-task scores are inferred from unavailable data.

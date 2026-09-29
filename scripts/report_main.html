@@ -1,293 +1,197 @@
-<!-- Trial by Trace report page body. Built into trial-by-trace.html by scripts/build_report.py -->
-<header class="rp-hero" id="top">
-  <div class="wrap">
-    <p class="rp-kicker"><span class="rp-dot" aria-hidden="true"></span><span data-en="Technical report · September 2026" data-zh="技术报告 · 2026 年 9 月">Technical report · September 2026</span></p>
-    <h1 class="rp-title">Trial by Trace</h1>
-    <p class="rp-sub" data-en="Benchmarking AI agent harnesses for reliability and failure attribution." data-zh="以执行轨迹评估 AI Agent 运行框架的可靠性与故障归因。">Benchmarking AI agent harnesses for reliability and failure attribution.</p>
-    <p class="rp-lead" data-en="A correct outcome is only part of the evidence. TraceTrial-Bench scores task completion and harness reliability separately, and traces every verdict back to what happened during execution." data-zh="结果正确，只是一部分证据。TraceTrial-Bench 把任务完成与运行框架可靠性分开打分，每个判定都能追溯到执行过程中发生了什么。">A correct outcome is only part of the evidence. TraceTrial-Bench scores task completion and harness reliability separately, and traces every verdict back to what happened during execution.</p>
-    <div class="rp-actions">
-      <a class="rp-btn rp-btn-dark" href="#results"><span data-en="See the results" data-zh="查看结果">See the results</span> <span aria-hidden="true">↓</span></a>
-      <a class="rp-btn" href="leaderboard.html"><span data-en="Leaderboard" data-zh="排行榜">Leaderboard</span> <span aria-hidden="true">→</span></a>
-      <a class="rp-btn" href="https://github.com/TraceLite-AI/Harness-Benchmark" target="_blank" rel="noopener noreferrer"><span data-en="Code" data-zh="代码">Code</span> <span aria-hidden="true">↗</span></a>
+<!-- Report content. Edit this file and run python3 scripts/build_report.py. -->
+<header class="publication-header">
+  <div class="container">
+    <p class="publication-label">TRACELITE AI <span> / </span> <span data-en="RESEARCH" data-zh="研究">RESEARCH</span></p>
+    <h1><span class="title-name">Trial by Trace</span><span class="title-description" data-en="Benchmarking AI Agent Harnesses for Reliability and Failure Attribution" data-zh="AI Agent 运行框架的可靠性评测与故障归因">Benchmarking AI Agent Harnesses for Reliability and Failure Attribution</span></h1>
+    <div class="publication-authors" aria-label="Authors">
+      <span class="author-name">Zhiyong Cao<sup aria-label="Core contributor">*</sup></span>,
+      <span class="author-name">Hengjie Zhu<sup aria-label="Core contributor">*</sup></span>,
+      <span class="author-name">Yongxin Wang<sup aria-label="Core contributor">*</sup></span>,
+      <span class="author-name">Xuchen Li<sup aria-label="Core contributor">*</sup></span>,
+      <span class="author-name">Jintao Li</span>,
+      <span class="author-name">Shuxia Liu</span>,
+      <span class="author-name">Dunqiang Liu</span>,
+      <span class="author-name">Bo Wang</span>,
+      <span class="author-name">Kairan Zhang</span>,
+      <span class="author-name">Cong Lin</span>,
+      <span class="author-name">JiangDi Yu</span>,
+      <span class="author-name">Siyuan Liu</span>,
+      <span class="author-name">Sijia Yao</span>,
+      <span class="author-name">Yi-Liang Wei</span>,
+      <span class="author-name">Lingxu Ma</span>,
+      <span class="author-name">Aijia Wang</span>,
+      <span class="author-name">Anxin Chen</span>,
+      <span class="author-name">Zixian Wei</span>,
+      <span class="author-name">Xiang Ruan</span>,
+      <span class="author-name">Ruizhi Xu</span>,
+      <span class="author-name">Ruqian Shi<sup aria-label="Corresponding author">✉</sup></span>,
+      <span class="author-name">Baihua Xiao<sup aria-label="Corresponding author">✉</sup></span>,
+      <span class="author-name">Sicheng Zhou<sup aria-label="Corresponding author">✉</sup></span>
     </div>
-    <dl class="rp-stats">
-      <div><dd data-count="95">95</dd><dt data-en="Mechanism-oriented tasks" data-zh="机制导向任务">Mechanism-oriented tasks</dt></div>
-      <div><dd data-count="4">4</dd><dt data-en="Native harnesses" data-zh="原生运行框架">Native harnesses</dt></div>
-      <div><dd data-count="9">9</dd><dt data-en="Models" data-zh="模型">Models</dt></div>
-      <div><dd data-count="3420">3,420</dd><dt data-en="Scored runs" data-zh="计分运行">Scored runs</dt></div>
-    </dl>
-    <p class="rp-fine" data-en="One selected execution per harness × model × task cell; these counts are not repeated trials within a cell." data-zh="每个 运行框架 × 模型 × 任务 组合对应一次选定运行；这些数字不是同一组合的重复试验。">One selected execution per harness × model × task cell; these counts are not repeated trials within a cell.</p>
+    <p class="author-notes"><span><sup>*</sup> <span data-en="Core contributor" data-zh="核心贡献者">Core contributor</span></span><span><sup>✉</sup> <span data-en="Corresponding author" data-zh="通讯作者">Corresponding author</span></span></p>
+    <a class="publication-team" href="index.html">TraceLite AI</a>
+    <p class="publication-venue" data-en="TraceTrial-Bench · Technical report" data-zh="TraceTrial-Bench · 技术报告">TraceTrial-Bench · Technical report</p>
+    <div class="publication-links">
+      <a class="button dark" href="https://github.com/TraceLite-AI/Harness-Benchmark" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg><span data-en="Code" data-zh="代码">Code</span></a>
+      <a class="button dark" href="leaderboard.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10h4v10m2 0V4h4v16m2 0V7h4v13M2 20h20"/></svg><span data-en="Leaderboard" data-zh="排行榜">Leaderboard</span></a>
+      <a class="button dark" href="#cases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h12M3 18h6m9-4 4 4-4 4"/></svg><span data-en="Explore traces" data-zh="探索轨迹">Explore traces</span></a>
+      <a class="button light" href="#cite"><span aria-hidden="true">{ }</span> BibTeX</a>
+    </div>
+    <p class="hero-takeaway" data-en="A successful task does not always mean a reliable harness." data-zh="任务成功，并不总意味着运行框架可靠。">A successful task does not always mean a reliable harness.</p>
   </div>
 </header>
-
-<nav class="rp-toc" aria-label="On this page">
-  <div class="wrap">
-    <a href="#method"><span class="n">01</span><span data-en="Approach" data-zh="方法">Approach</span></a>
-    <a href="#results"><span class="n">02</span><span data-en="Results" data-zh="结果">Results</span></a>
-    <a href="#dimensions"><span class="n">03</span><span data-en="Dimensions" data-zh="维度">Dimensions</span></a>
-    <a href="#cases"><span class="n">04</span><span data-en="Cases" data-zh="案例">Cases</span></a>
-    <a href="#cite"><span class="n">05</span><span data-en="Cite" data-zh="引用">Cite</span></a>
-  </div>
-</nav>
-
-<section class="rp-sec" id="method">
-  <div class="wrap">
-    <div class="rp-head">
-      <p class="rp-eyebrow"><span>01</span><span data-en="The approach" data-zh="评测方法">The approach</span></p>
-      <p class="rp-lede" data-en="The harness manages context, tools, execution, and state. It is part of the agent system, and it deserves an evaluation of its own." data-zh="运行框架（Harness）负责上下文、工具、执行与状态管理。它是 Agent 系统的一部分，也需要被单独检验。">The harness manages context, tools, execution, and state. It is part of the agent system, and it deserves an evaluation of its own.</p>
-    </div>
-    <div class="rp-layers">
-      <article class="rp-layer">
-        <span class="rp-tag">Layer 01 · Agent</span>
-        <h3 data-en="Did the task succeed?" data-zh="任务完成了吗？">Did the task succeed?</h3>
-        <p data-en="Were the required artifacts, actions, and task constraints satisfied? Executable or state-based criteria check the actual delivery." data-zh="要求的产物、操作和任务约束是否完成？用可执行或基于状态的判据检查实际交付。">Were the required artifacts, actions, and task constraints satisfied? Executable or state-based criteria check the actual delivery.</p>
-      </article>
-      <article class="rp-layer is-dark">
-        <span class="rp-tag">Layer 02 · Harness</span>
-        <h3 data-en="Was the harness reliable?" data-zh="运行框架可靠吗？">Was the harness reliable?</h3>
-        <p data-en="Were context, tool results, and execution states preserved and delivered faithfully? Separate criteria check the mechanisms, even when the task succeeds." data-zh="上下文、工具结果和执行状态是否被忠实保留与传递？单独的判据检验运行机制，即使任务已经成功。">Were context, tool results, and execution states preserved and delivered faithfully? Separate criteria check the mechanisms, even when the task succeeds.</p>
-      </article>
-    </div>
-    <ol class="rp-chain" aria-label="Evidence chain">
-      <li><span class="n">1</span><span data-en="Trace collection" data-zh="轨迹采集">Trace collection</span></li>
-      <li><span class="n">2</span><span data-en="Multi-source evidence & Trace IR" data-zh="多源证据与 Trace IR">Multi-source evidence &amp; Trace IR</span></li>
-      <li><span class="n">3</span><span data-en="Layered evaluation" data-zh="分层评分">Layered evaluation</span></li>
-      <li><span class="n">4</span><span data-en="Evidence-based attribution review" data-zh="基于证据的归因审查">Evidence-based attribution review</span></li>
-    </ol>
-    <p class="rp-fine" data-en="Measurement validity is checked separately. Candidate links and co-occurring failures are not, by themselves, validated causal effects." data-zh="测量有效性单独检查。候选关联与同时出现的错误，本身不等于已验证的因果关系。">Measurement validity is checked separately. Candidate links and co-occurring failures are not, by themselves, validated causal effects.</p>
-  </div>
+<section class="teaser container" aria-label="Research overview"><figure class="paper-figure"><a class="figure-link" href="assets/report/background-cartoon.webp" aria-label="Enlarge figure: How task outcomes can hide harness failures; trace evidence distinguishes model and harness behavior."><img src="assets/report/background-cartoon.webp" width="1800" height="923" alt="How task outcomes can hide harness failures; trace evidence distinguishes model and harness behavior." loading="eager" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="TraceTrial-Bench looks beyond the final answer: native execution traces reveal what the model saw, what the harness delivered, and what actually happened." data-zh="TraceTrial-Bench 不止检查最终答案：原生执行轨迹揭示模型看到了什么、运行框架传递了什么，以及实际发生了什么。">TraceTrial-Bench looks beyond the final answer: native execution traces reveal what the model saw, what the harness delivered, and what actually happened.</figcaption></figure>
+  <dl class="study-stats"><div><dt>95</dt><dd data-en="Mechanism-oriented tasks" data-zh="机制导向任务">Mechanism-oriented tasks</dd></div><div><dt>7</dt><dd data-en="Reliability dimensions" data-zh="可靠性维度">Reliability dimensions</dd></div><div><dt>4 × 9</dt><dd data-en="Harnesses × models" data-zh="运行框架 × 模型">Harnesses × models</dd></div><div><dt>3,420</dt><dd data-en="Scored executions" data-zh="计分运行">Scored executions</dd></div></dl>
 </section>
+<nav class="section-nav" aria-label="On this page"><div><a href="#abstract"><span data-en="Abstract" data-zh="摘要">Abstract</span></a><a href="#method"><span data-en="Framework" data-zh="评测框架">Framework</span></a><a href="#dimensions"><span data-en="Benchmark" data-zh="基准任务">Benchmark</span></a><a href="#task-design"><span data-en="Tasks" data-zh="任务构成">Tasks</span></a><a href="#protocol"><span data-en="Protocol" data-zh="评测流程">Protocol</span></a><a href="#results"><span data-en="Results" data-zh="实验结果">Results</span></a><a href="#cases"><span data-en="Case studies" data-zh="轨迹案例">Case studies</span></a><a href="#cite"><span data-en="BibTeX" data-zh="引用">BibTeX</span></a></div></nav>
 
-<section class="rp-sec" id="results">
-  <div class="wrap">
-    <div class="rp-head">
-      <p class="rp-eyebrow"><span>02</span><span data-en="Results" data-zh="主要结果">Results</span></p>
-      <p class="rp-lede" data-en="Pooled over nine models, 855 runs per harness. Claude Code has the highest task pass rate; OpenClaw has the highest harness-criterion rate. Codex is lowest on the harness layer for every model." data-zh="汇总 9 个模型，每个运行框架 855 次运行。Claude Code 任务通过率最高；OpenClaw 运行框架判据达标率最高。Codex 在每个模型上的框架层得分都最低。">Pooled over nine models, 855 runs per harness. Claude Code has the highest task pass rate; OpenClaw has the highest harness-criterion rate. Codex is lowest on the harness layer for every model.</p>
-    </div>
-    <div class="rp-chart" role="table" aria-label="Task pass rate and harness macro rate by harness">
-      <div class="rp-legend" aria-hidden="true"><span class="k k-a"></span><span data-en="Task pass %" data-zh="任务通过率">Task pass %</span><span class="k k-h"></span><span data-en="Harness macro %" data-zh="框架判据达标率">Harness macro %</span></div>
-      <div class="rp-row" role="row"><span class="rp-name" role="rowheader">Claude Code</span><div class="rp-bars"><div class="b b-a" style="--v:44.0"><i></i><em>44.0</em></div><div class="b b-h" style="--v:71.2"><i></i><em>71.2</em></div></div></div>
-      <div class="rp-row" role="row"><span class="rp-name" role="rowheader">DeepSeek Harness</span><div class="rp-bars"><div class="b b-a" style="--v:40.0"><i></i><em>40.0</em></div><div class="b b-h" style="--v:68.8"><i></i><em>68.8</em></div></div></div>
-      <div class="rp-row" role="row"><span class="rp-name" role="rowheader">OpenClaw</span><div class="rp-bars"><div class="b b-a" style="--v:38.2"><i></i><em>38.2</em></div><div class="b b-h" style="--v:72.0"><i></i><em>72.0</em></div></div></div>
-      <div class="rp-row" role="row"><span class="rp-name" role="rowheader">Codex</span><div class="rp-bars"><div class="b b-a" style="--v:35.8"><i></i><em>35.8</em></div><div class="b b-h" style="--v:59.8"><i></i><em>59.8</em></div></div></div>
-    </div>
-    <div class="rp-facts">
-      <div><b>39.5%</b><span data-en="of runs pass every Agent criterion" data-zh="的运行通过全部 Agent 判据">of runs pass every Agent criterion</span></div>
-      <div><b>8.4%</b><span data-en="pass every criterion in both layers" data-zh="两层判据全部通过">pass every criterion in both layers</span></div>
-      <div><b>22.1 pts</b><span data-en="Grok-4.6 task pass range across harnesses (33.7–55.8%)" data-zh="Grok-4.6 换运行框架后任务通过率的差距（33.7–55.8%）">Grok-4.6 task pass range across harnesses (33.7–55.8%)</span></div>
-    </div>
-    <p class="rp-fine"><span data-en="Report Table 7 and Section 5. Descriptive results on the selected executions, not significance claims." data-zh="数据取自报告表 7 与第 5 节。为所选运行的描述性结果，不构成显著性结论。">Report Table 7 and Section 5. Descriptive results on the selected executions, not significance claims.</span> <a class="rp-link" href="leaderboard.html"><span data-en="Full leaderboard" data-zh="完整排行榜">Full leaderboard</span> →</a></p>
-  </div>
-</section>
+<section class="section tint" id="abstract"><div class="reading-width"><h2 data-en="Abstract" data-zh="摘要">Abstract</h2><p data-en="Agent performance depends on both the underlying model and the harness that manages its context, tools, execution, and state. Most benchmarks evaluate task completion, leaving the reliability of the harness itself largely unmeasured." data-zh="Agent 的表现同时取决于底层模型，以及负责上下文、工具、执行和状态管理的运行框架。大多数基准关注任务是否完成，而运行框架自身的可靠性仍缺乏充分评估。">Agent performance depends on both the underlying model and the harness that manages its context, tools, execution, and state. Most benchmarks evaluate task completion, leaving the reliability of the harness itself largely unmeasured.</p><p data-en="We introduce TraceTrial-Bench: 95 expert-level, mechanism-oriented tasks spanning seven reliability dimensions. Trajectory Tracing captures native execution records, while Multi-source Evidence Acquisition combines the agent context, harness records, and environment state. A two-layer evaluation separately assesses Agent performance and Harness reliability; explicit mechanism chains support evidence-based failure attribution." data-zh="我们提出 TraceTrial-Bench：包含 95 个专家级、机制导向任务，覆盖七个可靠性维度。轨迹追踪模块采集原生执行记录，多源证据采集模块结合 Agent 上下文、框架记录与环境状态。双层评测分别衡量 Agent 表现与运行框架可靠性，并通过显式机制链支持基于证据的故障归因。">We introduce TraceTrial-Bench: 95 expert-level, mechanism-oriented tasks spanning seven reliability dimensions. Trajectory Tracing captures native execution records, while Multi-source Evidence Acquisition combines the agent context, harness records, and environment state. A two-layer evaluation separately assesses Agent performance and Harness reliability; explicit mechanism chains support evidence-based failure attribution.</p><p data-en="Across four harnesses, nine models, and 3,420 selected runs, macro-averaged Harness scores range from 59.8% to 72.0%. In 31.1% of runs, the task succeeds despite at least one failed Harness criterion. These results show why task outcomes and harness reliability need to be measured together." data-zh="在四个运行框架、九个模型、3,420 次选定运行中，框架层宏平均得分介于 59.8% 至 72.0%。31.1% 的运行虽然任务成功，却至少有一项框架判据未通过。这说明任务结果与框架可靠性需要结合评估。">Across four harnesses, nine models, and 3,420 selected runs, macro-averaged Harness scores range from 59.8% to 72.0%. In 31.1% of runs, the task succeeds despite at least one failed Harness criterion. These results show why task outcomes and harness reliability need to be measured together.</p></div></section>
 
-<section class="rp-sec" id="dimensions">
-  <div class="wrap">
-    <div class="rp-head">
-      <p class="rp-eyebrow"><span>03</span><span data-en="What we measure" data-zh="评测范围">What we measure</span></p>
-      <p class="rp-lede" data-en="95 tasks target specific mechanisms while preserving native harness behavior. Coverage varies by dimension; Verification currently contains one task scenario." data-zh="95 道题围绕具体机制设计，并保留各运行框架的原生行为。各维度覆盖不均衡，Verification 目前只有一个任务场景。">95 tasks target specific mechanisms while preserving native harness behavior. Coverage varies by dimension; Verification currently contains one task scenario.</p>
-    </div>
-    <div class="rp-dims">
-      <article><span class="l">C</span><h3 data-en="Context" data-zh="上下文">Context</h3><p data-en="Retention, truncation, compaction, and recovery." data-zh="保留、截断、压缩与恢复。">Retention, truncation, compaction, and recovery.</p></article>
-      <article><span class="l">E</span><h3 data-en="Execution" data-zh="执行">Execution</h3><p data-en="Processes, exit status, timeouts, and interaction." data-zh="进程、退出状态、超时与交互。">Processes, exit status, timeouts, and interaction.</p></article>
-      <article><span class="l">G</span><h3 data-en="Governance" data-zh="治理">Governance</h3><p data-en="Permissions, safety policies, and isolation boundaries." data-zh="权限、安全规则与隔离边界。">Permissions, safety policies, and isolation boundaries.</p></article>
-      <article><span class="l">L</span><h3 data-en="Lifecycle" data-zh="生命周期">Lifecycle</h3><p data-en="Sessions, delegation, and state continuity." data-zh="会话、委派与状态连续性。">Sessions, delegation, and state continuity.</p></article>
-      <article><span class="l">O</span><h3 data-en="Observability" data-zh="可观测性">Observability</h3><p data-en="Failure signals, diagnostics, and visible evidence." data-zh="错误信号、诊断与可见证据。">Failure signals, diagnostics, and visible evidence.</p></article>
-      <article><span class="l">T</span><h3 data-en="Tools" data-zh="工具">Tools</h3><p data-en="Tool discovery, interfaces, and call routing." data-zh="工具发现、接口与调用路由。">Tool discovery, interfaces, and call routing.</p></article>
-      <article><span class="l">V</span><h3 data-en="Verification" data-zh="验证">Verification</h3><p data-en="Faithful delivery of verification actions and results." data-zh="验证操作及其结果是否忠实交付。">Faithful delivery of verification actions and results.</p></article>
-    </div>
-  </div>
-</section>
+<section class="section" id="method"><div class="container"><h2 data-en="From execution traces to reliable evidence" data-zh="从执行轨迹到可靠证据">From execution traces to reliable evidence</h2><p class="section-intro" data-en="A benchmark for the system around the model." data-zh="评测模型周围的运行系统。">A benchmark for the system around the model.</p><figure class="paper-figure"><a class="figure-link" href="assets/report/tracetrial-benchmark-main-v2.webp" aria-label="Enlarge figure: Four-stage framework: task design, native execution and tracing, multi-source evidence acquisition, and failure attribution."><img src="assets/report/tracetrial-benchmark-main-v2.webp" width="1800" height="1013" alt="Four-stage framework: task design, native execution and tracing, multi-source evidence acquisition, and failure attribution." loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Framework overview. Native harness behavior is preserved; criterion-specific evidence connects each verdict to its execution record." data-zh="框架概览。保留各运行框架的原生行为，以判据对应的证据将每项评分连接到执行记录。">Framework overview. Native harness behavior is preserved; criterion-specific evidence connects each verdict to its execution record.</figcaption></figure><div class="method-grid">
 
-<section class="rp-sec rp-cases" id="cases">
-  <div class="wrap">
-    <div class="rp-head">
-      <p class="rp-eyebrow"><span>04</span><span data-en="Inside the trace" data-zh="深入轨迹">Inside the trace</span></p>
-      <p class="rp-lede" data-en="Three selected cases show what a final answer can miss. Each pairs two harnesses running the same model on the same task." data-zh="三个选定案例，展示只看最终答案会漏掉什么。每个案例都是同一模型、同一道题，在两个运行框架里的对比。">Three selected cases show what a final answer can miss. Each pairs two harnesses running the same model on the same task.</p>
-    </div>
-    <div class="rp-tabs" role="tablist" aria-label="Trace cases">
-      <button type="button" role="tab" id="tab-failure" aria-controls="case-failure" aria-selected="true"><span class="n">01</span><span data-en="Failure signals" data-zh="错误信号">Failure signals</span></button>
-      <button type="button" role="tab" id="tab-recovery" aria-controls="case-recovery" aria-selected="false" tabindex="-1"><span class="n">02</span><span data-en="Truncation & recovery" data-zh="截断与恢复">Truncation &amp; recovery</span></button>
-      <button type="button" role="tab" id="tab-once" aria-controls="case-once" aria-selected="false" tabindex="-1"><span class="n">03</span><span data-en="Exactly once" data-zh="只执行一次">Exactly once</span></button>
-    </div>
+<article><span class="step-number">01</span><h3 data-en="Trace native behavior" data-zh="追踪原生行为">Trace native behavior</h3><p data-en="Collect execution records without replacing native context policies, tool transport, or session behavior." data-zh="采集执行记录，不替换原生上下文策略、工具传输或会话行为。">Collect execution records without replacing native context policies, tool transport, or session behavior.</p></article>
 
-    <article class="rp-case" id="case-failure" role="tabpanel" aria-labelledby="tab-failure">
-      <div class="rp-case-head">
-        <div>
-          <p class="rp-meta"><span data-en="Execution / Observability · shared model: Opus 5" data-zh="执行 / 可观测性 · 共用模型：Opus 5">Execution / Observability · shared model: Opus 5</span><span class="sep">·</span><span data-en="Report p. 68" data-zh="报告第 68 页">Report p. 68</span></p>
-          <h3 data-en="The report is right. Is the failure state?" data-zh="报告写对了，错误状态也记对了吗？">The report is right. Is the failure state?</h3>
-        </div>
-        <p data-en="A command prints “OK” and “complete”, but exits with code 23. Both agents report the failure correctly; their structured execution states differ." data-zh="命令输出“OK”和“complete”，实际退出码却是 23。两边 Agent 的最终报告都正确，结构化的执行状态却不同。">A command prints “OK” and “complete”, but exits with code 23. Both agents report the failure correctly; their structured execution states differ.</p>
-      </div>
-      <div class="rp-pair">
-        <div class="rp-trace">
-          <div class="rp-trace-top"><strong>OpenClaw</strong><span data-en="Explicit failure state" data-zh="明确的失败状态">Explicit failure state</span></div>
-          <p class="rp-step" data-en="Model-visible output" data-zh="模型可见输出">Model-visible output</p>
-          <pre>STATUS: OK
-RESULT: complete
-(Command exited with code 23)</pre>
-          <p class="rp-step" data-en="Post-tool observer fields" data-zh="工具调用后观测字段">Post-tool observer fields</p>
-          <pre>exit_code: 23
-error: true</pre>
-          <div class="rp-score"><span>Agent <b>4/4</b></span><span>Harness <b>7/7</b></span></div>
-        </div>
-        <div class="rp-trace">
-          <div class="rp-trace-top"><strong>DeepSeek Harness</strong><span data-en="Text-only failure" data-zh="错误只存在于文本里">Text-only failure</span></div>
-          <p class="rp-step" data-en="Model-visible output" data-zh="模型可见输出">Model-visible output</p>
-          <pre>STATUS: OK
-RESULT: complete
-[exit code: 23]</pre>
-          <p class="rp-step is-flag" data-en="Post-tool observer fields" data-zh="工具调用后观测字段">Post-tool observer fields</p>
-          <pre class="is-flag">exit_code: null
-error: false</pre>
-          <div class="rp-score"><span>Agent <b>4/4</b></span><span>Harness <b class="lo">4/7</b></span></div>
-        </div>
-      </div>
-      <p class="rp-take" data-en="Identical correct reports can conceal different failure channels. Task success does not certify the structured harness state." data-zh="同样正确的报告，可能掩盖不同的错误传递机制。任务成功不能证明结构化的运行状态可靠。">Identical correct reports can conceal different failure channels. Task success does not certify the structured harness state.</p>
-    </article>
+<article><span class="step-number">02</span><h3 data-en="Evaluate two layers" data-zh="分别评估两层">Evaluate two layers</h3><p data-en="Score task deliverables and harness obligations separately, using executable checks and criterion-specific evidence." data-zh="通过可执行检查及判据对应的证据，分别评估任务交付与运行框架职责。">Score task deliverables and harness obligations separately, using executable checks and criterion-specific evidence.</p></article>
 
-    <article class="rp-case" id="case-recovery" role="tabpanel" aria-labelledby="tab-recovery" hidden>
-      <div class="rp-case-head">
-        <div>
-          <p class="rp-meta"><span data-en="Context / Recovery · shared model: Opus 5" data-zh="上下文 / 恢复 · 共用模型：Opus 5">Context / Recovery · shared model: Opus 5</span><span class="sep">·</span><span data-en="Report p. 67" data-zh="报告第 67 页">Report p. 67</span></p>
-          <h3 data-en="After truncation, is there a way back?" data-zh="被截断之后，还能找回来吗？">After truncation, is there a way back?</h3>
-        </div>
-        <p data-en="The task requires recovering 12 escalation codes from a single export. When output is too large, keeping the snapshot identifier visible is what makes bounded recovery calls possible." data-zh="任务要求从一次导出中找回 12 个工单的升级代码。输出过大时，恢复所需的快照标识是否仍然可见，决定了后续能不能找回内容。">The task requires recovering 12 escalation codes from a single export. When output is too large, keeping the snapshot identifier visible is what makes bounded recovery calls possible.</p>
-      </div>
-      <div class="rp-pair">
-        <div class="rp-trace">
-          <div class="rp-trace-top"><strong>Claude Code</strong><span data-en="Recovery preserved" data-zh="保留了恢复线索">Recovery preserved</span></div>
-          <p class="rp-step" data-en="Export result" data-zh="导出结果">Export result</p>
-          <pre>Output too large (5.7MB).
-SNAPSHOT_ID=snap_5a4f9a718a1d56f8
-TOTAL_ESCALATED=12</pre>
-          <p class="rp-step" data-en="Final check" data-zh="最终检查">Final check</p>
-          <pre>keys: 12  unique codes: 12
-all escalated ids: True</pre>
-          <div class="rp-score"><span>Agent <b>5/5</b></span><span>Harness <b>10/11</b></span></div>
-        </div>
-        <div class="rp-trace">
-          <div class="rp-trace-top"><strong>OpenClaw</strong><span data-en="Recovery lost" data-zh="恢复线索丢失">Recovery lost</span></div>
-          <p class="rp-step" data-en="Export result" data-zh="导出结果">Export result</p>
-          <pre>136935 more characters truncated;
-rerun with narrower args if needed</pre>
-          <p class="rp-step is-flag" data-en="Recovery call → rejection" data-zh="恢复调用 → 被拒绝">Recovery call → rejection</p>
-          <pre class="is-flag">bin/ticketctl range --snapshot UNKNOWN
-The snapshot ID is invalid
-or is not the active export snapshot.</pre>
-          <div class="rp-score"><span>Agent <b class="lo">0/5</b></span><span>Harness <b class="lo">5/11</b></span></div>
-        </div>
-      </div>
-      <p class="rp-take" data-en="A truncation warning is not enough. The visible result must keep the information needed to recover what was cut." data-zh="有截断提示还不够。可见结果还得保留找回缺失内容所需的信息。">A truncation warning is not enough. The visible result must keep the information needed to recover what was cut.</p>
-    </article>
+<article><span class="step-number">03</span><h3 data-en="Attribute with evidence" data-zh="基于证据归因">Attribute with evidence</h3><p data-en="Review declared mechanism chains connecting harness shortfalls, observable distortions, and agent consequences." data-zh="审查连接框架缺失、可观测变化与 Agent 后果的预先声明机制链。">Review declared mechanism chains connecting harness shortfalls, observable distortions, and agent consequences.</p></article>
 
-    <article class="rp-case" id="case-once" role="tabpanel" aria-labelledby="tab-once" hidden>
-      <div class="rp-case-head">
-        <div>
-          <p class="rp-meta"><span data-en="Context / Verification · shared model: Qwen3.8-Max" data-zh="上下文 / 验证 · 共用模型：Qwen3.8-Max">Context / Verification · shared model: Qwen3.8-Max</span><span class="sep">·</span><span data-en="Report p. 71" data-zh="报告第 71 页">Report p. 71</span></p>
-          <h3 data-en="Correct codes. Repeated actions." data-zh="编码正确，操作却重复了。">Correct codes. Repeated actions.</h3>
-        </div>
-        <p data-en="Across a session handoff, 12 sets must each be checked exactly once. A final file can hold the correct codes while the interaction breaks that rule." data-zh="跨会话交接时，12 个集合每个只能检查一次。最终文件里的编码正确，不代表过程遵守了“只执行一次”。">Across a session handoff, 12 sets must each be checked exactly once. A final file can hold the correct codes while the interaction breaks that rule.</p>
-      </div>
-      <div class="rp-pair">
-        <div class="rp-trace">
-          <div class="rp-trace-top"><strong>Codex</strong><span data-en="Exactly once" data-zh="每个集合只检查一次">Exactly once</span></div>
-          <p class="rp-step" data-en="Trace-derived call counts" data-zh="根据轨迹统计的调用次数">Trace-derived call counts</p>
-          <pre>12 check calls
-12 distinct sets
-0 repeated checks</pre>
-          <p class="rp-step" data-en="Final file" data-zh="最终文件">Final file</p>
-          <pre>"SET-8007": "SL-DCDA0EBEB2"</pre>
-          <div class="rp-score"><span>Agent <b>17/17</b></span><span>Harness <b>12/12</b></span></div>
-        </div>
-        <div class="rp-trace">
-          <div class="rp-trace-top"><strong>Claude Code</strong><span data-en="Repeated checks" data-zh="出现重复检查">Repeated checks</span></div>
-          <p class="rp-step is-flag" data-en="Repeated check" data-zh="重复调用的返回">Repeated check</p>
-          <pre class="is-flag">"state": "already_verified"
-the seal code will not be reissued</pre>
-          <p class="rp-step" data-en="Final file" data-zh="最终文件">Final file</p>
-          <pre>"SET-8007": "SL-F21B5A593D"</pre>
-          <div class="rp-score"><span>Agent <b class="lo">15/17</b></span><span>Harness <b>12/12</b></span></div>
-        </div>
-      </div>
-      <p class="rp-take" data-en="Trace-level checks expose repeated actions without blaming intact delivery. Here both harnesses pass every harness criterion." data-zh="轨迹级检查能揭示重复操作，同时不把责任错归到正常工作的运行机制上。本例中两个运行框架都通过了全部框架判据。">Trace-level checks expose repeated actions without blaming intact delivery. Here both harnesses pass every harness criterion.</p>
-    </article>
+</div><p class="fine-print" data-en="Candidate-link activation identifies a path for review. It does not, by itself, establish causality." data-zh="候选关联的激活只是提示需要审查的证据路径，本身并不能证明因果关系。">Candidate-link activation identifies a path for review. It does not, by itself, establish causality.</p></div></section>
 
-    <div class="rp-notes">
-      <p data-en="Agent / Harness fractions are passed criteria over total criteria for one run, not success rates over repeated trials. Excerpts follow the report appendix; recorded tool text is kept in English." data-zh="Agent / Harness 分数表示该次运行通过的判据数 / 判据总数，不是重复试验的成功率。节选来自报告附录，原始工具文本保留英文。">Agent / Harness fractions are passed criteria over total criteria for one run, not success rates over repeated trials. Excerpts follow the report appendix; recorded tool text is kept in English.</p>
-      <p data-en="These cases were selected to explain mechanisms. They are not estimates of failure frequency, controlled causal experiments, or harness rankings." data-zh="这些案例是为解释机制而挑选的，不代表故障发生频率、受控因果实验或运行框架排名。">These cases were selected to explain mechanisms. They are not estimates of failure frequency, controlled causal experiments, or harness rankings.</p>
-    </div>
-  </div>
-</section>
+<section class="section tint" id="dimensions"><div class="container"><h2 data-en="Seven dimensions. 95 targeted tasks." data-zh="七个维度，95 个针对性任务。">Seven dimensions. 95 targeted tasks.</h2><p class="section-intro" data-en="Mechanism-oriented tasks with executable or state-based ground truth, preserving equivalent task semantics across native harnesses." data-zh="机制导向任务采用可执行或基于状态的真值，在不同原生运行框架间保持任务语义等价。">Mechanism-oriented tasks with executable or state-based ground truth, preserving equivalent task semantics across native harnesses.</p><div class="dimension-grid">
 
-<section class="rp-sec" id="cite">
-  <div class="wrap rp-cite">
-    <div>
-      <p class="rp-eyebrow"><span>05</span><span data-en="Cite this report" data-zh="引用本报告">Cite this report</span></p>
-      <p class="rp-lede" data-en="For developers building agents, teams deciding what to verify before deployment, and researchers studying system reliability. We welcome questions and collaboration." data-zh="面向构建 Agent 的开发者、在部署前决定验收什么的团队，以及研究系统可靠性的研究者。欢迎交流与合作。">For developers building agents, teams deciding what to verify before deployment, and researchers studying system reliability. We welcome questions and collaboration.</p>
-      <div class="rp-actions">
-        <a class="rp-btn" href="https://github.com/TraceLite-AI/Harness-Benchmark" target="_blank" rel="noopener noreferrer"><span data-en="Repository" data-zh="代码仓库">Repository</span> <span aria-hidden="true">↗</span></a>
-        <a class="rp-btn" href="mailto:contact@tracelite.ai">contact@tracelite.ai</a>
-      </div>
-    </div>
-    <div class="rp-citebox">
-      <div class="rp-citetop"><span data-en="Citation" data-zh="引用格式">Citation</span><button type="button" id="copyCitation" data-en="Copy" data-zh="复制">Copy</button></div>
-      <pre id="citation">TraceLite AI. (2026). Trial by Trace:
-Benchmarking AI Agent Harnesses for
-Reliability and Failure Attribution.
-https://tracelite.ai/trial-by-trace.html</pre>
-    </div>
-  </div>
-</section>
+<article><span class="dimension-letter">C</span><div><h3 data-en="Context" data-zh="上下文">Context</h3><p data-en="Information preservation, isolation, and recovery." data-zh="信息保留、隔离与恢复。">Information preservation, isolation, and recovery.</p></div><span class="task-count" data-en="15 tasks" data-zh="15 个任务">15 tasks</span></article>
 
-<script>
-(() => {
-  // case tabs
-  const tabs = [...document.querySelectorAll('.rp-tabs [role="tab"]')];
-  const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
-  function select(i, focus) {
-    tabs.forEach((t, j) => { const on = i === j; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; panels[j].hidden = !on; });
-    panels[i].classList.remove('is-in'); requestAnimationFrame(() => panels[i].classList.add('is-in'));
-    if (focus) tabs[i].focus();
-  }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => { select(i); history.replaceState(null, '', '#' + panels[i].id); });
-    t.addEventListener('keydown', e => {
-      const n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i - 1 + tabs.length) % tabs.length : -1;
-      if (n >= 0) { e.preventDefault(); select(n, true); }
-    });
-  });
-  const fromHash = () => { const i = panels.findIndex(p => '#' + p.id === location.hash); if (i >= 0) { select(i); panels[i].closest('section').scrollIntoView(); } };
-  fromHash(); addEventListener('hashchange', fromHash);
-  if (!panels.some(p => p.classList.contains('is-in'))) panels[0].classList.add('is-in');
+<article><span class="dimension-letter">E</span><div><h3 data-en="Execution" data-zh="执行">Execution</h3><p data-en="Process semantics and faithful result delivery." data-zh="进程语义与忠实的结果传递。">Process semantics and faithful result delivery.</p></div><span class="task-count" data-en="27 tasks" data-zh="27 个任务">27 tasks</span></article>
 
-  // copy citation
-  const btn = document.getElementById('copyCitation');
-  btn.addEventListener('click', async () => {
-    const zh = document.documentElement.lang === 'zh-CN';
-    try { await navigator.clipboard.writeText(document.getElementById('citation').textContent); btn.textContent = zh ? '已复制' : 'Copied'; }
-    catch (_) { btn.textContent = zh ? '请手动复制' : 'Select to copy'; }
-    setTimeout(() => { btn.textContent = zh ? btn.dataset.zh : btn.dataset.en; }, 1800);
-  });
+<article><span class="dimension-letter">G</span><div><h3 data-en="Governance" data-zh="治理">Governance</h3><p data-en="Permissions, policies, and security boundaries." data-zh="权限、策略与安全边界。">Permissions, policies, and security boundaries.</p></div><span class="task-count" data-en="9 tasks" data-zh="9 个任务">9 tasks</span></article>
 
-  // count-up stats and chart bars when visible
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return; io.unobserve(e.target);
-    if (e.target.matches('.rp-chart')) { e.target.classList.add('is-in'); return; }
-    const end = +e.target.dataset.count; if (reduce) return;
-    const t0 = performance.now(), dur = 1100;
-    const tick = t => { const p = Math.min(1, (t - t0) / dur), v = Math.round(end * (1 - Math.pow(1 - p, 3)));
-      e.target.textContent = v.toLocaleString('en-US'); if (p < 1) requestAnimationFrame(tick); };
-    requestAnimationFrame(tick);
-  }), { threshold: 0.3 });
-  document.querySelectorAll('.rp-stats dd[data-count], .rp-chart').forEach(el => io.observe(el));
+<article><span class="dimension-letter">L</span><div><h3 data-en="Lifecycle" data-zh="生命周期">Lifecycle</h3><p data-en="Session transitions, delegation, and state recovery." data-zh="会话转换、委派与状态恢复。">Session transitions, delegation, and state recovery.</p></div><span class="task-count" data-en="19 tasks" data-zh="19 个任务">19 tasks</span></article>
 
-  // highlight current section in the sticky index
-  const links = [...document.querySelectorAll('.rp-toc a')];
-  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
-  const so = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) links.forEach((a, i) => a.classList.toggle('is-on', secs[i] === e.target));
-  }), { rootMargin: '-45% 0px -50% 0px' });
-  secs.forEach(s => s && so.observe(s));
-})();
-</script>
+<article><span class="dimension-letter">O</span><div><h3 data-en="Observability" data-zh="可观测性">Observability</h3><p data-en="Faithful diagnostic and failure channels." data-zh="忠实的诊断与错误传递通道。">Faithful diagnostic and failure channels.</p></div><span class="task-count" data-en="7 tasks" data-zh="7 个任务">7 tasks</span></article>
+
+<article><span class="dimension-letter">T</span><div><h3 data-en="Tools" data-zh="工具">Tools</h3><p data-en="Tool interfaces, discovery, and transport fidelity." data-zh="工具接口、发现与传输保真。">Tool interfaces, discovery, and transport fidelity.</p></div><span class="task-count" data-en="17 tasks" data-zh="17 个任务">17 tasks</span></article>
+
+<article><span class="dimension-letter">V</span><div><h3 data-en="Verification" data-zh="验证">Verification</h3><p data-en="Completion claims versus authoritative outcomes." data-zh="完成声明与权威结果是否一致。">Completion claims versus authoritative outcomes.</p></div><span class="task-count" data-en="1 task" data-zh="1 个任务">1 task</span></article>
+
+</div><p class="fine-print" data-en="40 mechanism-level properties · 46 single-turn, 45 fixed multi-turn, and 4 simulator-driven tasks. Coverage is uneven; Verification contains one task." data-zh="40 项机制级属性 · 46 个单轮、45 个固定多轮、4 个模拟器驱动任务。各维度覆盖不均衡，验证维度仅包含一个任务。">40 mechanism-level properties · 46 single-turn, 45 fixed multi-turn, and 4 simulator-driven tasks. Coverage is uneven; Verification contains one task.</p></div></section>
+
+<section class="section" id="task-design"><div class="container">
+<h2 data-en="What is inside a benchmark task?" data-zh="一个基准任务包含什么？">What is inside a benchmark task?</h2>
+<p class="section-intro" data-en="Every scenario pairs a concrete deliverable with a specific harness responsibility." data-zh="每个场景都将具体交付物与一项明确的运行框架职责结合。">Every scenario pairs a concrete deliverable with a specific harness responsibility.</p>
+<div class="method-grid">
+<article><span class="step-number">01</span><h3 data-en="Instructions &amp; interaction" data-zh="指令与交互">Instructions &amp; interaction</h3><p data-en="Each task fixes its user prompt or turn sequence, required actions, working boundaries, and expected deliverables. Single-turn, fixed multi-turn, and simulator-driven tasks exercise different interaction conditions." data-zh="每个任务固定用户提示或轮次序列、必要操作、工作边界与交付要求。单轮、固定多轮和模拟器驱动任务分别覆盖不同交互条件。">Each task fixes its user prompt or turn sequence, required actions, working boundaries, and expected deliverables. Single-turn, fixed multi-turn, and simulator-driven tasks exercise different interaction conditions.</p></article>
+<article><span class="step-number">02</span><h3 data-en="Initial state &amp; interfaces" data-zh="初始状态与接口">Initial state &amp; interfaces</h3><p data-en="The task package specifies workspace files, controlled services, native and task-specific tools, and the mechanism trigger—such as oversized output, timeout, or a session handoff." data-zh="任务包规定工作区文件、受控服务、原生及任务专用工具，以及超大输出、超时或会话交接等机制触发条件。">The task package specifies workspace files, controlled services, native and task-specific tools, and the mechanism trigger—such as oversized output, timeout, or a session handoff.</p></article>
+<article><span class="step-number">03</span><h3 data-en="Independent ground truth" data-zh="独立真值">Independent ground truth</h3><p data-en="Private truth, simulator ledgers, process outcomes, and executable verifiers check what actually happened. Private oracle state stays outside the agent-writable workspace." data-zh="私有真值、模拟器账本、进程结果和可执行验证器检查实际发生的情况。私有真值状态位于 Agent 可写工作区之外。">Private truth, simulator ledgers, process outcomes, and executable verifiers check what actually happened. Private oracle state stays outside the agent-writable workspace.</p></article>
+<article><span class="step-number">04</span><h3 data-en="Resource &amp; execution contract" data-zh="资源与执行约定">Resource &amp; execution contract</h3><p data-en="Resolved configurations retain time, turn, and tool-call limits alongside runtime requirements. Adapters preserve task semantics while keeping each harness’s native behavior." data-zh="解析后的配置保存时间、轮次、工具调用限制及运行时要求。适配器保持任务语义一致，同时保留各框架的原生行为。">Resolved configurations retain time, turn, and tool-call limits alongside runtime requirements. Adapters preserve task semantics while keeping each harness’s native behavior.</p></article>
+<article><span class="step-number">05</span><h3 data-en="Two score sheets" data-zh="两份评分表">Two score sheets</h3><p data-en="Agent criteria check actions and deliverables. Harness criteria check the declared obligation at an explicit observation boundary, using its own evidence selectors." data-zh="Agent 判据检查操作和交付物；框架判据在明确的观测边界上检查预先声明的职责，并使用独立的证据选择规则。">Agent criteria check actions and deliverables. Harness criteria check the declared obligation at an explicit observation boundary, using its own evidence selectors.</p></article>
+<article><span class="step-number">06</span><h3 data-en="Inspectable evidence" data-zh="可审查的证据">Inspectable evidence</h3><p data-en="Trace IR, native records, artifact differences, and environment probes retain provenance. Verdicts remain connected to the evidence used to reach them." data-zh="Trace IR、原生记录、产物差异与环境探针保留来源信息。每个判定都可以追溯到支持该判定的证据。">Trace IR, native records, artifact differences, and environment probes retain provenance. Verdicts remain connected to the evidence used to reach them.</p></article>
+</div>
+<p class="fine-print" data-en="Example: recover 12 escalation codes from one ticket export. The agent must use bounded requests against the same snapshot; an independent ledger and verifier compare the issued codes, delivered tool results, and final JSON mapping." data-zh="例如：从一次工单导出中恢复 12 个升级代码。Agent 必须针对同一快照进行有界恢复请求；独立账本与验证器核对签发的代码、实际传递的工具结果及最终 JSON 映射。">Example: recover 12 escalation codes from one ticket export. The agent must use bounded requests against the same snapshot; an independent ledger and verifier compare the issued codes, delivered tool results, and final JSON mapping.</p>
+<p class="center"><a class="text-link" href="#case-recovery"><span data-en="Inspect the output-recovery case →" data-zh="查看输出恢复案例 →">Inspect the output-recovery case →</span></a></p>
+</div></section>
+
+<section class="section tint" id="protocol"><div class="container">
+<h2 data-en="How an evaluation runs" data-zh="一次评测如何进行">How an evaluation runs</h2>
+<p class="section-intro" data-en="Fixed task contracts, native harness execution, and evidence-grounded scoring." data-zh="固定任务约定，执行原生运行框架，再依据证据评分。">Fixed task contracts, native harness execution, and evidence-grounded scoring.</p>
+<div class="method-grid">
+<article><span class="step-number">01</span><h3 data-en="Prepare &amp; isolate" data-zh="准备与隔离">Prepare &amp; isolate</h3><p data-en="Task-scoped Docker containers establish the initial workspace and declared limits. Admission checks cover container lifecycle, archive integrity, trace scoreability, applicable probes, and private oracles." data-zh="任务级 Docker 容器准备初始工作区和预先声明的限制。准入检查覆盖容器生命周期、归档完整性、轨迹可评分性、适用探针及私有真值。">Task-scoped Docker containers establish the initial workspace and declared limits. Admission checks cover container lifecycle, archive integrity, trace scoreability, applicable probes, and private oracles.</p></article>
+<article><span class="step-number">02</span><h3 data-en="Execute &amp; collect" data-zh="执行与采集">Execute &amp; collect</h3><p data-en="Native adapters run Claude Code, Codex, DeepSeek Harness, and OpenClaw. Trajectory tracing and multi-source evidence capture execution events, artifacts, environment state, and recorded resource usage." data-zh="原生适配器运行 Claude Code、Codex、DeepSeek Harness 和 OpenClaw。轨迹追踪与多源证据采集记录执行事件、交付物、环境状态及资源用量。">Native adapters run Claude Code, Codex, DeepSeek Harness, and OpenClaw. Trajectory tracing and multi-source evidence capture execution events, artifacts, environment state, and recorded resource usage.</p></article>
+<article><span class="step-number">03</span><h3 data-en="Verify &amp; diagnose" data-zh="验证与诊断">Verify &amp; diagnose</h3><p data-en="Deterministic checks are fixed first. Semantic Agent and Harness criteria are then evaluated with their respective evidence; final semantic evaluations use DeepSeek-V4-Flash. Candidate mechanism links undergo separate evidence review before propagation claims." data-zh="先确定可执行检查的结果，再依据各自证据评估语义类 Agent 与框架判据；最终语义评审使用 DeepSeek-V4-Flash。候选机制关联需要经过单独的证据审查，才能支持传播结论。">Deterministic checks are fixed first. Semantic Agent and Harness criteria are then evaluated with their respective evidence; final semantic evaluations use DeepSeek-V4-Flash. Candidate mechanism links undergo separate evidence review before propagation claims.</p></article>
+</div>
+<p class="fine-print" data-en="Configured task ceilings range from 120–5,400 seconds, 1–120 user-input turns, and 5–300 task-tool calls. These are allowed limits, not observed usage. Each model–harness block contains the same 95 tasks." data-zh="各任务配置上限范围为 120–5,400 秒、1–120 个用户输入轮次、5–300 次任务工具调用。这些是允许上限，不是实际用量。每个模型–框架组合均包含相同的 95 个任务。">Configured task ceilings range from 120–5,400 seconds, 1–120 user-input turns, and 5–300 task-tool calls. These are allowed limits, not observed usage. Each model–harness block contains the same 95 tasks.</p>
+</div></section>
+
+<section class="section" id="results"><div class="container"><h2 data-en="Task success is only part of the story" data-zh="任务成功，只是评测的一部分">Task success is only part of the story</h2><p class="section-intro" data-en="Different harnesses lead on task completion and harness reliability." data-zh="任务完成和框架可靠性，得分领先的运行框架并不相同。">Different harnesses lead on task completion and harness reliability.</p><div class="finding-grid">
+
+<article><strong>31.1%</strong><p data-en="Task succeeds, but at least one Harness criterion fails" data-zh="任务成功，但至少一项框架判据未通过">Task succeeds, but at least one Harness criterion fails</p></article>
+
+<article><strong>8.4%</strong><p data-en="All criteria pass in both the Agent and Harness layers" data-zh="Agent 与框架两层判据全部通过">All criteria pass in both the Agent and Harness layers</p></article>
+
+<article><strong>12.2 pts</strong><p data-en="Spread in Harness Macro across the four harnesses" data-zh="四个运行框架宏平均得分的差距">Spread in Harness Macro across the four harnesses</p></article>
+
+</div><figure class="paper-figure"><a class="figure-link" href="assets/report/overall-score-model-harness.webp" aria-label="Enlarge figure: Overall scores for nine model groups and four harnesses. Claude Code leads harness Overall at 73.5%."><img src="assets/report/overall-score-model-harness.webp" width="1800" height="655" alt="Overall scores for nine model groups and four harnesses. Claude Code leads harness Overall at 73.5%." loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Overall Score gives equal weight to Agent Score and Harness Macro. Model bars average across four harnesses; harness bars average across nine models." data-zh="综合得分对 Agent 得分与框架宏平均得分等权加权。模型柱汇总四个运行框架，框架柱汇总九个模型。">Overall Score gives equal weight to Agent Score and Harness Macro. Model bars average across four harnesses; harness bars average across nine models.</figcaption></figure><div class="table-scroll" role="region" aria-label="Aggregate results" tabindex="0"><table><caption><span data-en="Aggregate results · 855 matched model–task cells per harness" data-zh="汇总结果 · 每个运行框架 855 个匹配的模型–任务组合">Aggregate results · 855 matched model–task cells per harness</span></caption><thead><tr><th scope="col">Harness</th><th scope="col">Agent Pass</th><th scope="col">Agent Score</th><th scope="col">Harness Macro</th><th scope="col">Clean</th><th scope="col">Overall</th></tr></thead><tbody>
+
+<tr><th scope="row">Claude Code</th><td><strong>44.0</strong></td><td><strong>75.9</strong></td><td>71.2</td><td>9.1</td><td><strong>73.5</strong></td></tr>
+
+<tr><th scope="row">Codex</th><td>35.8</td><td>70.7</td><td>59.8</td><td>2.8</td><td>65.2</td></tr>
+
+<tr><th scope="row">DeepSeek Harness</th><td>40.0</td><td>73.3</td><td>68.8</td><td>9.8</td><td>71.0</td></tr>
+
+<tr><th scope="row">OpenClaw</th><td>38.2</td><td>71.7</td><td><strong>72.0</strong></td><td><strong>11.7</strong></td><td>71.8</td></tr>
+
+</tbody></table></div><p class="fine-print" data-en="All values are percentages. Agent Pass requires every Agent criterion; Clean requires every criterion in both layers. Macro averages per-run fractions." data-zh="所有数值均为百分比。Agent Pass 要求通过全部 Agent 判据；Clean 要求两层全部通过。Macro 对各次运行的通过比例取平均。">All values are percentages. Agent Pass requires every Agent criterion; Clean requires every criterion in both layers. Macro averages per-run fractions.</p><div class="method-grid">
+<article><span class="step-number">01</span><h3 data-en="Agent Score &amp; Agent Pass" data-zh="Agent 得分与通过率">Agent Score &amp; Agent Pass</h3><p data-en="Agent Score averages each run’s fraction of passed Agent criteria. Agent Pass counts only runs that satisfy every Agent criterion; a high partial score does not imply a fully completed task." data-zh="Agent Score 对每次运行通过的 Agent 判据比例取平均。Agent Pass 只统计全部 Agent 判据均通过的运行；较高的部分得分不代表任务完整完成。">Agent Score averages each run’s fraction of passed Agent criteria. Agent Pass counts only runs that satisfy every Agent criterion; a high partial score does not imply a fully completed task.</p></article>
+<article><span class="step-number">02</span><h3 data-en="Harness Macro &amp; Micro" data-zh="框架宏平均与微平均">Harness Macro &amp; Micro</h3><p data-en="Macro gives each run equal weight by averaging its passed-criterion fraction. Micro pools all Harness criteria, so tasks with longer score sheets contribute more items." data-zh="Macro 对每次运行的判据通过比例取平均，赋予每次运行相同权重。Micro 汇总全部框架判据，因此评分表较长的任务会贡献更多判据项。">Macro gives each run equal weight by averaging its passed-criterion fraction. Micro pools all Harness criteria, so tasks with longer score sheets contribute more items.</p></article>
+<article><span class="step-number">03</span><h3 data-en="Overall &amp; Clean" data-zh="综合得分与完全通过">Overall &amp; Clean</h3><p data-en="Overall equally weights Agent Score and Harness Macro. Clean requires every criterion in both layers to pass. These measures describe different aspects of the same selected runs." data-zh="Overall 对 Agent Score 与 Harness Macro 等权加权。Clean 要求两层全部判据通过。这些指标描述同一批选定运行的不同方面。">Overall equally weights Agent Score and Harness Macro. Clean requires every criterion in both layers to pass. These measures describe different aspects of the same selected runs.</p></article>
+</div>
+<p class="fine-print" data-en="Per-run Overall = 50 × (passed Agent criteria / total Agent criteria) + 50 × (passed Harness criteria / total Harness criteria). The two layers use distinct score sheets, but the outcome-conditioned treatment of unexercised Harness criteria means they are not statistically independent." data-zh="单次运行综合得分 = 50 ×（通过的 Agent 判据数 / Agent 判据总数）+ 50 ×（通过的框架判据数 / 框架判据总数）。两层使用不同评分表，但未触发框架判据的处理取决于任务结果，因此两层并非统计独立。">Per-run Overall = 50 × (passed Agent criteria / total Agent criteria) + 50 × (passed Harness criteria / total Harness criteria). The two layers use distinct score sheets, but the outcome-conditioned treatment of unexercised Harness criteria means they are not statistically independent.</p>
+<p class="center"><a class="text-link" href="leaderboard.html"><span data-en="Explore the full leaderboard →" data-zh="查看完整排行榜 →">Explore the full leaderboard →</span></a></p><figure class="paper-figure"><a class="figure-link" href="assets/report/cost-performance-pareto.webp" aria-label="Enlarge figure: Cost and overall performance across model–harness configurations."><img src="assets/report/cost-performance-pareto.webp" width="1800" height="720" alt="Cost and overall performance across model–harness configurations." loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Performance and recorded cost. Estimates use frozen model-specific prices and selected executions, excluding Judge calls and discarded runs." data-zh="表现与记录成本。成本按固定的模型价格和选定运行估算，不包含评审模型调用及丢弃运行。">Performance and recorded cost. Estimates use frozen model-specific prices and selected executions, excluding Judge calls and discarded runs.</figcaption></figure><figure class="paper-figure"><a class="figure-link" href="assets/report/reliability-analysis-overview.webp" aria-label="Enlarge figure: Reliability scores by dimension, four criterion-verdict states, and candidate-link incidence."><img src="assets/report/reliability-analysis-overview.webp" width="1800" height="550" alt="Reliability scores by dimension, four criterion-verdict states, and candidate-link incidence." loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Reliability analysis across the 3,420-run grid. Automatically activated candidate links are distinct from evidence-validated causal propagation." data-zh="3,420 次运行的可靠性分析。自动激活的候选关联，不等同于经证据验证的因果传播。">Reliability analysis across the 3,420-run grid. Automatically activated candidate links are distinct from evidence-validated causal propagation.</figcaption></figure></div></section>
+
+<section class="section tint" id="cases"><div class="container"><h2 data-en="Look inside the trace" data-zh="深入执行轨迹">Look inside the trace</h2><p class="section-intro" data-en="Five paired case studies. The same model and task, seen through different native harnesses." data-zh="五组配对案例：同一模型、同一任务，在不同原生运行框架中的表现。">Five paired case studies. The same model and task, seen through different native harnesses.</p><div class="case-tabs" aria-label="Trace case studies">
+
+<a id="tab-case-recovery" href="#case-recovery"><span class="tab-number">01</span><span data-en="Output recovery" data-zh="输出恢复">Output recovery</span></a>
+
+<a id="tab-case-failure" href="#case-failure"><span class="tab-number">02</span><span data-en="Failure signals" data-zh="错误信号">Failure signals</span></a>
+
+<a id="tab-case-handoff" href="#case-handoff"><span class="tab-number">03</span><span data-en="Child handoff" data-zh="子任务交接">Child handoff</span></a>
+
+<a id="tab-case-terminal" href="#case-terminal"><span class="tab-number">04</span><span data-en="Terminal EOF" data-zh="终端 EOF">Terminal EOF</span></a>
+
+<a id="tab-case-once" href="#case-once"><span class="tab-number">05</span><span data-en="Exactly once" data-zh="只执行一次">Exactly once</span></a>
+
+</div>
+
+<article class="case-panel" id="case-recovery" aria-labelledby="tab-case-recovery"><h3 data-en="Can the agent recover what was truncated?" data-zh="Agent 能找回被截断的内容吗？">Can the agent recover what was truncated?</h3><p class="case-description" data-en="With Opus 5, recovery depends on whether the visible output preserves the information needed to retrieve the missing content." data-zh="在 Opus 5 的配对轨迹中，恢复是否可行取决于可见输出是否保留了检索缺失内容所需的信息。">With Opus 5, recovery depends on whether the visible output preserves the information needed to retrieve the missing content.</p><figure class="paper-figure"><a class="figure-link" href="assets/report/01-output-recovery.webp" aria-label="Enlarge figure: Output recovery paired execution trajectories"><img src="assets/report/01-output-recovery.webp" width="1415" height="2000" alt="Output recovery paired execution trajectories" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Output recovery · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run." data-zh="输出恢复 · 选自稿件附录的轨迹。分数为该次运行通过的判据数 / 判据总数。">Output recovery · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run.</figcaption></figure></article>
+
+<article class="case-panel" id="case-failure" aria-labelledby="tab-case-failure"><h3 data-en="Correct reports can hide different failure states." data-zh="正确报告可能掩盖不同的错误状态。">Correct reports can hide different failure states.</h3><p class="case-description" data-en="Both agents can recognize failure in text while structured error and exit-code fields tell different stories." data-zh="两边 Agent 都可能从文本识别失败，但结构化错误字段和退出码的表现可能不同。">Both agents can recognize failure in text while structured error and exit-code fields tell different stories.</p><figure class="paper-figure"><a class="figure-link" href="assets/report/02-structured-failure.webp" aria-label="Enlarge figure: Failure signals paired execution trajectories"><img src="assets/report/02-structured-failure.webp" width="1415" height="2000" alt="Failure signals paired execution trajectories" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Failure signals · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run." data-zh="错误信号 · 选自稿件附录的轨迹。分数为该次运行通过的判据数 / 判据总数。">Failure signals · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run.</figcaption></figure></article>
+
+<article class="case-panel" id="case-handoff" aria-labelledby="tab-case-handoff"><h3 data-en="Dispatch accepted is not completion delivered." data-zh="接受派发，不等于完成交付。">Dispatch accepted is not completion delivered.</h3><p class="case-description" data-en="Asynchronous delegation requires preserving the distinction between an accepted child task and a result actually delivered to the parent." data-zh="异步委派需要区分子任务已被接受，以及结果是否真正交付给父任务。">Asynchronous delegation requires preserving the distinction between an accepted child task and a result actually delivered to the parent.</p><figure class="paper-figure"><a class="figure-link" href="assets/report/03-child-handoff.webp" aria-label="Enlarge figure: Child handoff paired execution trajectories"><img src="assets/report/03-child-handoff.webp" width="1415" height="2000" alt="Child handoff paired execution trajectories" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Child handoff · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run." data-zh="子任务交接 · 选自稿件附录的轨迹。分数为该次运行通过的判据数 / 判据总数。">Child handoff · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run.</figcaption></figure></article>
+
+<article class="case-panel" id="case-terminal" aria-labelledby="tab-case-terminal"><h3 data-en="Did the end-of-file signal reach the process?" data-zh="文件结束信号是否传递到进程？">Did the end-of-file signal reach the process?</h3><p class="case-description" data-en="Native terminal traces reveal whether EOF delivery and the resulting task state agree." data-zh="原生终端轨迹揭示 EOF 信号传递与后续任务状态是否一致。">Native terminal traces reveal whether EOF delivery and the resulting task state agree.</p><figure class="paper-figure"><a class="figure-link" href="assets/report/04-terminal-eof.webp" aria-label="Enlarge figure: Terminal EOF paired execution trajectories"><img src="assets/report/04-terminal-eof.webp" width="1415" height="2000" alt="Terminal EOF paired execution trajectories" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Terminal EOF · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run." data-zh="终端 EOF · 选自稿件附录的轨迹。分数为该次运行通过的判据数 / 判据总数。">Terminal EOF · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run.</figcaption></figure></article>
+
+<article class="case-panel" id="case-once" aria-labelledby="tab-case-once"><h3 data-en="Correct final values. Repeated actions." data-zh="最终值正确，操作却重复了。">Correct final values. Repeated actions.</h3><p class="case-description" data-en="With Qwen3.8-Max, session-handoff traces distinguish correct final values from compliance with an exactly-once interaction rule." data-zh="在 Qwen3.8-Max 的跨会话轨迹中，最终值正确与遵守“只执行一次”的交互规则，是两个不同的要求。">With Qwen3.8-Max, session-handoff traces distinguish correct final values from compliance with an exactly-once interaction rule.</p><figure class="paper-figure"><a class="figure-link" href="assets/report/05-exactly-once-memory.webp" aria-label="Enlarge figure: Exactly once paired execution trajectories"><img src="assets/report/05-exactly-once-memory.webp" width="1415" height="2000" alt="Exactly once paired execution trajectories" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">↗</span></a><figcaption data-en="Exactly once · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run." data-zh="只执行一次 · 选自稿件附录的轨迹。分数为该次运行通过的判据数 / 判据总数。">Exactly once · Selected trajectories from the manuscript appendix. Fractions are passed criteria / total criteria for each run.</figcaption></figure></article>
+
+<p class="fine-print" data-en="Cases explain mechanisms; they do not estimate failure frequency or establish controlled causal effects. Click any figure to enlarge." data-zh="案例用于解释机制，不用于估计故障频率或确立受控因果效应。点击任意图表可放大查看。">Cases explain mechanisms; they do not estimate failure frequency or establish controlled causal effects. Click any figure to enlarge.</p></div></section>
+
+<section class="section" id="limitations"><div class="reading-width"><h2 data-en="Reading the results" data-zh="如何解读这些结果">Reading the results</h2><p data-en="The study retains one selected execution per harness × model × task cell. These are descriptive results under the archived configurations, not estimates of repeated-run stability. Uneven task coverage, source visibility, evidence selection, and Judge-budget variation limit generalization." data-zh="本研究在每个运行框架 × 模型 × 任务组合中保留一次选定运行。结果描述归档配置下的表现，不用于估计重复运行的稳定性。任务覆盖不均、证据源可见性、证据选择及评审预算差异限制了结论的推广。">The study retains one selected execution per harness × model × task cell. These are descriptive results under the archived configurations, not estimates of repeated-run stability. Uneven task coverage, source visibility, evidence selection, and Judge-budget variation limit generalization.</p><p data-en="A failed Harness criterion is an operational shortfall, not automatic confirmation of a defect. Likewise, a candidate link is an evidence path to review, not proof of causality." data-zh="框架判据未通过表示操作层面的要求未被满足，并不自动确认缺陷。同样，候选关联是待审查的证据路径，而非因果关系的证明。">A failed Harness criterion is an operational shortfall, not automatic confirmation of a defect. Likewise, a candidate link is an evidence path to review, not proof of causality.</p></div></section>
+
+<section class="section" id="resources"><div class="container">
+<h2 data-en="Inspect, compare, reproduce" data-zh="审查、比较与复现">Inspect, compare, reproduce</h2>
+<p class="section-intro" data-en="Follow a result back to its task, configuration, and execution evidence." data-zh="从一项结果追溯到对应任务、配置与执行证据。">Follow a result back to its task, configuration, and execution evidence.</p>
+<div class="method-grid">
+<article><span class="step-number">01</span><h3 data-en="Inspect a task" data-zh="审查任务">Inspect a task</h3><p data-en="Start with the prompt, initial workspace, resource limits, verifier, and the two score sheets. Confirm which mechanism is triggered and which observation establishes the verdict." data-zh="首先查看提示、初始工作区、资源限制、验证器及两份评分表，确认所触发的机制，以及支持判定的观测。">Start with the prompt, initial workspace, resource limits, verifier, and the two score sheets. Confirm which mechanism is triggered and which observation establishes the verdict.</p></article>
+<article><span class="step-number">02</span><h3 data-en="Compare configurations" data-zh="比较配置">Compare configurations</h3><p data-en="Use the leaderboard to compare harness aggregates or model–harness pairs. Keep task population and metric definitions aligned; inspect the paired cases to understand concrete mechanisms." data-zh="通过排行榜比较框架汇总结果或模型–框架组合。保持任务总体和指标定义一致，并借助配对案例理解具体机制。">Use the leaderboard to compare harness aggregates or model–harness pairs. Keep task population and metric definitions aligned; inspect the paired cases to understand concrete mechanisms.</p></article>
+<article><span class="step-number">03</span><h3 data-en="Recompute from evidence" data-zh="依据证据复核">Recompute from evidence</h3><p data-en="Use the archived task and resolved run configuration together with traces, artifacts, and final criterion verdicts. Final combined-score files supply score authority; a root execution-status label alone does not." data-zh="结合归档任务、解析后的运行配置、轨迹、产物与最终判据结果进行复核。分数以最终综合评分文件为准，不能仅依据根级执行状态标签。">Use the archived task and resolved run configuration together with traces, artifacts, and final criterion verdicts. Final combined-score files supply score authority; a root execution-status label alone does not.</p></article>
+</div>
+<div class="center"><div class="publication-links"><a class="button dark" href="https://github.com/TraceLite-AI/Harness-Benchmark" target="_blank" rel="noopener noreferrer"><span data-en="GitHub repository" data-zh="GitHub 仓库">GitHub repository</span></a><a class="button light" href="leaderboard.html"><span data-en="Compare results" data-zh="比较结果">Compare results</span></a><a class="button light" href="#cases"><span data-en="Inspect case studies" data-zh="查看轨迹案例">Inspect case studies</span></a></div></div>
+</div></section>
+
+<section class="section tint" id="cite"><div class="reading-width"><div class="citation-heading"><h2>BibTeX</h2><button class="copy-button" type="button" id="copyCitation" data-en="Copy citation" data-zh="复制引用">Copy citation</button></div><pre class="citation"><code id="citation">@misc{tracelite2026trialbytrace,
+  title  = {Trial by Trace: Benchmarking AI Agent Harnesses
+            for Reliability and Failure Attribution},
+  author = {Cao, Zhiyong and
+            Zhu, Hengjie and
+            Wang, Yongxin and
+            Li, Xuchen and
+            Li, Jintao and
+            Liu, Shuxia and
+            Liu, Dunqiang and
+            Wang, Bo and
+            Zhang, Kairan and
+            Lin, Cong and
+            Yu, JiangDi and
+            Liu, Siyuan and
+            Yao, Sijia and
+            Wei, Yi-Liang and
+            Ma, Lingxu and
+            Wang, Aijia and
+            Chen, Anxin and
+            Wei, Zixian and
+            Ruan, Xiang and
+            Xu, Ruizhi and
+            Shi, Ruqian and
+            Xiao, Baihua and
+            Zhou, Sicheng},
+  year   = {2026},
+  url    = {https://tracelite.ai/trial-by-trace.html}
+}</code></pre><p id="copyStatus" role="status" aria-live="polite"></p></div></section>
