@@ -326,62 +326,6 @@ canvas{display:block;}
         </div>
       </div>
 
-      <!-- BLOCK 2 — Papers -->
-      <div class="r-block">
-        <div class="r-head">
-          <svg class="c-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/><path d="M8 13h7M8 17h7"/></svg>
-          <h2>Papers</h2>
-        </div>
-        <div class="papers-strip">
-          <article class="paper-card" id="mm-verirubric" data-year="EMNLP 2026" data-tags="Multimodal · Reward Models" data-fig="images/papers/mm-verirubric.jpg" data-abstract="Most multimodal reward models emit only an outcome reward, which is sparse and misses the structure of human preference. MM-VeriRubric builds training data for multimodal rubric generation at scale: task-aware visual clue extraction grounds rubrics in task-relevant image evidence, and rubric-aligned rejected responses with controlled error dimensions let each rubric be verified through consistency checking. The verified data trains both a rubric generator and a rubric-based reward model, improving preference judgment by 16.4% on VL-RewardBench and Best-of-5 selection by 13.1% on MMMU-Pro.">
-            <div class="pc-visual"><img src="images/papers/mm-verirubric.jpg" alt="Main figure — MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models" loading="lazy" /></div>
-            <h3>MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models</h3>
-            <div class="pc-meta"><span>EMNLP 2026</span><span>Multimodal</span><span>Reward Models</span></div>
-          </article>
-          <article class="paper-card" id="disentangled-privileged-states" data-year="EMNLP 2026" data-tags="Dialogue Policy · Simulators" data-fig="images/papers/dps.jpg" data-abstract="Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.">
-            <div class="pc-visual"><img src="images/papers/dps.jpg" alt="Main figure — Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training" loading="lazy" /></div>
-            <h3>Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training</h3>
-            <div class="pc-meta"><span>EMNLP 2026</span><span>Dialogue Policy</span><span>Simulators</span></div>
-          </article>
-          <article class="paper-card is-oral" id="simrpd" data-year="ACL 2026" data-tags="Dialogue Agents · Synthetic Data" data-fig="images/papers/simrpd.jpg" data-oral="1" data-abstract="Proactive dialogue agents steer recruitment conversations toward concrete business outcomes, but training them is bottlenecked by the scarcity of high-quality, goal-oriented domain data. SimRPD is a three-stage framework: a high-fidelity user simulator synthesizes large-scale multi-turn conversations, a Chain-of-Intention evaluation framework assesses the simulator and selects high-quality data using both global-level and instance-level metrics, and the agent is then trained on that selection. In a real-world recruitment scenario SimRPD outperforms existing simulator-based data selection strategies.">
-            <div class="pc-visual"><img src="images/papers/simrpd.jpg" alt="Main figure — SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection" loading="lazy" /></div>
-            <h3>SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection</h3>
-            <div class="pc-meta"><span class="tag-oral">Oral</span><span>ACL 2026</span><span>Dialogue Agents</span><span>Synthetic Data</span></div>
-          </article>
-          <article class="paper-card" id="select-less-reason-more" data-year="CVPR 2026" data-tags="Video Reasoning · Reinforcement Learning" data-fig="images/papers/earl-select-less.jpg" data-abstract="Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.">
-            <div class="pc-visual"><img src="images/papers/earl-select-less.jpg" alt="Main figure — Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning" loading="lazy" /></div>
-            <h3>Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h3>
-            <div class="pc-meta"><span>CVPR 2026</span><span>Video Reasoning</span><span>Reinforcement Learning</span></div>
-          </article>
-          <article class="paper-card" id="look-less-reason-more" data-year="ACL 2026" data-tags="Vision-Language · Reinforcement Learning" data-fig="images/papers/adaptive-pixel-reasoning.jpg" data-abstract="Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.">
-            <div class="pc-visual"><img src="images/papers/adaptive-pixel-reasoning.jpg" alt="Main figure — Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning" loading="lazy" /></div>
-            <h3>Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h3>
-            <div class="pc-meta"><span>ACL 2026</span><span>Vision-Language</span><span>Reinforcement Learning</span></div>
-          </article>
-          <article class="paper-card" data-year="Aquaculture and Fisheries 2026" data-tags="Computer Vision · Aquaculture" data-fig="images/papers/stafdd.jpg" data-abstract="Fish disease spreads rapidly in high-density aquaculture, where manual inspection is too slow to catch it early. STAFDD combines what a fish looks like with how it moves: SSCA-YOLO, an improved YOLOv8 with an SPD-CBS downsampling module, a small-object head and coordinate attention, detects body-surface abnormalities; ByteSort with ReID features tracks individuals into stable trajectories; an LSTM reads abnormal behaviour from those trajectories; and a learnable MLP gate fuses the two branches by confidence. On a dataset built from Aeromonas hydrophila-challenged Prussian carp, tracking reaches 89.74% HOTA and 94.05% MOTA, and overall classification accuracy reaches 96.86%.">
-            <div class="pc-visual"><img src="images/papers/stafdd.jpg" alt="Main figure — STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method" loading="lazy" /></div>
-            <h3>STAFDD: A Spatio-Temporal Automatic Fish Disease Detection Method</h3>
-            <div class="pc-meta"><span>Aquaculture and Fisheries 2026</span><span>Computer Vision</span><span>Aquaculture</span></div>
-          </article>
-          <article class="paper-card" data-year="arXiv 2025" data-tags="Benchmark · Video Reasoning" data-fig="images/papers/causalstep.jpg" data-abstract="Existing video benchmarks mostly probe shallow understanding and let models exploit global context, so they never really test causal, step-by-step reasoning. CausalStep segments videos into causally linked units and enforces a strict sequential question-answer protocol that blocks shortcut solutions, with distractors built from an error-type taxonomy so every question is diagnostic. The benchmark covers 100 videos across six categories with 1,852 multiple-choice pairs and seven diagnostic metrics; leading proprietary and open-source models all fall well short of the human baseline.">
-            <div class="pc-visual"><img src="images/papers/causalstep.jpg" alt="Main figure — CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos" loading="lazy" /></div>
-            <h3>CausalStep: A Benchmark for Explicit Stepwise Causal Reasoning in Videos</h3>
-            <div class="pc-meta"><span>arXiv 2025</span><span>Benchmark</span><span>Video Reasoning</span></div>
-          </article>
-          <article class="paper-card" data-year="Under Review" data-tags="Embodied Agents · Planning" data-fig="images/papers/eviseek.jpg" data-abstract="Embodied agents can acquire the evidence a task needs through interaction rather than waiting for it to appear in passive observation — the hard part is knowing what evidence is required and turning that into something to go do. EviSeek is a training-free framework with three parts: Evidence-Demand Planning derives explicit, answer-agnostic evidence demands and matching acquisition goals; Evidence-Seeking Interaction pursues them through viewpoint changes or physical intervention; and Evidence-Oriented Memory retains demand-linked evidence and tracks coverage, with the final answer generated solely from what was retained. It substantially improves answer and grounded accuracy on ESI-Bench and achieves the best path-weighted correctness on EXPRESS-Bench.">
-            <div class="pc-visual"><img src="images/papers/eviseek.jpg" alt="Main figure — EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking" loading="lazy" /></div>
-            <h3>EviSeek: An Evidence-Centric Agentic Framework for Embodied Active Information Seeking</h3>
-            <div class="pc-meta"><span>Under Review</span><span>Embodied Agents</span><span>Planning</span></div>
-          </article>
-          <article class="paper-card" data-year="Under Review" data-tags="Cross-Modal Retrieval · Representation Learning" data-fig="images/papers/kdph.jpg" data-abstract="Proxy-based deep cross-modal hashing models each class proxy as a deterministic point, and in multi-label settings label co-occurrence turns that rigidity into gradient contention and optimization collapse. KDPH replaces point proxies with flexible anisotropic Kent distributions on the hypersphere, so a proxy absorbs conflicting gradients by adjusting its directional variance instead of drifting — holding a stable semantic mean direction while stretching to cover diverse label correlations. A tailored loss using the Cayley transform enforces strict orthogonality of the geometric parameters. It is the first framework to bring Kent distributions into cross-modal hashing, and it mitigates proxy collapse and oscillation while outperforming state-of-the-art methods on three benchmarks.">
-            <div class="pc-visual"><img src="images/papers/kdph.jpg" alt="Main figure — Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing" loading="lazy" /></div>
-            <h3>Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing</h3>
-            <div class="pc-meta"><span>Under Review</span><span>Cross-Modal Retrieval</span><span>Representation Learning</span></div>
-          </article>
-        </div>
-        <a class="col-link" href="papers.html">View all papers →</a>
-      </div>
-
       <!-- BLOCK 3 — Products -->
       <div class="r-block" data-masked="products">
         <div class="r-head">
