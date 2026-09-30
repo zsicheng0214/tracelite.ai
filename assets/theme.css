@@ -223,3 +223,6 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 a.proj-link:hover{border-color:#111;background:#fff;}
 .proj-link.is-soon{color:#9a9a9a;border-style:dashed;}
 @media(max-width:520px){.proj-grid{grid-template-columns:1fr;}}
+.proj-eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;color:var(--text-2);}
+.proj-eyebrow::before{content:"";width:18px;height:1px;background:currentColor;}
+.proj-block .proj-grid{margin-top:16px;}
