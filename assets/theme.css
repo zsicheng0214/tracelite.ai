@@ -206,3 +206,5 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .page-hero h1{letter-spacing:0;}
 .nav-cta .soc-txt{font-size:12.5px;font-weight:700;letter-spacing:.02em;color:#333;white-space:nowrap;}
 .nav-cta .lang-toggle{font-size:13px!important;font-weight:600;}
 @media(max-width:767px){.nav-cta .ext,.nav-cta .soc{display:none!important;}}
+/* Same wordmark size on every page */
+.brand img.logo,.nav .brand img,.site-header .brand img{height:26px!important;width:auto!important;display:block;}
