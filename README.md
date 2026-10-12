@@ -46,6 +46,8 @@ FishCaduceus and FishNALM were removed from the public paper listings at the tea
 
 ## Blog
 
+**Currently hidden (2026-10-12):** the homepage `#blog` section and every nav/footer Blog link carry `data-masked="blog"`. `blog.html` is still published and reachable by URL. To restore, remove those attributes (`grep -n 'data-masked="blog"' *.html`).
+
 The homepage has a separate `#blog` section after the research output, with three selected notes and a link to the full blog. Its cards reuse the existing illustrations and articles. `blog.html#useful-agent-benchmarks`, `blog.html#synthetic-trajectories`, and `blog.html#beyond-pass-at-one` open the corresponding article directly and remain readable without JavaScript. Keep article IDs stable when updating titles or text. To feature a new post, add its article to the blog and update a homepage card to its permanent link.
 
 ## Research release
