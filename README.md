@@ -65,13 +65,13 @@ The earlier supplied PDF had inconsistent aggregate figures. The September 29 we
 
 The InfoQ item links to the verified September 4, 2026 AICon Shenzhen conference recap: <https://www.infoq.cn/news/6EYVBX5UD2Cb0PWYsPCq>. It is labeled as a conference mention, not a dedicated feature, award, or endorsement. If the team supplies its separate InfoQ feature, add its actual title and link to the timeline data and update the homepage `#media` card.
 
-The benchmark repository URL follows the report: <https://github.com/TraceLite-AI/Harness-Benchmark>. Confirm access to the materials intended for release before promoting the page.
+The benchmark repository URL follows the report: <https://github.com/TraceLite-AI/TraceTrial-Bench>. Confirm access to the materials intended for release before promoting the page.
 
 The website deploys as static files. Releasing a PDF is a separate editorial decision from publishing the website code.
 
 ## Report content expansion
 
-The report page borrows the content organization of https://www.harness-bench.ai/ (task anatomy, execution protocol, metric explanations, and inspection resources). Its new descriptions are grounded in the supplied Trial by Trace manuscript, especially `content/tracetrialbench.tex`, `content/appendix_A.tex`, and `content/experiments.tex`. Harness Bench is a different benchmark: its 106 tasks, eight workflow categories, trajectory counts, and Completion/Process definitions are not TraceTrial-Bench results and are not imported. This update uses existing HTML classes without changing CSS or JavaScript. The GitHub link is the URL confirmed by the team: https://github.com/TraceLite-AI/Harness-Benchmark. Public access returned HTTP 404 during the content review; repository availability and file-level links have not been assumed.
+The report page borrows the content organization of https://www.harness-bench.ai/ (task anatomy, execution protocol, metric explanations, and inspection resources). Its new descriptions are grounded in the supplied Trial by Trace manuscript, especially `content/tracetrialbench.tex`, `content/appendix_A.tex`, and `content/experiments.tex`. Harness Bench is a different benchmark: its 106 tasks, eight workflow categories, trajectory counts, and Completion/Process definitions are not TraceTrial-Bench results and are not imported. This update uses existing HTML classes without changing CSS or JavaScript. The GitHub link is the URL confirmed by the team: https://github.com/TraceLite-AI/TraceTrial-Bench. Public access returned HTTP 404 during the content review; repository availability and file-level links have not been assumed.
 
 ## Leaderboard maintenance
 
