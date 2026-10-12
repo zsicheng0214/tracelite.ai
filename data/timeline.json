@@ -159,6 +159,37 @@
     "links": []
   },
   {
+    "id": "kdph-ijcai-2026",
+    "type": "paper",
+    "date": "2026",
+    "dateKind": "conference",
+    "title": {
+      "en": "Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing",
+      "zh": "Absorbing Gradient Conflicts：用 Kent 分布刻画语义方差的跨模态哈希"
+    },
+    "summary": {
+      "en": "Modeling class proxies as Kent distributions on the hypersphere so that conflicting multi-label gradients are absorbed by directional variance instead of shifting the proxy.",
+      "zh": "把类别代理从固定点改为超球面上的 Kent 分布，让多标签带来的梯度冲突由方向方差吸收，而不是把代理本身拉偏。"
+    },
+    "venue": "IJCAI 2026",
+    "links": [
+      {
+        "href": "https://arxiv.org/abs/2608.24010",
+        "label": {
+          "en": "Read the paper",
+          "zh": "阅读论文"
+        }
+      },
+      {
+        "href": "https://github.com/Senmo996/KDPH-official-code",
+        "label": {
+          "en": "Code",
+          "zh": "代码"
+        }
+      }
+    ]
+  },
+  {
     "id": "select-less-reason-more-cvpr-2026",
     "type": "paper",
     "date": "2026",
