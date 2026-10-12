@@ -210,9 +210,10 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   .home-ext .section-head::before{display:none;}
 }
 
-/* --- Products 暂时下线 ---------------------------------------------------
-   markup 原封不动留在页面里，只是加了 data-masked="products"。
-   想恢复：删掉那个属性就行，下面两条规则会自动失效。 */
+/* --- 暂时下线的模块 -------------------------------------------------------
+   Products 栏（data-masked="products"）和整块"精选研究"（#outputs，
+   data-masked="featured"，2026-10-12 起首页只按时间线展示）。
+   markup 原封不动留在页面里；想恢复：删掉对应的 data-masked 属性即可。 */
 [data-masked]{display:none!important;}
 .home-ext .out-grid:has(>[data-masked]){grid-template-columns:1fr;}
 
@@ -476,7 +477,7 @@ html.intro-lock{overflow:hidden;}
   </section>
 
   <!-- Module 2: Selected Output -->
-  <section class="ext-module" id="outputs">
+  <section class="ext-module" id="outputs" data-masked="featured">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow" data-en="Featured work" data-zh="精选研究">Featured work</span>
