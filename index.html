@@ -210,10 +210,9 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
   .home-ext .section-head::before{display:none;}
 }
 
-/* --- 暂时下线的模块 -------------------------------------------------------
-   Products 栏（data-masked="products"）和整块"精选研究"（#outputs，
-   data-masked="featured"，2026-10-12 起首页只按时间线展示）。
-   markup 原封不动留在页面里；想恢复：删掉对应的 data-masked 属性即可。 */
+/* --- Products 暂时下线 ---------------------------------------------------
+   markup 原封不动留在页面里，只是加了 data-masked="products"。
+   想恢复：删掉那个属性就行，下面两条规则会自动失效。 */
 [data-masked]{display:none!important;}
 .home-ext .out-grid:has(>[data-masked]){grid-template-columns:1fr;}
 
@@ -477,7 +476,7 @@ html.intro-lock{overflow:hidden;}
   </section>
 
   <!-- Module 2: Selected Output -->
-  <section class="ext-module" id="outputs" data-masked="featured">
+  <section class="ext-module" id="outputs">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow" data-en="Featured work" data-zh="精选研究">Featured work</span>
@@ -503,6 +502,14 @@ html.intro-lock{overflow:hidden;}
                 <p>Simulator-assisted reinforcement learning is a practical way to train multi-turn dialogue agents, but policy optimization gets misled when the simulated user gives inconsistent feedback across long trajectories. DPS decouples task-conditioned privileged state tracking from surface utterance realization; those privileged states stay hidden from the agent but are used during training to derive dense, state-aware process rewards that complement sparse outcome signals. The work also introduces RecruitmentBench, a persuasion dialogue benchmark grounded in anonymized real-world logs, and reports improved measured simulator fidelity and stronger fine-tuned policy performance.</p>
               </div>
             </div>
+            <div class="item home-item" id="featured-kdph" tabindex="0" role="button" aria-label="Read: Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing">
+              <img class="ph-thumb" src="images/papers/kdph.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>Absorbing Gradient Conflicts: Modeling Semantic Variance via Kent Distributions for Cross-Modal Hashing</h4>
+                <div class="it-meta">IJCAI 2026 · Cross-Modal Retrieval · Hashing</div>
+                <p>Proxy-based deep cross-modal hashing usually treats each class proxy as a fixed point in the embedding space. With multi-label data, co-occurring labels pull that point in conflicting directions, causing gradient contention and proxy collapse. KDPH instead models each proxy as an anisotropic Kent distribution on the hypersphere: the proxy keeps a stable mean direction and absorbs conflicting gradients by adjusting its directional variance, while a loss built on the Cayley transform keeps the distribution parameters orthogonal during training. It is the first framework to bring Kent distributions into cross-modal hashing; on three benchmark datasets it mitigates proxy collapse and oscillation and outperforms state-of-the-art methods.</p>
+              </div>
+            </div>
             <div class="item home-item is-oral" tabindex="0" role="button" aria-label="Read: SimRPD: Optimizing Recruitment Proactive Dialogue Agents through Simulator-Based Data Evaluation and Selection" data-oral="1">
               <img class="ph-thumb" src="images/papers/simrpd.jpg" alt="" loading="lazy" />
               <div class="it-body">
@@ -517,6 +524,14 @@ html.intro-lock{overflow:hidden;}
                 <h4>Look Less, Reason More: Rollout-Guided Adaptive Pixel-Space Reasoning</h4>
                 <div class="it-meta">ACL 2026 · Vision-Language · Reinforcement Learning</div>
                 <p>Pixel-level visual operations help Vision-Language Models handle fine-grained detail, but they are routinely overused — costing efficiency and pulling attention toward irrelevant regions. This paper proposes the first framework for adaptive pixel reasoning, which decides per query whether a pixel operation is warranted: operation-aware supervised fine-tuning establishes baseline competence, then a rollout-guided reinforcement learning stage uses feedback from the model&#x27;s own responses to learn when to invoke tools. The result reaches 73.4% accuracy on HR-Bench 4K at a tool usage ratio of only 20.1% — 66.5% less tool use than prior methods, with higher accuracy.</p>
+              </div>
+            </div>
+            <div class="item home-item" tabindex="0" role="button" aria-label="Read: Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning">
+              <img class="ph-thumb" src="images/papers/earl-select-less.jpg" alt="" loading="lazy" />
+              <div class="it-body">
+                <h4>Select Less, Reason More: Prioritizing Evidence Purity for Video Reasoning</h4>
+                <div class="it-meta">CVPR 2026 · Video Reasoning · Reinforcement Learning</div>
+                <p>Uniform frame sampling dilutes evidence in long videos, and existing pixel-space video agents lack reward mechanisms that enforce evidence purity or let them look beyond pre-sampled frames. This work introduces EARL, an evidence-aware reinforcement learning framework that turns the model into an active interrogator of evidence: it selects the most relevant frames and re-samples locally around them to recover fine-grained temporal detail. Across five video reasoning benchmarks the EARL-trained 7B model sets a new state of the art among open-source Video LLMs, reaching 59.8% on LongVideoBench, 69.0% on MVBench and 64.9% on VideoMME.</p>
               </div>
             </div>
           </div>
