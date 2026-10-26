@@ -139,7 +139,7 @@
       "en": "Separating privileged state tracking from simulated user utterances to support multi-turn dialogue policy training.",
       "zh": "将特权状态跟踪与模拟用户的话语生成解耦，用于支持多轮对话策略训练。"
     },
-    "venue": "EMNLP 2026 Findings",
+    "venue": "EMNLP 2026",
     "links": [
       {
         "href": "https://aclanthology.org/2026.findings-emnlp.1852/",
