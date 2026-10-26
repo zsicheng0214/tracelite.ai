@@ -105,8 +105,8 @@
   {
     "id": "mm-verirubric-emnlp-2026",
     "type": "paper",
-    "date": "2026",
-    "dateKind": "conference",
+    "date": "2026-10",
+    "dateKind": "proceedings",
     "title": {
       "en": "MM-VeriRubric: Verifiable Evidence-Grounded Rubrics for Multimodal Reward Models",
       "zh": "MM-VeriRubric：基于可验证多模态证据的奖励模型评分准则"
@@ -116,13 +116,21 @@
       "zh": "将多模态奖励模型的评分准则建立在任务相关视觉证据之上，并验证其一致性。"
     },
     "venue": "EMNLP 2026",
-    "links": []
+    "links": [
+      {
+        "href": "https://aclanthology.org/2026.emnlp-main.2230/",
+        "label": {
+          "en": "Read the paper",
+          "zh": "阅读论文"
+        }
+      }
+    ]
   },
   {
     "id": "disentangled-privileged-states-emnlp-2026",
     "type": "paper",
-    "date": "2026",
-    "dateKind": "conference",
+    "date": "2026-10",
+    "dateKind": "proceedings",
     "title": {
       "en": "Disentangled Privileged States for Simulator-Assisted Multi-Turn Dialogue Policy Training",
       "zh": "Disentangled Privileged States：用于模拟器辅助多轮对话策略训练的解耦特权状态"
@@ -132,7 +140,15 @@
       "zh": "将特权状态跟踪与模拟用户的话语生成解耦，用于支持多轮对话策略训练。"
     },
     "venue": "EMNLP 2026 Findings",
-    "links": []
+    "links": [
+      {
+        "href": "https://aclanthology.org/2026.findings-emnlp.1852/",
+        "label": {
+          "en": "Read the paper",
+          "zh": "阅读论文"
+        }
+      }
+    ]
   },
   {
     "id": "kdph-ijcai-2026",
