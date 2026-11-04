@@ -1,0 +1,11 @@
+# Public search access. No new restriction on training crawlers.
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+Sitemap: https://tracelite.ai/sitemap.xml

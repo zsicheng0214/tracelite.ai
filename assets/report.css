@@ -860,3 +860,8 @@ td strong {
     gap: 6px 16px;
   }
 }
+
+/* Paper metadata and experiment context, 2026-11-04. */
+#problem h2 { text-align:center; margin:32px 0 16px; }
+.experiment-conditions { margin-bottom:32px; }
+.experiment-conditions h3 { margin-bottom:14px; }

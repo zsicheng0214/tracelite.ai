@@ -2,8 +2,8 @@
   {
     "id": "trial-by-trace",
     "type": "report",
-    "date": "2026-09-17",
-    "dateKind": "document",
+    "date": "2026-10-23",
+    "dateKind": "submission",
     "title": {
       "en": "Trial by Trace",
       "zh": "Trial by Trace"
@@ -12,20 +12,34 @@
       "en": "Benchmarking AI agent harnesses for reliability and failure attribution. TraceTrial-Bench examines 95 tasks across four harnesses and nine model configurations.",
       "zh": "AI Agent 运行框架的可靠性评测与故障归因。TraceTrial-Bench 覆盖 95 个任务、4 个运行框架与 9 种模型配置。"
     },
-    "venue": "TraceTrial-Bench",
+    "venue": "arXiv:2610.32285 · Preprint",
     "links": [
       {
         "href": "trial-by-trace.html",
         "label": {
-          "en": "Explore the report",
-          "zh": "了解报告"
+          "en": "Paper project page",
+          "zh": "论文项目页"
+        }
+      },
+      {
+        "href": "https://arxiv.org/abs/2610.32285",
+        "label": {
+          "en": "arXiv preprint",
+          "zh": "arXiv 预印本"
         }
       },
       {
         "href": "https://github.com/TraceLite-AI/TraceTrial-Bench",
         "label": {
-          "en": "Code",
-          "zh": "代码"
+          "en": "GitHub code",
+          "zh": "GitHub 代码"
+        }
+      },
+      {
+        "href": "https://huggingface.co/datasets/TraceLite-AI/TraceTrial-Bench",
+        "label": {
+          "en": "Hugging Face dataset",
+          "zh": "Hugging Face 数据集"
         }
       }
     ]

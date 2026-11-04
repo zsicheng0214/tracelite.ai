@@ -55,8 +55,8 @@ The homepage has a separate `#blog` section after the research output, with thre
 - `trial-by-trace.html` is a standalone bilingual academic project page, with manuscript figures, five paired trace cases, image enlargement, and BibTeX copying. It uses `assets/report.{css,js}` and shared language handling in `assets/site.js`. The older `assets/trial-by-trace.{css,js}` are retained legacy assets and are not loaded by this page.
 - Edit `scripts/report_main.html` for content and `scripts/report_shell.html` for the page shell. Run `python3 scripts/build_report.py`, then `python3 scripts/build_report.py --check`. The generator no longer derives the page shell from `papers.html`.
 - `assets/report/*.webp` are web exports of the supplied LaTeX manuscript figures. Main figures were rendered at 1,800 pixels on the longest edge, case-study figures at 2,000 pixels, then encoded as WebP at quality 92. Keep the manuscript source separate from the deployed page. The layout references the Academic Project Page Template, credited in the footer.
-- The page uses the 23-author list supplied by the team, in its original order. The first four authors are marked as core contributors; Ruqian Shi, Baihua Xiao, and Sicheng Zhou are marked as corresponding authors. BibTeX and author metadata use the same list. TraceLite AI remains the team link; no conference acceptance or paper publication date is claimed. It retains the existing public repository link; the manuscript’s anonymous review URL is not substituted into the public page.
-- The supplied `papers/Trial_by_Trace.pdf` stays local and is excluded by `.gitignore`. It is not part of the repository or deployment, and public pages offer no PDF download. Citations link to the HTML project page. The report's internal document date is September 17, 2026; the website does not invent a public release date.
+- The page uses the 23-author list supplied by the team, in its original order. The first four authors are marked as core contributors; Baihua Xiao and Sicheng Zhou are marked as corresponding authors, following the arXiv v1 author contributions. BibTeX and author metadata use the same list. TraceLite AI remains the team link; no conference acceptance or paper publication date is claimed. It retains the existing public repository link; the manuscript’s anonymous review URL is not substituted into the public page.
+- The supplied `papers/Trial_by_Trace.pdf` stays local and is excluded by `.gitignore`. It is not part of the repository or deployment, and public pages offer no PDF download. The public paper is now arXiv:2610.32285v1, submitted October 23, 2026. Citations identify the arXiv preprint rather than the project webpage. The older local manuscript is not used as the public bibliographic source.
 - `assets/site.{css,js}` provide shared timeline navigation, persistent language selection, and mobile navigation. The storage key is `tracelite-lang`, with values `en` and `zh-CN`.
 - Retained papers and blog articles keep their original content. The new report material is bilingual; existing paper titles and abstracts are not newly translated.
 - `CNAME` is preserved for the existing domain. The site uses relative internal paths and can be served as static files.
@@ -87,3 +87,24 @@ python3 scripts/build_leaderboard.py --check
 ```
 
 The generator embeds the data and a readable four-harness chart/table fallback in the page. Without JavaScript, the aggregates and JSON download remain available. The interactive chart shows at most eight filtered entries, ranked by its explicitly selected metric on a fixed 0–100 scale. The table shows every filtered entry and supports independent column sorting; numeric ties share ranks. CSV export contains the filtered table in its current order, with metric keys and units matching the source JSON (`*_k` = thousands of tokens; cost = mean USD per run). Rounded input/output figures and total tokens are preserved as reported rather than recomputed. No runtime, effort, task-split, or best-per-task scores are inferred from unavailable data.
+
+## Publication discovery
+
+The authoritative paper record is https://arxiv.org/abs/2610.32285 (v1, 2026-10-23). Edit `scripts/report_main.html` and `scripts/report_shell.html`, then regenerate the report. Preserve the arXiv author order, published metrics and their conditions. The homepage distinguishes the public TraceTrial-Bench release from environment-construction and recursive self-improvement research. Placeholder product blocks have been removed.
+
+Canonical URLs use the root `/` for home and `.html` for content pages. `sitemap.xml` lists only the seven active canonical pages; the hidden blog is not promoted in the sitemap. GitHub Pages currently also serves the extensionless report URL with HTTP 200. Its canonical is correct, but a genuine one-hop HTTP 301 requires a configurable edge or host; a meta refresh, JavaScript redirect, or ignored `_redirects` file is not an equivalent fix.
+
+`robots.txt` permits search crawlers and preserves the existing unrestricted GPTBot policy, as requested by the owner. User-agent probes cannot establish access from real crawler IPs or guarantee indexing. Keep the Google Search Console verification meta tag on the homepage.
+
+The report has one `citation_title`, one `citation_publication_date`, and one `citation_author` per author. The arXiv PDF is a normal full-text link. No `citation_pdf_url` is declared: the original PDF is approximately 9.8 MB, above Scholar's 5 MB document limit, and this site does not host a validated same-directory PDF. Do not substitute an external PDF URL into that metadata field or claim guaranteed Scholar inclusion.
+
+Check before publishing:
+
+```sh
+python3 scripts/build_report.py --check
+python3 scripts/build_timeline.py --check
+python3 scripts/build_leaderboard.py --check
+python3 scripts/check_discovery.py
+```
+
+Verify the deployed canonical pages, robots, sitemap and resource links anonymously after publication. The official X account is https://x.com/traceliteai; X may require login for full access.

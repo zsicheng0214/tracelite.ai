@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Research — TraceLite</title>
-<meta name="description" content="TraceLite research areas: agent evaluation, synthetic data, and agent training." />
+<meta name="description" content="TraceLite research: model evaluation and training components, the public TraceTrial-Bench release, and ongoing environment and RSI research." />
 <link rel="icon" type="image/png" href="images/favicon.png" />
 <link rel="apple-touch-icon" href="images/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -225,7 +225,7 @@ canvas{display:block;}
   .reveal{opacity:1;transform:none;}
 }
 </style>
-<link rel="stylesheet" href="assets/site.css?v=20260930d" />
+<link rel="stylesheet" href="assets/site.css?v=20261104" />
 <link rel="canonical" href="https://tracelite.ai/research.html" />
 <noscript><style>.reveal{opacity:1;transform:none}.intro{display:none!important}.menu-toggle,.lang-toggle{display:none!important}@media(max-width:767px){.nav .nav-links{display:flex;gap:12px}.nav-cta{gap:8px}.nav .nav-links a.lk{font-size:12px}.nav .brand .logo{max-width:95px;height:auto}}</style></noscript>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet" />
@@ -237,7 +237,7 @@ canvas{display:block;}
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="TraceLite home">
+    <a class="brand" href="/" aria-label="TraceLite home">
       <img class="logo" src="images/logo.png" alt="TraceLite AI" /></a>
     <div class="nav-cta">
       <div class="nav-links" id="siteMenu">
@@ -299,7 +299,7 @@ canvas{display:block;}
   </div>
   <div class="wrap hero-content">
     <span class="mono reveal" data-en="RESEARCH" data-zh="研究">RESEARCH</span>
-    <p class="lead reveal" data-d="2" data-en="Evaluation, data, and training — connected to trace the path toward more capable agents." data-zh="连接评测、数据与训练，探索更有能力的智能体。">Evaluation, data, and training — connected to trace the path toward more capable agents.</p>
+    <p class="lead reveal" data-d="2" data-en="Model evaluation and training components, with public benchmarks and research on agent environments and recursive self-improvement (RSI)." data-zh="模型评测与训练组件：已公开的评测基准，以及仍在研究的智能体环境与递归自我改进（RSI）。">Model evaluation and training components, with public benchmarks and research on agent environments and recursive self-improvement (RSI).</p>
   </div>
 </header>
 
@@ -312,13 +312,13 @@ canvas{display:block;}
         <p class="proj-eyebrow mono" data-en="BENCHMARKS" data-zh="评测基准">BENCHMARKS</p>
         <div class="proj-grid">
         <article class="proj-card">
-          <p class="proj-tag mono" data-en="Agent harness evaluation" data-zh="Agent 运行框架评测">Agent harness evaluation</p>
+          <p class="proj-tag mono" data-en="Public release · Agent harness evaluation" data-zh="已公开发布 · Agent 运行框架评测">Public release · Agent harness evaluation</p>
           <h3><a class="proj-name" href="trial-by-trace.html">TraceTrial-Bench</a></h3>
           <p class="proj-desc" data-en="Task success is only part of the story. 95 mechanism-oriented tasks, four harnesses, nine models, with every verdict traced back to execution." data-zh="任务成功只是评测的一部分。95 道机制导向任务、4 个运行框架、9 个模型，每个判定都能追溯到执行过程。">Task success is only part of the story. 95 mechanism-oriented tasks, four harnesses, nine models, with every verdict traced back to execution.</p>
-          <div class="proj-links"><a class="proj-link" href="trial-by-trace.html"><span data-en="Technical report" data-zh="技术报告">Technical report</span> →</a><span class="proj-link is-soon"><span data-en="Paper" data-zh="论文">Paper</span> · <span data-en="Coming soon" data-zh="即将发布">Coming soon</span></span><a class="proj-link" href="leaderboard.html"><span data-en="Leaderboard" data-zh="排行榜">Leaderboard</span> →</a><a class="proj-link" href="https://github.com/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.1 10.1 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg><span>GitHub</span> ↗</a><a class="proj-link" href="https://huggingface.co/spaces/TraceLite-AI/Trial-by-Trace" target="_blank" rel="noopener"><span aria-hidden="true">🤗</span><span>Hugging Face</span> ↗</a></div>
+          <div class="proj-links"><a class="proj-link" href="trial-by-trace.html"><span data-en="Technical report" data-zh="技术报告">Technical report</span> →</a><a class="proj-link" href="https://arxiv.org/abs/2610.32285" target="_blank" rel="noopener noreferrer"><span data-en="arXiv preprint" data-zh="arXiv 预印本">arXiv preprint</span> ↗</a><a class="proj-link" href="leaderboard.html"><span data-en="Leaderboard" data-zh="排行榜">Leaderboard</span> →</a><a class="proj-link" href="https://github.com/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.1 10.1 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg><span>GitHub</span> ↗</a><a class="proj-link" href="https://huggingface.co/spaces/TraceLite-AI/Trial-by-Trace" target="_blank" rel="noopener"><span aria-hidden="true">🤗</span><span data-en="Interactive report" data-zh="交互报告">Interactive report</span> ↗</a><a class="proj-link" href="https://huggingface.co/datasets/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener noreferrer"><span data-en="Hugging Face dataset" data-zh="Hugging Face 数据集">Hugging Face dataset</span> ↗</a></div>
         </article>
         <article class="proj-card is-soon">
-          <p class="proj-tag mono" data-en="Environment sensitivity" data-zh="环境敏感度">Environment sensitivity</p>
+          <p class="proj-tag mono" data-en="In research · Environment sensitivity" data-zh="研究中 · 环境敏感度">In research · Environment sensitivity</p>
           <h3><span class="proj-name">ChameleonBench</span></h3>
           <p class="proj-desc" data-en="The same task, byte for byte, in a different environment. Measures how much an agent's success depends on the environment it runs in." data-zh="同一道题一个字节不改，只换环境，测 Agent 的成败有多依赖它所在的环境。">The same task, byte for byte, in a different environment. Measures how much an agent's success depends on the environment it runs in.</p>
           <div class="proj-links"><span class="proj-link is-soon"><span data-en="Technical report" data-zh="技术报告">Technical report</span> · <span data-en="Coming soon" data-zh="即将发布">Coming soon</span></span><span class="proj-link is-soon"><span data-en="Paper" data-zh="论文">Paper</span> · <span data-en="Coming soon" data-zh="即将发布">Coming soon</span></span><span class="proj-link is-soon"><span data-en="Leaderboard" data-zh="排行榜">Leaderboard</span> · <span data-en="Coming soon" data-zh="即将发布">Coming soon</span></span><span class="proj-link is-soon"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.1 10.1 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg><span>GitHub</span> · <span data-en="Open-sourcing soon" data-zh="即将开源">Open-sourcing soon</span></span><span class="proj-link is-soon"><span aria-hidden="true">🤗</span><span>Hugging Face</span> · <span data-en="Coming soon" data-zh="即将发布">Coming soon</span></span></div>
@@ -326,20 +326,6 @@ canvas{display:block;}
         </div>
       </div>
 
-      <!-- BLOCK 3 — Products -->
-      <div class="r-block" data-masked="products">
-        <div class="r-head">
-          <svg class="c-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 22v-6M2 12h6M22 12h-6"/><circle cx="12" cy="12" r="3"/></svg>
-          <h2>Products</h2>
-        </div>
-        <div class="prod-list">
-          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
-          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
-          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
-          <div class="prod-item"><span class="p-dot"></span><div class="p-text"><h3>Placeholder Product</h3><p>Placeholder description text.</p></div></div>
-        </div>
-        <a class="col-link" href="#">View all products →</a>
-      </div>
 
     </div>
   </div>

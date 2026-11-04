@@ -84,3 +84,9 @@ section[id]{scroll-margin-top:96px;}
   .coverage-source span{display:inline-block;margin:0 0 0 14px;}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
+/* Public research resources, using the existing homepage layout. */
+.hero .hero-status{font-size:14px;line-height:1.6;color:var(--text-2);max-width:560px;margin-top:18px;}
+.hero-resources{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:16px;max-width:580px;}
+.hero-resources a{font-size:13px;line-height:1.5;border-bottom:1px solid var(--border);padding-bottom:3px;}
+.hero-resources a:hover{border-color:var(--text);}
