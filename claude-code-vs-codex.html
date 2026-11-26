@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Code vs Codex: Same-Model Benchmark | TraceTrial-Bench</title>
+  <meta name="description" content="Compare Claude Code and Codex on the same 95 tasks with Opus 5. See task pass, harness reliability, and a paired execution trace.">
+  <link rel="canonical" href="https://tracelite.ai/claude-code-vs-codex.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude Code vs Codex: What Changes When You Keep the Model Fixed?">
+  <meta property="og:description" content="Compare Claude Code and Codex on the same 95 tasks with Opus 5. See task pass, harness reliability, and a paired execution trace.">
+  <meta property="og:url" content="https://tracelite.ai/claude-code-vs-codex.html">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="assets/report.css?v=20260929">
+  <script src="assets/site.js?v=20260930d" defer></script>
+</head>
+<body>
+  <nav class="project-nav" aria-label="Project navigation">
+    <a class="brand" href="/" aria-label="TraceLite home"><img class="logo" src="images/logo.png" alt="TraceLite AI" style="height:26px;width:auto;display:block"></a>
+    <div class="nav-links"><a href="trial-by-trace.html"><span data-en="Project page" data-zh="项目主页">Project page</span></a><a href="leaderboard.html"><span data-en="Leaderboard" data-zh="排行榜">Leaderboard</span></a></div>
+  </nav>
+  <main>
+    <article lang="en">
+      <header class="publication-header">
+        <div class="reading-width">
+          <p class="publication-label">TRACELITE AI / FIELD NOTE</p>
+          <h1>Claude Code vs Codex: What Changes When You Keep the Model Fixed?</h1>
+          <p class="section-intro">With Opus 5 in both harnesses, Claude Code passed 51 of 95 TraceTrial-Bench tasks and Codex passed 29. Only 7 and 2 runs, respectively, also passed every harness check.</p>
+        </div>
+      </header>
+      <section class="section" aria-labelledby="results">
+        <div class="reading-width">
+          <h2 id="results">Same model, same 95 tasks</h2>
+          <p>We used the Opus 5 rows from the published TraceTrial-Bench results. Each harness has one retained run per task. The harness handles tools, context, and execution around the model. This comparison keeps the model group and task set fixed while using each harness in its archived native configuration.</p>
+          <figure class="paper-figure">
+            <svg viewBox="0 0 560 210" role="img" aria-label="Passed tasks out of 95 with Opus 5. Task Pass: Claude Code 51, Codex 29. Clean: Claude Code 7, Codex 2. Each bar shares a 0 to 95 scale." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;font:15px Inter,system-ui,sans-serif"><text x="8" y="27" fill="#101828" font-weight="700">Task Pass</text><text x="8" y="55" fill="#344054">Claude Code</text><rect x="126" y="39" width="380" height="22" rx="3" fill="#edf1f5"/><rect x="126" y="39" width="204.0" height="22" rx="3" fill="#2558a5"/><text x="337.0" y="55" fill="#101828" font-weight="700">51</text><text x="8" y="87" fill="#344054">Codex</text><rect x="126" y="71" width="380" height="22" rx="3" fill="#edf1f5"/><rect x="126" y="71" width="116.0" height="22" rx="3" fill="#536576"/><text x="249.0" y="87" fill="#101828" font-weight="700">29</text><text x="8" y="132" fill="#101828" font-weight="700">Clean</text><text x="8" y="160" fill="#344054">Claude Code</text><rect x="126" y="144" width="380" height="22" rx="3" fill="#edf1f5"/><rect x="126" y="144" width="28.0" height="22" rx="3" fill="#2558a5"/><text x="161.0" y="160" fill="#101828" font-weight="700">7</text><text x="8" y="192" fill="#344054">Codex</text><rect x="126" y="176" width="380" height="22" rx="3" fill="#edf1f5"/><rect x="126" y="176" width="8.0" height="22" rx="3" fill="#536576"/><text x="141.0" y="192" fill="#101828" font-weight="700">2</text></svg>
+            <figcaption>One selected Opus 5 run per task and harness. Both series use a 0–95 scale; Clean is a subset of Task Pass.</figcaption>
+          </figure>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Opus 5 comparison results">
+            <table>
+              <caption>TraceTrial-Bench v1 results, Opus 5</caption>
+              <thead><tr><th scope="col">Harness</th><th scope="col">Task Pass</th><th scope="col">Harness Macro</th><th scope="col">Clean</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Claude Code</th><td>51/95 (53.7%)</td><td>71.9%</td><td>7/95 (7.4%)</td></tr>
+                <tr><th scope="row">Codex</th><td>29/95 (30.5%)</td><td>60.5%</td><td>2/95 (2.1%)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Task Pass</strong> requires every Agent criterion to pass. <strong>Harness Macro</strong> averages the fraction of harness criteria passed per run. <strong>Clean</strong> requires every criterion in both layers to pass. A task can meet its goal while the run still falls short on a tool, context, or lifecycle check.</p>
+        </div>
+      </section>
+      <section class="section tint" aria-labelledby="trace">
+        <div class="reading-width">
+          <h2 id="trace">A trace example: dispatch acceptance versus completion</h2>
+          <p>In one matched Opus 5 case, the task asked a parent agent to delegate a release audit and yield once for the native completion or non-completion signal. Claude Code recorded the dispatch, received the child’s completion payload, and wrote a completed report. Codex also recorded a dispatch, but the child replied that it had no task details and the parent recorded the audit as pending.</p>
+          <p>The trace shows why an evaluation should check the result delivered to the parent, not just whether the dispatch call was accepted. This example does not explain the aggregate score gap or establish how often the same behavior recurs.</p>
+          <p><a class="text-link" href="trial-by-trace.html#case-handoff">Read the paired execution trace →</a></p>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="reuse">
+        <div class="reading-width">
+          <h2 id="reuse">How to use these results</h2>
+          <p>Start with the metric that matches your workload, then inspect the associated traces. If you rely on async delegation, check that the parent receives the child’s actual result. For a reliability estimate, rerun the same setup rather than treating this single retained run per cell as a stability estimate.</p>
+          <p>These are results for the published v1 configurations, not a ranking of current product versions. Task revisions, runtime settings, recovery conditions, and judge budgets vary across the full archive. The comparison does not isolate the causal effect of a particular harness design choice.</p>
+          <div class="publication-links">
+            <a class="button dark" href="leaderboard.html">Compare all leaderboard results</a>
+            <a class="button light" href="https://huggingface.co/datasets/TraceLite-AI/TraceTrial-Bench">Get the tasks and traces on Hugging Face</a>
+            <a class="button light" href="https://github.com/TraceLite-AI/TraceTrial-Bench">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+  <footer class="project-footer"><div class="container"><a href="/">TraceLite AI</a></div></footer>
+</body>
+</html>

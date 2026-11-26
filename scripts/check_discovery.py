@@ -18,7 +18,7 @@ import xml.etree.ElementTree as ET
 
 ORIGIN = 'https://tracelite.ai'
 PATHS = ('/', '/research.html', '/papers.html', '/timeline.html',
-         '/trial-by-trace.html', '/leaderboard.html', '/wechat.html')
+         '/trial-by-trace.html', '/leaderboard.html', '/claude-code-vs-codex.html', '/wechat.html')
 TITLE = ('Trial by Trace: Benchmarking AI Agent Harnesses for Reliability '
          'and Failure Attribution')
 AUTHORS = ['Zhiyong Cao', 'Hengjie Zhu', 'Yongxin Wang', 'Xuchen Li',
@@ -305,7 +305,7 @@ def main():
         for error in check.errors:
             print('  - ' + error)
         return 1
-    print('PASS: {} static discovery checks across 7 canonical pages.'.format(check.count))
+    print('PASS: {} static discovery checks across {} canonical pages.'.format(check.count, len(PATHS)))
     print('HTTP redirects, real crawler access, PDF content fidelity, and indexing require separate verification.')
     return 0
 

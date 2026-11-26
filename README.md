@@ -61,6 +61,8 @@ The homepage has a separate `#blog` section after the research output, with thre
 - Retained papers and blog articles keep their original content. The new report material is bilingual; existing paper titles and abstracts are not newly translated.
 - `CNAME` is preserved for the existing domain. The site uses relative internal paths and can be served as static files.
 
+The standalone [Claude Code vs Codex field note](claude-code-vs-codex.html) is linked from the leaderboard and sitemap without changing the hidden blog navigation. It uses the Opus 5 rows in `data/leaderboard.json` and Case 03 of the paper. If those source rows change, check the note's chart and table against the archived v1 results before editing.
+
 ## Editorial handoff
 
 The earlier supplied PDF had inconsistent aggregate figures. The September 29 website revision instead follows the newly supplied LaTeX manuscript: its abstract, experiments, contingency table, and background figure agree on 1,065 / 3,420 (31.1%) successful Agent runs with at least one failed Harness criterion. Figures and five case studies come from that manuscript. The older PDF is still not a public download.
@@ -92,7 +94,7 @@ The generator embeds the data and a readable four-harness chart/table fallback i
 
 The authoritative paper record is https://arxiv.org/abs/2610.32285 (v1, 2026-10-23). Edit `scripts/report_main.html` and `scripts/report_shell.html`, then regenerate the report. Preserve the arXiv author order, published metrics and their conditions. The homepage distinguishes the public TraceTrial-Bench release from environment-construction and recursive self-improvement research. Placeholder product blocks have been removed.
 
-Canonical URLs use the root `/` for home and `.html` for content pages. `sitemap.xml` lists only the seven active canonical pages; the hidden blog is not promoted in the sitemap. GitHub Pages currently also serves the extensionless report URL with HTTP 200. Its canonical is correct, but a genuine one-hop HTTP 301 requires a configurable edge or host; a meta refresh, JavaScript redirect, or ignored `_redirects` file is not an equivalent fix.
+Canonical URLs use the root `/` for home and `.html` for content pages. `sitemap.xml` lists the active canonical pages; the hidden blog is not promoted in the sitemap. GitHub Pages currently also serves the extensionless report URL with HTTP 200. Its canonical is correct, but a genuine one-hop HTTP 301 requires a configurable edge or host; a meta refresh, JavaScript redirect, or ignored `_redirects` file is not an equivalent fix.
 
 `robots.txt` permits search crawlers and preserves the existing unrestricted GPTBot policy, as requested by the owner. User-agent probes cannot establish access from real crawler IPs or guarantee indexing. Keep the Google Search Console verification meta tag on the homepage.
 
