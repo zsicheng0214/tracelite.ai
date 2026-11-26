@@ -247,6 +247,12 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
       <p class="report-summary" data-en="Same model (DeepSeek-V4.1-Flash), 95 containerized tasks, 5 latest harnesses—plus 24 upstream PRs across OpenHands, Hermes, OpenCode, Aider, and Harbor matched-parity integration, alongside trace-backed engineering proposals for Claude Code, Codex, and DeepSeek Harness." data-zh="同一模型（DeepSeek-V4.1-Flash）横评五大最新主流 Harness（95 题容器实测），并系统复盘我们向 OpenHands、Hermes、OpenCode、Aider、Harbor 提交的 24 个上游 PR 与面向 Claude Code、Codex、DeepSeek Harness 的实证工程提案。">Same model (DeepSeek-V4.1-Flash), 95 containerized tasks, 5 latest harnesses—plus 24 upstream PRs across OpenHands, Hermes, OpenCode, Aider, and Harbor matched-parity integration, alongside trace-backed engineering proposals for Claude Code, Codex, and DeepSeek Harness.</p>
       <a class="report-link" href="open-source-harness-engineering.html" data-en="Read the full engineering blog →" data-zh="阅读完整技术博客 →">Read the full engineering blog →</a>
     </article>
+    <article class="report-feature" aria-labelledby="cc-codex-note-title" style="margin-bottom:24px">
+      <p class="report-kicker mono" data-en="FIELD NOTE · SAME-MODEL COMPARISON" data-zh="研究笔记 · 同模型对比">FIELD NOTE · SAME-MODEL COMPARISON</p>
+      <h2 class="report-title" id="cc-codex-note-title" data-en="Claude Code vs Codex: What Changes When You Keep the Model Fixed?" data-zh="Claude Code vs Codex：固定同一模型时，运行框架改变了什么？">Claude Code vs Codex: What Changes When You Keep the Model Fixed?</h2>
+      <p class="report-summary" data-en="With Opus 5 in both harnesses across 95 TraceTrial-Bench tasks, Claude Code passed 51 tasks and Codex passed 29—yet only 7 and 2 runs passed every harness reliability check." data-zh="在两套框架内固定同一模型（Opus 5）跑全量 95 道 TraceTrial-Bench 任务：Claude Code 通过 51 题、Codex 通过 29 题，但同时通过全部 Harness 可靠性检查的 Clean 场次仅有 7 次和 2 次。">With Opus 5 in both harnesses across 95 TraceTrial-Bench tasks, Claude Code passed 51 tasks and Codex passed 29—yet only 7 and 2 runs passed every harness reliability check.</p>
+      <a class="report-link" href="claude-code-vs-codex.html" data-en="Read the field note →" data-zh="阅读对比全文 →">Read the field note →</a>
+    </article>
     <article class="report-feature" aria-labelledby="trace-note-title">
       <p class="report-kicker mono" data-en="FROM TRIAL BY TRACE · CASE 02" data-zh="来自 TRIAL BY TRACE · 案例 02">FROM TRIAL BY TRACE · CASE 02</p>
       <h2 class="report-title" id="trace-note-title" data-en="A correct answer can hide a missing error signal." data-zh="答案正确，错误信号也可能缺失。">A correct answer can hide a missing error signal.</h2>
@@ -254,64 +260,6 @@ h2.title{font-size:clamp(32px,4.4vw,56px);line-height:1.05;font-weight:600;lette
       <p class="report-summary" data-en="Both task reports passed their checks; the harness assessments differed. This is why TraceTrial-Bench examines the execution evidence alongside the final answer. The case illustrates a distinction, rather than estimating how often it occurs." data-zh="两个任务报告都通过了结果检查，执行框架的评估却不同。因此，TraceTrial-Bench 在检查最终答案的同时，也检查执行证据。这一案例用于展示差异，不代表此类问题的发生频率。">Both task reports passed their checks; the harness assessments differed. This is why TraceTrial-Bench examines the execution evidence alongside the final answer. The case illustrates a distinction, rather than estimating how often it occurs.</p>
       <a class="report-link" href="trial-by-trace.html#cases" data-en="Read the trace comparison · report p. 68 →" data-zh="阅读轨迹对比 · 报告第 68 页 →">Read the trace comparison · report p. 68 →</a>
     </article>
-    <div class="notes-list">
-      <article class="note-row reveal" id="environment-dimensions" tabindex="-1" aria-label="Read: What is an agent&#x27;s environment made of?">
-        <img class="note-thumb" src="images/blog/environment.svg" alt="" />
-        <div class="note-body">
-          <div>
-            <h3 class="nt" data-en="What is an agent&#x27;s environment made of?" data-zh="Agent 的环境到底由什么组成">What is an agent&#x27;s environment made of?</h3>
-            <p class="ns" data-en="We want to describe an environment the way we describe a model: by listing the factors that change what the right move is." data-zh="我们想像描述模型一样描述环境：列出那些会改变正确做法的因素。">We want to describe an environment the way we describe a model: by listing the factors that change what the right move is.</p>
-          </div>
-          <div class="note-meta">
-            <div class="tags"><span class="tag roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</span><span class="tag" data-en="Environment" data-zh="环境">Environment</span></div>
-            <time class="nd" datetime="2026-09-28">Sep 28, 2026</time>
-          </div>
-        </div>
-        <p class="na" hidden data-en="Coming soon." data-zh="敬请期待。">Coming soon.</p>
-      </article>
-      <article class="note-row reveal" id="evaluating-harnesses" tabindex="-1" aria-label="Read: Evaluating the harness, not just the model">
-        <img class="note-thumb" src="images/blog/harness.svg" alt="" />
-        <div class="note-body">
-          <div>
-            <h3 class="nt" data-en="Evaluating the harness, not just the model" data-zh="评测运行框架，而不只是模型">Evaluating the harness, not just the model</h3>
-            <p class="ns" data-en="The same model can behave very differently inside different agent harnesses. We want that difference to be measurable." data-zh="同一个模型放进不同的运行框架，表现可以差很多。我们想让这个差别能被量出来。">The same model can behave very differently inside different agent harnesses. We want that difference to be measurable.</p>
-          </div>
-          <div class="note-meta">
-            <div class="tags"><span class="tag roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</span><span class="tag" data-en="Evaluation" data-zh="评测">Evaluation</span></div>
-            <time class="nd" datetime="2026-09-28">Sep 28, 2026</time>
-          </div>
-        </div>
-        <p class="na" hidden data-en="Coming soon." data-zh="敬请期待。">Coming soon.</p>
-      </article>
-      <article class="note-row reveal" id="failures-to-training-data" tabindex="-1" aria-label="Read: Turning failures into training data">
-        <img class="note-thumb" src="images/blog/failures.svg" alt="" />
-        <div class="note-body">
-          <div>
-            <h3 class="nt" data-en="Turning failures into training data" data-zh="把失败变成训练数据">Turning failures into training data</h3>
-            <p class="ns" data-en="Agents fail all the time on real tasks, and most of those failures are thrown away. We want to keep the useful ones." data-zh="Agent 在真实任务里经常失败，这些失败大多被扔掉了。我们想把有用的留下来。">Agents fail all the time on real tasks, and most of those failures are thrown away. We want to keep the useful ones.</p>
-          </div>
-          <div class="note-meta">
-            <div class="tags"><span class="tag roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</span><span class="tag" data-en="Training data" data-zh="训练数据">Training data</span></div>
-            <time class="nd" datetime="2026-09-28">Sep 28, 2026</time>
-          </div>
-        </div>
-        <p class="na" hidden data-en="Coming soon." data-zh="敬请期待。">Coming soon.</p>
-      </article>
-      <article class="note-row reveal" id="closing-the-loop" tabindex="-1" aria-label="Read: Closing the loop">
-        <img class="note-thumb" src="images/blog/loop.svg" alt="" />
-        <div class="note-body">
-          <div>
-            <h3 class="nt" data-en="Closing the loop" data-zh="让闭环转起来">Closing the loop</h3>
-            <p class="ns" data-en="Evaluation, environments, attribution and training data are usually built by different teams. We think they belong in one loop." data-zh="评测、环境、归因和训练数据通常由不同团队分头做。我们认为它们应该连成一个闭环。">Evaluation, environments, attribution and training data are usually built by different teams. We think they belong in one loop.</p>
-          </div>
-          <div class="note-meta">
-            <div class="tags"><span class="tag roadmap" data-en="Roadmap" data-zh="路线图">Roadmap</span><span class="tag" data-en="Research" data-zh="研究">Research</span></div>
-            <time class="nd" datetime="2026-09-28">Sep 28, 2026</time>
-          </div>
-        </div>
-        <p class="na" hidden data-en="Coming soon." data-zh="敬请期待。">Coming soon.</p>
-      </article>
-    </div>
   </div>
 </section>
 
