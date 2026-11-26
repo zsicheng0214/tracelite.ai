@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From Traces to Upstream Fixes: Open-Source Harness Reliability Engineering | TraceLite AI</title>
+  <meta name="description" content="How TraceTrial-Bench surfaced reproducible reliability and security defects across Claude Code, Codex, DeepSeek Harness, OpenHands, OpenCode, Hermes, and Aider—resulting in 24 upstream PRs, official Harbor parity, and trace-backed engineering proposals.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://tracelite.ai/open-source-harness-engineering.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="TraceLite AI">
+  <meta property="og:title" content="From Traces to Upstream Fixes: Open-Source Harness Reliability Engineering">
+  <meta property="og:description" content="Same model, 95 containerized tasks, 5 latest agent harnesses—plus 24 upstream PRs, matched-parity Harbor integration, and trace-backed field reports across the agent ecosystem.">
+  <meta property="og:url" content="https://tracelite.ai/open-source-harness-engineering.html">
+  <meta property="og:image" content="https://tracelite.ai/assets/report/core95-five-harnesses.png">
+  <meta property="og:image:alt" content="TraceTrial-Bench Core-95 same-model comparison across five latest agent harnesses">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/report.css?v=20261104">
+  <script src="assets/site.js?v=20260930d" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip to content</a>
+  <nav class="project-nav" aria-label="Project navigation">
+    <a class="brand" href="/" aria-label="TraceLite home"><img class="logo" src="images/logo.png" alt="TraceLite AI" style="height:26px;width:auto;display:block"></a>
+    <div class="nav-links">
+      <a href="blog.html" data-en="Blog" data-zh="博客">Blog</a>
+      <a href="trial-by-trace.html" data-en="Trial by Trace" data-zh="论文报告">Trial by Trace</a>
+      <a href="leaderboard.html" data-en="Leaderboard" data-zh="排行榜">Leaderboard</a>
+      <a href="research.html" data-en="Research" data-zh="研究">Research</a>
+      <button class="lang-toggle" type="button" id="langToggle" aria-label="Switch language">中文</button>
+    </div>
+  </nav>
+
+  <main>
+    <article>
+      <header class="publication-header">
+        <div class="reading-width">
+          <p class="publication-label" data-en="TRACELITE AI / TECHNICAL BLOG · NOVEMBER 26, 2026" data-zh="TRACELITE AI / 技术博客 · 2026 年 11 月 26 日">TRACELITE AI / TECHNICAL BLOG · NOVEMBER 26, 2026</p>
+          <h1 data-en="From Traces to Upstream Fixes: Open-Source Harness Reliability Engineering" data-zh="从执行轨迹到上游修复：TraceLite AI 的开源 Agent Harness 可靠性工程实践">From Traces to Upstream Fixes: Open-Source Harness Reliability Engineering</h1>
+          <p class="section-intro" data-en="A benchmark only matters when it changes real software. Over the past month, we ran TraceTrial-Bench Core-95 across the latest releases of seven major agent harnesses, turning trace-verified failure attributions into 24 upstream pull requests, an official Harbor matched-parity integration, and reproducible engineering proposals for Claude Code, Codex, and DeepSeek Harness." data-zh="基准评测的价值在于推动真实系统演进。过去一个月，我们在七大主流 Agent Harness 最新版本上系统运行了 TraceTrial-Bench Core-95，将轨迹级归因证据转化为 24 个上游开源 PR、Harbor 官方同口径 Parity 接入，以及面向 Claude Code、Codex 和 DeepSeek Harness 的可复现工程提案。">A benchmark only matters when it changes real software. Over the past month, we ran TraceTrial-Bench Core-95 across the latest releases of seven major agent harnesses, turning trace-verified failure attributions into 24 upstream pull requests, an official Harbor matched-parity integration, and reproducible engineering proposals for Claude Code, Codex, and DeepSeek Harness.</p>
+          <p class="fine-print">
+            <a href="https://arxiv.org/abs/2610.32285" target="_blank" rel="noopener">arXiv:2610.32285</a> ·
+            <a href="https://github.com/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="https://huggingface.co/datasets/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener">Hugging Face Dataset</a> ·
+            <a href="https://github.com/harbor-framework/adapters/pull/121" target="_blank" rel="noopener">Harbor Adapter PR #121</a>
+          </p>
+        </div>
+      </header>
+
+      <section class="section" id="overview" aria-labelledby="sec-overview">
+        <div class="reading-width">
+          <h2 id="sec-overview" data-en="1. Same Model, Five Latest Harnesses: Core-95 Results" data-zh="一、同一模型，五大最新 Harness：Core-95 实测结果">1. Same Model, Five Latest Harnesses: Core-95 Results</h2>
+          <p data-en="To isolate the runtime layer from model capability, we evaluated five current agent harnesses under identical containerized conditions: the same 95 TraceTrial-Bench Core tasks (final.manifest), the same model (DeepSeek-V4.1-Flash), and the same two-layer rule + LLM-judge scoring pipeline. Every run executes offline inside an isolated Docker container with independent private ground truth outside the agent-writable workspace." data-zh="为了把运行时框架（Harness）与底层模型能力彻底解耦，我们在完全一致的容器隔离条件下横评了五款最新主流 Harness：相同的 95 道 TraceTrial-Bench Core 任务（final.manifest）、相同的底层模型（DeepSeek-V4.1-Flash）以及相同的规则 + LLM Judge 双层归因评分管线。">To isolate the runtime layer from model capability, we evaluated five current agent harnesses under identical containerized conditions: the same 95 TraceTrial-Bench Core tasks (<code>final.manifest</code>), the same model (<code>DeepSeek-V4.1-Flash</code>), and the same two-layer rule + LLM-judge scoring pipeline. Every run executes offline inside an isolated Docker container with independent private ground truth outside the agent-writable workspace.</p>
+
+          <figure class="paper-figure">
+            <img src="assets/report/core95-five-harnesses.png" alt="TraceTrial-Bench Core-95 comparison across Claude Code 2.1.332, DeepSeek Harness 0.2.3-alpha.2, Hermes Agent main, OpenHands v1.16.0, and Codex CLI 0.172.0 with DeepSeek-V4.1-Flash" style="width:100%;height:auto;border-radius:8px;display:block">
+            <figcaption data-en="Same model (DeepSeek-V4.1-Flash) across 95 containerized tasks. Swapping only the harness shifts Agent Pass by 23.1 percentage points (23.2% to 46.3%), yet Clean rates remain between 1.1% and 8.4% across all five harnesses." data-zh="同一模型（DeepSeek-V4.1-Flash）在 95 道容器化任务上的表现。仅更换 Harness 就让 Agent Pass 产生 23.1 个百分点的落差（23.2% 至 46.3%），但五款框架的 Clean 率（任务通过且零 Harness 缺陷）均仅为 1.1%–8.4%。">Same model (DeepSeek-V4.1-Flash) across 95 containerized tasks. Swapping only the harness shifts Agent Pass by 23.1 percentage points (23.2% to 46.3%), yet Clean rates remain between 1.1% and 8.4% across all five harnesses.</figcaption>
+          </figure>
+
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Core-95 five harness results">
+            <table>
+              <caption data-en="TraceTrial-Bench Core-95 official two-layer scores (model &amp; judge: DeepSeek-V4.1-Flash)" data-zh="TraceTrial-Bench Core-95 官方双层评分汇总（模型与裁判：DeepSeek-V4.1-Flash）">TraceTrial-Bench Core-95 official two-layer scores (model &amp; judge: DeepSeek-V4.1-Flash)</caption>
+              <thead>
+                <tr>
+                  <th scope="col" data-en="Harness (Version)" data-zh="Harness（版本）">Harness (Version)</th>
+                  <th scope="col" data-en="Overall" data-zh="综合分">Overall</th>
+                  <th scope="col" data-en="Agent Pass" data-zh="Agent 通过率">Agent Pass</th>
+                  <th scope="col" data-en="Agent Score" data-zh="Agent 均分">Agent Score</th>
+                  <th scope="col" data-en="Harness Macro" data-zh="Harness 宏均分">Harness Macro</th>
+                  <th scope="col" data-en="Clean" data-zh="Clean 率">Clean</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Claude Code <code>2.1.332</code></th><td><strong>75.2%</strong></td><td><strong>46.3%</strong> (44/95)</td><td>78.5%</td><td>71.8%</td><td><strong>8.4%</strong> (8/95)</td></tr>
+                <tr><th scope="row">DeepSeek Harness <code>0.2.3-alpha.2</code>*</th><td><strong>65.9%</strong></td><td>35.8% (34/95)</td><td>70.6%</td><td>61.3%</td><td>4.2% (4/95)</td></tr>
+                <tr><th scope="row">Hermes Agent <code>main</code> (93 tasks)</th><td>64.1%</td><td>33.3% (31/93)</td><td>69.7%</td><td>58.4%</td><td>2.2% (2/93)</td></tr>
+                <tr><th scope="row">OpenHands <code>v1.16.0</code></th><td>61.7%</td><td>26.3% (25/95)</td><td>60.0%</td><td>63.3%</td><td>5.3% (5/95)</td></tr>
+                <tr><th scope="row">Codex CLI <code>0.172.0</code></th><td>61.5%</td><td>23.2% (22/95)</td><td>63.8%</td><td>59.2%</td><td>1.1% (1/95)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine-print" data-en="*On DeepSeek Harness 0.2.3-alpha.2, the T-dimension (17 MCP tasks) was impacted by an alpha.2 Cordis MCP bridge schema change; across the remaining 77 scored non-T tasks, DSH achieves 73.8% Overall and 44.2% Agent Pass. Claude Code 2.1.332 and DSH 0.2.3-alpha.2 each had 1 unscoreable 300s turn timeout (counted as 0 in the 95-task denominator)." data-zh="*DeepSeek Harness 0.2.3-alpha.2 在 T 维（17 道 MCP 题）受 alpha.2 版本插件桥接配置变更影响；剔除 T 维后的 77 道有效题中，DSH 实测为 Overall 73.8%、Agent Pass 44.2%。Claude Code 2.1.332 与 DSH 0.2.3-alpha.2 各有 1 题 300s 整轮超时（在 95 题分母中计 0）。">*On DeepSeek Harness <code>0.2.3-alpha.2</code>, the T-dimension (17 MCP tasks) was impacted by an <code>alpha.2</code> Cordis MCP bridge schema change; across the remaining 77 scored non-T tasks, DSH achieves <strong>73.8% Overall</strong> and <strong>44.2% Agent Pass</strong>. Claude Code <code>2.1.332</code> and DSH <code>0.2.3-alpha.2</code> each had 1 unscoreable 300s turn timeout (counted as 0 in the 95-task denominator).</p>
+        </div>
+      </section>
+
+      <section class="section" id="upstream-prs" aria-labelledby="sec-prs">
+        <div class="reading-width">
+          <h2 id="sec-prs" data-en="2. Turning Failure Traces into 24 Upstream Pull Requests" data-zh="二、把失败轨迹转化为 24 个上游开源 PR">2. Turning Failure Traces into 24 Upstream Pull Requests</h2>
+          <p data-en="Rather than stopping at leaderboard tables, we traced each recurring harness-caused failure down to exact source lines, wrote minimal regression tests, verified containerized A/B score lifts, and submitted pull requests upstream across five major open-source ecosystems." data-zh="我们没有停留在发榜单，而是把每一类高频 harness_caused 缺陷顺藤摸瓜定位到上游源码精确行号，补齐单元测试与容器 A/B 提分实测，向五大主流开源生态提交了 24 个代码与基准接入 PR。">Rather than stopping at leaderboard tables, we traced each recurring <code>harness_caused</code> failure down to exact source lines, wrote minimal regression tests, verified containerized A/B score lifts, and submitted pull requests upstream across five major open-source ecosystems.</p>
+
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Upstream engineering contributions summary">
+            <table>
+              <caption data-en="Verified open-source PRs, official benchmark integrations, and upstream triage outcomes" data-zh="核心开源 PR、官方基准接入与上游维护者复现进展">Verified open-source PRs, official benchmark integrations, and upstream triage outcomes</caption>
+              <thead>
+                <tr>
+                  <th scope="col" data-en="Ecosystem" data-zh="开源项目">Ecosystem</th>
+                  <th scope="col" data-en="Pull Requests" data-zh="已提交 PR">Pull Requests</th>
+                  <th scope="col" data-en="Key Defects Fixed &amp; Upstream Validation" data-zh="核心修复与上游验证亮点">Key Defects Fixed &amp; Upstream Validation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><strong>Harbor Framework</strong></th>
+                  <td>
+                    <a href="https://github.com/harbor-framework/adapters/pull/121" target="_blank" rel="noopener">adapters#121</a><br>
+                    <a href="https://github.com/harbor-framework/harbor-datasets/pull/286" target="_blank" rel="noopener">harbor-datasets#286</a><br>
+                    <a href="https://huggingface.co/datasets/harborframework/parity-experiments/discussions/288" target="_blank" rel="noopener">HF parity#288</a>
+                  </td>
+                  <td data-en="Official 14-task containerized TraceTrial-Bench adapter (Ready for Review). Passes 31/31 validate_adapter checks, 14/14 Oracle = 1.000, and 3×14 matched parity (Overall 66.90 ± 0.59 vs 68.40 ± 0.95; Harness 52.92 ± 0.47 vs 52.94 ± 0.24)." data-zh="Harbor 官方 14 题单容器适配器（已转 Ready for Review）。通过 31/31 官方脚本零告警校验、14/14 Oracle 1.000 与 3×14 同口径 Parity 全指标区间重叠（Harness 52.92 ± 0.47 vs 52.94 ± 0.24）。">Official 14-task containerized TraceTrial-Bench adapter (<code>Ready for Review</code>). Passes <strong>31/31</strong> <code>validate_adapter.py</code> checks, <strong>14/14 Oracle = 1.000</strong>, and <strong>3×14 matched parity</strong> (Overall <code>66.90 ± 0.59</code> vs <code>68.40 ± 0.95</code>; Harness <code>52.92 ± 0.47</code> vs <code>52.94 ± 0.24</code>).</td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>OpenHands</strong><br><span class="fine-print">SDK · CLI · Benchmarks</span></th>
+                  <td>
+                    <a href="https://github.com/OpenHands/software-agent-sdk/pull/7001" target="_blank" rel="noopener">sdk#7001</a> ·
+                    <a href="https://github.com/OpenHands/software-agent-sdk/pull/7003" target="_blank" rel="noopener">sdk#7003</a><br>
+                    <a href="https://github.com/OpenHands/software-agent-sdk/pull/6986" target="_blank" rel="noopener">sdk#6986–7025</a> (10 PRs)<br>
+                    <a href="https://github.com/OpenHands/OpenHands-CLI/pull/846" target="_blank" rel="noopener">CLI#846</a> ·
+                    <a href="https://github.com/OpenHands/benchmarks/pull/792" target="_blank" rel="noopener">benchmarks#792</a>
+                  </td>
+                  <td data-en="Core maintainer @enyst independently reproduced and acknowledged our fail-open subagent confirmation bypass (#7001, priority:high) and secret-rotation plaintext leakage (#7003, reproduced in main@722e5d40 / #7031). Also fixed hard-timeout process-group reaping (#7025), truncation metadata (#7024), subagent event forwarding (#6997), anchor-preserving condensation (#6998), headless exit-0 error swallowing (CLI#846), and official OpenHands/benchmarks integration (#792)." data-zh="核心维护者 @enyst 在官方主干独立复现并确认了我们定位的高危安全漏洞：子代理确认护栏 fail-open 绕过（#7001，priority:high）与密钥轮换明文泄露（#7003，main@722e5d40 复现并链向本 PR）。同时补齐硬超时进程组收割（#7025）、结构化截断元数据（#7024）、无头模式异常吞错退出码 0 修复（CLI#846）及 OpenHands/benchmarks 官方收录（#792）。">Core maintainer <code>@enyst</code> independently reproduced and acknowledged our <strong>fail-open subagent confirmation bypass</strong> (<a href="https://github.com/OpenHands/software-agent-sdk/issues/6999" target="_blank" rel="noopener">#6999</a> / <a href="https://github.com/OpenHands/software-agent-sdk/pull/7001" target="_blank" rel="noopener">#7001</a>, <code>priority:high</code>) and <strong>secret-rotation plaintext leakage</strong> (<a href="https://github.com/OpenHands/software-agent-sdk/issues/7002" target="_blank" rel="noopener">#7002</a> / <a href="https://github.com/OpenHands/software-agent-sdk/pull/7003" target="_blank" rel="noopener">#7003</a>, reproduced in <code>main@722e5d40</code>). Also fixed hard-timeout process-group reaping (#7025), structured truncation metadata (#7024), headless silent exit-0 errors (CLI#846), and official <code>OpenHands/benchmarks</code> integration (#792).</td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>NousResearch Hermes Agent</strong><br><span class="fine-print">265k★</span></th>
+                  <td>
+                    <a href="https://github.com/NousResearch/hermes-agent/pull/158167" target="_blank" rel="noopener">#158167</a> ·
+                    <a href="https://github.com/NousResearch/hermes-agent/pull/158168" target="_blank" rel="noopener">#158168</a><br>
+                    <a href="https://github.com/NousResearch/hermes-agent/pull/158214" target="_blank" rel="noopener">#158214</a> ·
+                    <a href="https://github.com/NousResearch/hermes-agent/pull/158215" target="_blank" rel="noopener">#158215</a><br>
+                    <a href="https://github.com/NousResearch/hermes-agent/pull/158216" target="_blank" rel="noopener">#158216</a>
+                  </td>
+                  <td data-en="Anchored by a full 93-task containerized baseline. Fixed MCP isError structuredContent/redaction drop (#158167), head-tail truncation zero-bound leak (#158168), trace export tool-call unwrapping &amp; is_error omission (#158214: O2 score 56.2% → 87.5%, Harness 62.5% → 100.0%), foreground timeout metadata drop (#158215: E6 score 87.5% → 93.8%), and CLI refusal field-list diagnostics (#158216)." data-zh="基于 93 题全量容器实测，提交 5 个定向修复 PR：MCP 错误信封与脱敏修复（#158167）、截断零界泄露修复（#158168）、轨迹导出解包与 is_error 补全（#158214，A/B 实测 O2 总分 56.2% → 87.5%，Harness 62.5% → 100.0%）、前台超时结构化元数据（#158215，E6 87.5% → 93.8%）及 CLI 参数拒绝诊断修复（#158216）。">Anchored by a full 93-task containerized baseline. Fixed MCP <code>isError</code> <code>structuredContent</code> drop (#158167), zero-bound truncation leak (#158168), trace-export <code>is_error</code> omission (#158214: containerized A/B lifted <code>O2</code> <strong>56.2% → 87.5%</strong>, Harness <strong>62.5% → 100.0%</strong>), foreground timeout metadata drop (#158215: <code>E6</code> <strong>87.5% → 93.8%</strong>), and CLI refusal diagnostics (#158216).</td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>OpenCode</strong></th>
+                  <td>
+                    <a href="https://github.com/anomalyco/opencode/pull/64838" target="_blank" rel="noopener">#64838</a> ·
+                    <a href="https://github.com/anomalyco/opencode/pull/64841" target="_blank" rel="noopener">#64841</a><br>
+                    <a href="https://github.com/anomalyco/opencode/pull/64852" target="_blank" rel="noopener">#64852</a><br>
+                    <span class="fine-print">RFCs: <a href="https://github.com/anomalyco/opencode/issues/65017" target="_blank" rel="noopener">#65017</a>, <a href="https://github.com/anomalyco/opencode/issues/65018" target="_blank" rel="noopener">#65018</a></span>
+                  </td>
+                  <td data-en="Fixed direct MCP structuredContent/EmbeddedResource drops (#64838, verified by maintainer @ychampion), SubagentTool session permission inheritance (#64841), and run --format json background notification streaming (#64852: L4 score 45.0 → 60.0). Plus triaged RFCs for interactive PTY (#65017) and machine-readable truncation metadata (#65018)." data-zh="修复直连 MCP structuredContent 丢弃（#64838，获核心维护者 @ychampion 实测确认）、SubagentTool 会话权限继承（#64841）及 run --format json 后台通知流式输出（#64852，L4 实测 45.0 → 60.0）；另有交互式 PTY（#65017）与截断元数据（#65018）两项官方定级 RFC。">Fixed direct MCP <code>structuredContent</code>/<code>EmbeddedResource</code> drops (#64838, verified by maintainer <code>@ychampion</code>), <code>SubagentTool</code> session permission inheritance (#64841), and <code>run --format json</code> background notification streaming (#64852: <code>L4</code> score <strong>45.0 → 60.0</strong>). Plus triaged RFCs for interactive PTY (#65017) and truncation metadata (#65018).</td>
+                </tr>
+                <tr>
+                  <th scope="row"><strong>Aider</strong></th>
+                  <td>
+                    <a href="https://github.com/Aider-AI/aider/pull/6002" target="_blank" rel="noopener">#6002</a> ·
+                    <a href="https://github.com/Aider-AI/aider/pull/6043" target="_blank" rel="noopener">#6043</a>
+                  </td>
+                  <td data-en="Added opt-in --yes-shell-commands + shell output reflection in one-shot --message runs (#6002: E1 score 25%/14.3% → 37.5%/28.6%) and --events-jsonl structured telemetry with exact integer token counts (#6043, closes #6003)." data-zh="新增无头沙箱 --yes-shell-commands 开关与 --message 模式 Shell 输出回传反射（#6002，E1 实测 25%/14.3% → 37.5%/28.6%），以及精确整型 Token 与动作遥测 --events-jsonl（#6043）。">Added opt-in <code>--yes-shell-commands</code> + shell output reflection in one-shot <code>--message</code> runs (#6002: <code>E1</code> <strong>25%/14.3% → 37.5%/28.6%</strong>) and <code>--events-jsonl</code> structured telemetry with exact integer token counts (#6043, closes #6003).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="field-reports" aria-labelledby="sec-reports">
+        <div class="reading-width">
+          <h2 id="sec-reports" data-en="3. Trace-Backed Proposals for Claude Code, Codex, and DeepSeek Harness" data-zh="三、面向 Claude Code、Codex 与 DeepSeek Harness 的实证工程提案">3. Trace-Backed Proposals for Claude Code, Codex, and DeepSeek Harness</h2>
+          <p data-en="For harnesses that are closed-source or accept community design input via Discussions and Issues, we distilled our Core-95 runs into minimal, verbatim-trace engineering proposals focused strictly on features that move end-to-end Agent Pass rates:" data-zh="对于闭源本体或通过 Discussions/Issues 收集社区反馈的头部框架，我们将 Core-95 实测压缩为只聚焦“直接提升最终任务正确率”的最小复现提案：">For harnesses that are closed-source or accept community design input via Discussions and Issues, we distilled our Core-95 runs into minimal, verbatim-trace engineering proposals focused strictly on features that move end-to-end Agent Pass rates:</p>
+
+          <ul>
+            <li>
+              <strong>Claude Code (<code>2.1.332</code>)</strong> — Ranked #1 across every dimension (<code>75.2%</code> Overall, <code>46.3%</code> Agent Pass), yet <code>21/94</code> runs were still <code>harness_caused</code> and <code>35/94</code> required model workarounds. We filed two focused Feature Requests:
+              <a href="https://github.com/anthropics/claude-code/issues/112385" target="_blank" rel="noopener">anthropics/claude-code#112385</a> (headless <code>-p</code> / <code>stream-json</code> structured <code>AskUserQuestion</code> callback—4/4 <code>T6</code>/<code>T10</code> tasks failed at the harness layer) and
+              <a href="https://github.com/anthropics/claude-code/issues/112386" target="_blank" rel="noopener">anthropics/claude-code#112386</a> (native interactive PTY session tool—<code>E9</code> tasks dropped to <code>37.5%</code>).
+            </li>
+            <li>
+              <strong>OpenAI Codex CLI (<code>0.172.0</code>)</strong> — Completed <code>95/95</code> runs with zero infra crashes, but <code>37/95</code> (<code>38.9%</code>) were <code>harness_caused</code> with Execution (<code>E</code>) trailing Claude Code by <code>29.1 pp</code> (<code>51.3%</code> vs <code>80.4%</code>). We published
+              <a href="https://github.com/openai/codex/discussions/63850" target="_blank" rel="noopener">openai/codex#63850</a> showing verbatim <code>0.172.0</code> traces where voluntary <code>exit 137</code> and <code>SIGKILL</code> (OOM-kill) return identical <code>exit_code: 137</code> metadata with no signal indicator.
+            </li>
+            <li>
+              <strong>DeepSeek Harness (<code>0.2.2-rc.5</code> &amp; <code>0.2.3-alpha.2</code>)</strong> — Strong core runtime (<code>73.8%</code> Overall across 77 non-T tasks). We published three trace-backed Ideas Discussions:
+              <a href="https://github.com/deepseek-ai/deepseek-harness/discussions/14270" target="_blank" rel="noopener">#14270</a> (54-run controlled A/B experiment showing <code>promoteOnTimeout: false</code> lifts Agent Pass from <strong>68.6% → 82.4%</strong>, proposing a per-call <code>killOnTimeout</code> override),
+              <a href="https://github.com/deepseek-ai/deepseek-harness/discussions/14276" target="_blank" rel="noopener">#14276</a> (preserving head + tail on <code>bash</code> truncation and eliminating nested double-spill files), and
+              <a href="https://github.com/deepseek-ai/deepseek-harness/discussions/14277" target="_blank" rel="noopener">#14277</a> (including POSIX <code>128 + signal</code> exit codes and preserving chronological <code>stdout</code>/<code>stderr</code> order).
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="takeaways" aria-labelledby="sec-takeaways">
+        <div class="reading-width">
+          <h2 id="sec-takeaways" data-en="4. Four Reliability Patterns That Recur Across Every Harness" data-zh="四、跨框架反复出现的四大可靠性根因">4. Four Reliability Patterns That Recur Across Every Harness</h2>
+          <div class="method-grid">
+            <article>
+              <span class="step-number">01</span>
+              <h3 data-en="Exit, signal, and timeout fidelity" data-zh="退出码、信号与超时保真">Exit, signal, and timeout fidelity</h3>
+              <p data-en="Separating voluntary exit codes from Unix signal deaths (SIGKILL/SIGTERM) and returning explicit structured timeout/error flags prevents stale-artifact acceptance and false success reports." data-zh="明确区分主动退出码与信号致死（SIGKILL/SIGTERM），并在超时时返回结构化错误标志，是避免旧产物误签收与虚假成功报告的关键。">Separating voluntary exit codes from Unix signal deaths (<code>SIGKILL</code>/<code>SIGTERM</code>) and returning explicit structured timeout/error flags prevents stale-artifact acceptance and false success reports.</p>
+            </article>
+            <article>
+              <span class="step-number">02</span>
+              <h3 data-en="Head + tail truncation with single spill" data-zh="双端截断与单一落盘路径">Head + tail truncation with single spill</h3>
+              <p data-en="Tail-only clipping erases schemas, headers, and root-cause errors at the top of command output. Preserving both head and tail with a single authoritative spill path eliminates wasted recovery turns." data-zh="仅保留尾部会直接切掉表头与首个根因报错；保留头尾双端并指向单一完整落盘文件，可显著减少无效恢复轮次。">Tail-only clipping erases schemas, headers, and root-cause errors at the top of command output. Preserving both head and tail with a single authoritative spill path eliminates wasted recovery turns.</p>
+            </article>
+            <article>
+              <span class="step-number">03</span>
+              <h3 data-en="Fail-closed subagent &amp; secret boundaries" data-zh="子代理安全护栏与密钥轮换脱敏">Fail-closed subagent &amp; secret boundaries</h3>
+              <p data-en="Permissions, security analyzers, and rotated secret registries must propagate across subagent boundaries and fail closed—never silently auto-approving when a confirmation handler is absent." data-zh="权限策略、安全分析器与轮换后的密钥脱敏表必须向子代理完整继承并默认 fail-closed，绝不能在无确认器时静默放行。">Permissions, security analyzers, and rotated secret registries must propagate across subagent boundaries and fail closed—never silently auto-approving when a confirmation handler is absent.</p>
+            </article>
+            <article>
+              <span class="step-number">04</span>
+              <h3 data-en="Headless-first observability" data-zh="面向无头自动化的可观测性">Headless-first observability</h3>
+              <p data-en="Non-interactive CLI/SDK modes need non-zero exit codes on fatal errors, structured AskUserQuestion callbacks, and lossless MCP/tool envelopes so CI and evaluation pipelines can trust the trace." data-zh="无头 CLI/SDK 模式需要致命异常返回非零退出码、结构化澄清回调以及无损 MCP 信封透传，CI 与评测管线才能真正信任执行轨迹。">Non-interactive CLI/SDK modes need non-zero exit codes on fatal errors, structured <code>AskUserQuestion</code> callbacks, and lossless MCP/tool envelopes so CI and evaluation pipelines can trust the trace.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="resources" aria-labelledby="sec-resources">
+        <div class="reading-width">
+          <h2 id="sec-resources" data-en="5. Reproduce or Contribute" data-zh="五、复现与开源资源">5. Reproduce or Contribute</h2>
+          <p data-en="All 95 tasks, Docker harness adapters, deterministic verifiers, and our DeepSeek Harness 54-run timeout A/B experiment are open-sourced under MIT." data-zh="全部 95 道任务、Docker 框架适配器、确定性验证器以及 DeepSeek Harness 54 次超时 A/B 实验均已按 MIT 协议开源。">All 95 tasks, Docker harness adapters, deterministic verifiers, and our DeepSeek Harness 54-run timeout A/B experiment are open-sourced under MIT.</p>
+          <ul>
+            <li><strong>Paper</strong>: <a href="https://arxiv.org/abs/2610.32285" target="_blank" rel="noopener">Trial by Trace (arXiv:2610.32285)</a> — Hugging Face #2 Paper of the Day</li>
+            <li><strong>Benchmark &amp; Experiments</strong>: <a href="https://github.com/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener">github.com/TraceLite-AI/TraceTrial-Bench</a></li>
+            <li><strong>Dataset</strong>: <a href="https://huggingface.co/datasets/TraceLite-AI/TraceTrial-Bench" target="_blank" rel="noopener">huggingface.co/datasets/TraceLite-AI/TraceTrial-Bench</a></li>
+            <li><strong>Interactive Leaderboard</strong>: <a href="leaderboard.html">tracelite.ai/leaderboard.html</a></li>
+            <li><strong>Full Project Report</strong>: <a href="trial-by-trace.html">tracelite.ai/trial-by-trace.html</a></li>
+          </ul>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><a href="/">TraceLite AI</a> · <a href="blog.html" data-en="All Field Notes" data-zh="全部博客">All Field Notes</a> · <a href="trial-by-trace.html" data-en="Trial by Trace" data-zh="论文主页">Trial by Trace</a> · <a href="https://github.com/TraceLite-AI" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+  </footer>
+</body>
+</html>

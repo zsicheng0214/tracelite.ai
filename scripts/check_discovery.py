@@ -18,7 +18,7 @@ import xml.etree.ElementTree as ET
 
 ORIGIN = 'https://tracelite.ai'
 PATHS = ('/', '/research.html', '/papers.html', '/timeline.html',
-         '/trial-by-trace.html', '/leaderboard.html', '/claude-code-vs-codex.html', '/wechat.html')
+         '/trial-by-trace.html', '/leaderboard.html', '/claude-code-vs-codex.html', '/open-source-harness-engineering.html', '/wechat.html')
 TITLE = ('Trial by Trace: Benchmarking AI Agent Harnesses for Reliability '
          'and Failure Attribution')
 AUTHORS = ['Zhiyong Cao', 'Hengjie Zhu', 'Yongxin Wang', 'Xuchen Li',
