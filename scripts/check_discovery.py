@@ -18,9 +18,14 @@ import xml.etree.ElementTree as ET
 
 ORIGIN = 'https://tracelite.ai'
 PATHS = ('/', '/research.html', '/papers.html', '/timeline.html',
+         '/twinenv-bench.html', '/twinenv-leaderboard.html',
          '/trial-by-trace.html', '/leaderboard.html', '/claude-code-vs-codex.html', '/open-source-harness-engineering.html', '/wechat.html')
 TITLE = ('Trial by Trace: Benchmarking AI Agent Harnesses for Reliability '
          'and Failure Attribution')
+TWINENV_TITLE = ('TwinEnv-Bench: Beyond Greenhouse Sandboxes via Counterfactual '
+                 'Evaluation of Reactive and Proactive Environment Adaptation in Software Agents')
+TWINENV_CODE = 'https://github.com/TraceLite-AI/TwinEnv-Bench'
+TWINENV_SPACE = 'https://huggingface.co/spaces/TraceLite-AI/TwinEnv-Bench'
 AUTHORS = ['Zhiyong Cao', 'Hengjie Zhu', 'Yongxin Wang', 'Xuchen Li',
            'Jintao Li', 'Shuxia Liu', 'Dunqiang Liu', 'Bo Wang', 'Kairan Zhang',
            'Cong Lin', 'JiangDi Yu', 'Siyuan Liu', 'Sijia Yao', 'Yi-Liang Wei',
@@ -207,9 +212,9 @@ def run(root):
         for node in page.tags('a'):
             href = node.attrs.get('href', '')
             target = urlsplit(urljoin(canonical, href))
-            if target.netloc == 'tracelite.ai' and target.path.rstrip('/') == '/trial-by-trace':
+            if target.netloc == 'tracelite.ai' and target.path.rstrip('/') in ('/trial-by-trace', '/twinenv-bench'):
                 check.require(False, '{}:{}'.format(name, node.line),
-                              'internal report link must use trial-by-trace.html: ' + href)
+                              'internal report link must use .html extension: ' + href)
 
     titles = [normalized(p.tags('title')[0].text()) for p in pages.values() if p.tags('title')]
     check.require(len(titles) == len(set(titles)), 'site', 'indexable pages must have distinct titles')
@@ -221,8 +226,35 @@ def run(root):
         check.require(not re.search(r'\bplaceholder\b', public_copy, re.I), 'index.html',
                       'remove Placeholder text/translation values from the public homepage')
         links = home.links(ORIGIN + '/')
-        for url in [ORIGIN + '/trial-by-trace.html', ARXIV, CODE, DATASET]:
+        for url in [ORIGIN + '/twinenv-bench.html', ORIGIN + '/trial-by-trace.html', ARXIV, CODE, DATASET]:
             check.require(url in links, 'index.html', 'missing raw HTML resource link: ' + url)
+
+    twinenv = pages.get('/twinenv-bench.html')
+    if twinenv:
+        name = 'twinenv-bench.html'
+        for key, value in [('citation_title', TWINENV_TITLE), ('citation_publication_date', '2026/11/25')]:
+            check.require(twinenv.meta(key) == [value], name, key + ' must equal ' + value)
+        check.require(twinenv.meta('citation_author') == ['TraceLite AI'], name,
+                      'citation_author must equal TraceLite AI')
+        te_titles = twinenv.tags('title')
+        check.require(len(te_titles) == 1 and TWINENV_TITLE in normalized(te_titles[0].text()),
+                      name, 'document title must include the complete TwinEnv-Bench paper title')
+        te_heads = twinenv.tags('h1')
+        check.require(len(te_heads) == 1 and normalized(te_heads[0].text()) == TWINENV_TITLE,
+                      name, 'raw HTML h1 must contain the complete TwinEnv-Bench paper title')
+        te_ids = {n.attrs['id']: n for n in twinenv.nodes if n.attrs.get('id')}
+        for section in ['abstract', 'problem', 'method', 'dimensions', 'protocol', 'results',
+                        'diagnostics', 'cases', 'limitations', 'resources', 'cite']:
+            check.require(section in te_ids and len(normalized(te_ids[section].text(exclude=('script', 'style')))) >= 30,
+                          name, 'missing substantive raw HTML section #' + section)
+        te_links = twinenv.links(ORIGIN + '/twinenv-bench.html')
+        for url in [ORIGIN + '/papers/TwinEnv-Bench.pdf', ORIGIN + '/papers/TwinEnv-Bench-ZH.pdf',
+                    ORIGIN + '/twinenv-leaderboard.html', TWINENV_CODE, TWINENV_SPACE]:
+            check.require(url in te_links, name, 'missing raw HTML resource link: ' + url)
+        for pdf_rel in ('papers/TwinEnv-Bench.pdf', 'papers/TwinEnv-Bench-ZH.pdf'):
+            pdf_file = root / pdf_rel
+            check.require(pdf_file.is_file() and pdf_file.read_bytes()[:5].startswith(b'%PDF-'),
+                          pdf_rel, 'missing or invalid PDF release file')
 
     report = pages.get('/trial-by-trace.html')
     if report:

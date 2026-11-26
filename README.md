@@ -104,8 +104,10 @@ Check before publishing:
 
 ```sh
 python3 scripts/build_report.py --check
+python3 scripts/build_twinenv_report.py --check
 python3 scripts/build_timeline.py --check
 python3 scripts/build_leaderboard.py --check
+python3 scripts/build_twinenv_leaderboard.py --check
 python3 scripts/check_discovery.py
 ```
 

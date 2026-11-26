@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Counterfactual Environment Adaptation Leaderboard | TwinEnv-Bench</title>
+  <meta name="description" content="Compare nine frontier models across 117 paired baseline and single-variable shifted OS sandboxes in TwinEnv-Bench, spanning exposed vs. latent shifts, E1–E5 layers, Pass^3 reliability, and refusal-as-zero sensitivity.">
+  <link rel="canonical" href="https://tracelite.ai/twinenv-leaderboard.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Counterfactual Environment Adaptation Leaderboard | TwinEnv-Bench">
+  <meta property="og:description" content="Nine frontier models across 117 paired tasks (234 cells) and 6,318 main runs. Compare Base@1, Target@1, Latent@1, Pass^3 reliability, and E1–E5 layers.">
+  <meta property="og:url" content="https://tracelite.ai/twinenv-leaderboard.html">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/report.css?v=20261104">
+  <link rel="stylesheet" href="assets/leaderboard.css?v=20260929">
+  <script src="assets/site.js?v=20260930d" defer></script>
+  <script src="assets/twinenv-leaderboard.js?v=20261125" defer></script>
+</head>
+<body class="leaderboard-page">
+  <a class="skip-link" href="#rankings" data-en="Skip to rankings" data-zh="跳转到排名">Skip to rankings</a>
+  <nav class="project-nav" aria-label="Project navigation">
+    <a class="brand" href="/" aria-label="TraceLite home"><img class="logo" src="images/logo.png" alt="TraceLite AI" style="height:26px; width:auto; display:block"></a>
+    <div class="nav-links">
+      <a href="twinenv-bench.html" data-en="Project page" data-zh="项目主页">Project page</a>
+      <a href="twinenv-leaderboard.html" aria-current="page" data-en="Leaderboard" data-zh="排行榜">Leaderboard</a>
+      <a href="research.html" data-en="Research" data-zh="研究">Research</a>
+      <button id="langToggle" type="button" aria-label="切换为中文">中</button>
+    </div>
+  </nav>
+  <main>
+    <header class="publication-header lb-hero">
+      <div class="container">
+        <p class="publication-label">TRACELITE AI <span> / </span> TWINENV-BENCH</p>
+        <h1 data-en="Environment Adaptation Benchmark &amp; Leaderboard" data-zh="反事实环境适应评测与排行榜">Environment Adaptation Benchmark &amp; Leaderboard</h1>
+        <p class="lb-lead" data-en="Compare nine frontier models across 117 paired tasks (234 baseline and single-variable shifted sandboxes). Near-ceiling 95.1%–99.7% Base Pass@1 drops to 26.8%–67.1% Target Pass@1 and 14.5%–59.5% Pass^3 reliability." data-zh="在完全一致的 117 道反事实任务（234 个基线与单变量偏移双生单元）上对比九个前沿大模型：基线 95.1%–99.7% 的近满分表现骤降至目标环境 26.8%–67.1% 的单轮通过率与 14.5%–59.5% 的三轮稳健率。">Compare nine frontier models across 117 paired tasks (234 baseline and single-variable shifted sandboxes). Near-ceiling 95.1%–99.7% Base Pass@1 drops to 26.8%–67.1% Target Pass@1 and 14.5%–59.5% Pass^3 reliability.</p>
+        <div class="publication-links">
+          <a class="button dark" href="twinenv-bench.html"><span aria-hidden="true">↗</span><span data-en="Read the report" data-zh="阅读报告">Read the report</span></a>
+          <a class="button light" href="papers/TwinEnv-Bench.pdf" target="_blank" rel="noopener noreferrer"><span data-en="PDF (EN)" data-zh="英文 PDF">PDF (EN)</span></a>
+          <a class="button light" href="papers/TwinEnv-Bench-ZH.pdf" target="_blank" rel="noopener noreferrer"><span data-en="PDF (ZH)" data-zh="中文 PDF">PDF (ZH)</span></a>
+          <a class="button light" href="https://github.com/TraceLite-AI/TwinEnv-Bench" target="_blank" rel="noopener noreferrer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.1 10.1 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg> GitHub</a>
+          <a class="button light" href="#metrics"><span data-en="Understanding the metrics" data-zh="了解评分指标">Understanding the metrics</span><span aria-hidden="true">↓</span></a>
+        </div>
+        <dl class="study-stats">
+          <div><dt>117</dt><dd data-en="Counterfactual tasks" data-zh="反事实任务">Counterfactual tasks</dd></div>
+          <div><dt>59 / 58</dt><dd data-en="Exposed vs. latent" data-zh="显性 / 隐性偏移">Exposed vs. latent</dd></div>
+          <div><dt>9</dt><dd data-en="Frontier models" data-zh="前沿模型">Frontier models</dd></div>
+          <div><dt>6,318</dt><dd data-en="Completed main runs" data-zh="完结主实验轮次">Completed main runs</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    <section class="lb-main" id="rankings" aria-labelledby="rankingTitle">
+      <div class="lb-container">
+        <div class="lb-section-head">
+          <div><h2 id="rankingTitle" data-en="Compare the results" data-zh="比较评测结果">Compare the results</h2><p data-en="Switch between non-refusal executed primary scoring and refusal-as-zero end-to-end sensitivity, or drill into E1–E5 OS layers." data-zh="可在非拒答有效运行主口径与拒答计零端到端敏感性口径间切换，或按 E1–E5 五大系统层展开对比。">Switch between non-refusal executed primary scoring and refusal-as-zero end-to-end sensitivity, or drill into E1–E5 OS layers.</p></div>
+          <a class="text-link" href="data/twinenv_leaderboard.json" download data-en="Download JSON ↗" data-zh="下载 JSON ↗">Download JSON ↗</a>
+        </div>
+        <noscript><p class="lb-notice">JavaScript is off. The nine-model primary non-refusal leaderboard is shown below. Download JSON for all OS-layer and refusal-as-zero slices.</p></noscript>
+        <div class="lb-controls js-control" hidden>
+          <div class="lb-view-switch" role="group" aria-label="Ranking view">
+            <button type="button" data-view="models" aria-pressed="true" data-en="By model (117 tasks)" data-zh="按模型汇总（117 题）">By model (117 tasks)</button>
+            <button type="button" data-view="layers" aria-pressed="false" data-en="Model × OS Layer" data-zh="模型 × 系统层级">Model × OS Layer</button>
+          </div>
+          <div class="lb-filters">
+            <label class="lb-search"><span class="sr-only" data-en="Search models or layers" data-zh="搜索模型或层级">Search models or layers</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input id="lbSearch" type="search" placeholder="Search results…" autocomplete="off"></label>
+            <label><span class="sr-only" data-en="Accounting rule" data-zh="拒答核算口径">Accounting rule</span><select id="lbAccounting">
+              <option value="non_refusal">Non-refusal executed</option>
+              <option value="refusal_zero">Refusal-as-0 sensitivity</option>
+            </select></label>
+            <label id="layerFilter" hidden><span class="sr-only" data-en="OS Layer" data-zh="系统层级">OS Layer</span><select id="lbScope"><option value="all">All layers</option></select></label>
+            <label id="modelFilter" hidden><span class="sr-only" data-en="Model" data-zh="模型">Model</span><select id="lbModel"><option value="all">All models</option></select></label>
+          </div>
+        </div>
+        <div class="lb-comparison">
+          <div class="chart-heading">
+            <div><h3 id="chartTitle" data-en="Model comparison" data-zh="前沿模型对比">Model comparison</h3><p id="chartDescription" data-en="Target Pass@1 · conditional on non-refusal executed runs · 0–100 scale" data-zh="目标单轮通过率 Target@1 · 基于非拒答有效运行 · 0–100 刻度">Target Pass@1 · conditional on non-refusal executed runs · 0–100 scale</p></div>
+            <div class="lb-metric-switch js-control" role="group" aria-label="Chart metric" hidden>
+              <button type="button" data-metric="target1" aria-pressed="true" data-en="Target@1" data-zh="目标通过率">Target@1</button>
+              <button type="button" data-metric="latent1" aria-pressed="false" data-en="Latent@1" data-zh="隐性通过率">Latent@1</button>
+              <button type="button" data-metric="pass_hat_3" aria-pressed="false" data-en="Pass^3" data-zh="三轮稳健率">Pass^3</button>
+              <button type="button" data-metric="exposed1" aria-pressed="false" data-en="Exposed@1" data-zh="显性通过率">Exposed@1</button>
+            </div>
+          </div>
+          <ol class="lb-chart" id="lbChart">
+<!-- STATIC_CHART -->
+          </ol>
+          <p class="lb-empty" id="chartEmpty" hidden data-en="No matching results. Try a different search or filter." data-zh="没有匹配结果，请调整搜索或筛选条件。">No matching results. Try a different search or filter.</p>
+        </div>
+        <div class="lb-table-heading">
+          <p id="resultStatus" role="status" aria-live="polite">9 models · All 117 tasks · Non-refusal executed</p>
+          <div class="lb-table-actions js-control" hidden><button type="button" id="resetFilters" data-en="Reset filters" data-zh="重置筛选">Reset filters</button><button type="button" id="exportCsv" data-en="Export CSV ↓" data-zh="导出 CSV ↓">Export CSV ↓</button></div>
+        </div>
+        <div class="lb-scroll" tabindex="0" role="region" aria-label="Scrollable TwinEnv-Bench leaderboard results">
+          <table id="lbTable" class="lb-table">
+            <caption class="sr-only" data-en="TwinEnv-Bench results across nine frontier models. Score columns are percentages; resource columns show mean shell commands, thousands of tokens, seconds, and USD cost per executed target run." data-zh="TwinEnv-Bench 九个前沿模型评测结果。得分列为百分比，资源列为每次有效目标运行的平均命令数、词元千数、耗时秒数与美元成本。">TwinEnv-Bench results across nine frontier models. Score columns are percentages; resource columns show mean shell commands, thousands of tokens, seconds, and USD cost per executed target run.</caption>
+            <thead><tr>
+              <th scope="col" class="rank-cell">#</th>
+              <th scope="col" class="identity-head" data-key="model"><button type="button" data-sort="model"><span data-en="Model" data-zh="模型">Model</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="scope"><button type="button" data-sort="scope"><span data-en="Scope" data-zh="任务范围">Scope</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="target1" aria-sort="descending"><button type="button" data-sort="target1"><span data-en="Target@1" data-zh="Target@1">Target@1</span><span class="sort-arrow" aria-hidden="true">↓</span></button></th>
+              <th scope="col" data-key="base1"><button type="button" data-sort="base1"><span data-en="Base@1" data-zh="Base@1">Base@1</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="shift_drop"><button type="button" data-sort="shift_drop"><span data-en="Δshift" data-zh="Δshift">Δshift</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="exposed1"><button type="button" data-sort="exposed1"><span data-en="Exposed" data-zh="显性">Exposed</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="latent1"><button type="button" data-sort="latent1"><span data-en="Latent" data-zh="隐性">Latent</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="pass_at_3"><button type="button" data-sort="pass_at_3"><span data-en="Pass@3" data-zh="Pass@3">Pass@3</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="pass_hat_3"><button type="button" data-sort="pass_hat_3"><span data-en="Pass^3" data-zh="Pass^3">Pass^3</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="probe_pct"><button type="button" data-sort="probe_pct"><span data-en="Probe%" data-zh="探测率%">Probe%</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="cmds"><button type="button" data-sort="cmds"><span data-en="Cmds" data-zh="命令数">Cmds</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="tokens_k"><button type="button" data-sort="tokens_k"><span data-en="Tokens (k)" data-zh="词元 (k)">Tokens (k)</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+              <th scope="col" data-key="cost"><button type="button" data-sort="cost"><span data-en="Cost / run" data-zh="单轮成本">Cost / run</span><span class="sort-arrow" aria-hidden="true">↕</span></button></th>
+            </tr></thead>
+            <tbody>
+<!-- STATIC_ROWS -->
+            </tbody>
+          </table>
+        </div>
+        <p class="lb-table-note" data-en="Scores are percentages. Note that Layer E2 has 24 exposed and 0 latent tasks, while Layer E5 has 0 exposed and 2 latent tasks (shown as —). Claude Opus 5.5 incurs 44/351 target API safety refusals (12.5%); the other 8 models incur zero target refusals." data-zh="得分单位为百分比。其中 E2 软件栈层含 24 道显性题、0 道隐性题，E5 状态层含 0 道显性题、2 道隐性题（无对应子集处标为 —）。Claude Opus 5.5 在 351 个目标轮次中有 44 轮接口安全拒答（12.5%），其余 8 个模型均为零目标拒答。">Scores are percentages. Note that Layer E2 has 24 exposed and 0 latent tasks, while Layer E5 has 0 exposed and 2 latent tasks (shown as —). Claude Opus 5.5 incurs 44/351 target API safety refusals (12.5%); the other 8 models incur zero target refusals.</p>
+      </div>
+    </section>
+
+    <section class="section tint" id="metrics"><div class="container">
+      <h2 data-en="Read the scores, not just the rank" data-zh="理解指标含义，而不止看排名">Read the scores, not just the rank</h2>
+      <p class="section-intro" data-en="Counterfactual shift drops, exposure regimes, and multi-run reliability capture orthogonal facets of adaptation." data-zh="反事实偏移跌幅、显隐暴露体制与多轮一致稳健率分别刻画环境适应的不同侧面。">Counterfactual shift drops, exposure regimes, and multi-run reliability capture orthogonal facets of adaptation.</p>
+      <div class="method-grid">
+        <article><span class="step-number">01</span><h3 data-en="Base@1, Target@1 &amp; Δshift" data-zh="基线、目标通过率与偏移跌幅">Base@1, Target@1 &amp; Δshift</h3><p data-en="Base@1 measures single-run solve rate in the standard greenhouse container; Target@1 measures solve rate when a single verified OS property shifts. Δshift = Target@1 − Base@1 isolates adaptation loss." data-zh="Base@1 度量标准温室容器单轮通过率；Target@1 度量单一经核验系统属性偏移后的通过率；差值 Δshift = Target@1 − Base@1 纯粹剥离环境适应损失。">Base@1 measures single-run solve rate in the standard greenhouse container; Target@1 measures solve rate when a single verified OS property shifts. Δshift = Target@1 − Base@1 isolates adaptation loss.</p></article>
+        <article><span class="step-number">02</span><h3 data-en="Exposed vs. Latent regimes" data-zh="交互显性与生产隐性体制">Exposed vs. Latent regimes</h3><p data-en="Across 59 Exposed tasks, discrepancies surface as immediate sample errors; across 58 Latent tasks, sample runs pass silently while production constraints reside in cron, mounts, privileges, or quotas." data-zh="59 道交互显性题在试跑时直接报错；58 道生产隐性题在小样本上静默通过，约束潜伏于 cron 调度、挂载、权限或资源配额中，检验主动宿主侦察。">Across 59 Exposed tasks, discrepancies surface as immediate sample errors; across 58 Latent tasks, sample runs pass silently while production constraints reside in cron, mounts, privileges, or quotas.</p></article>
+        <article><span class="step-number">03</span><h3 data-en="Pass@3 vs. Pass^3 reliability" data-zh="乐观上限 Pass@3 与严苛稳健率 Pass^3">Pass@3 vs. Pass^3 reliability</h3><p data-en="Pass@3 requires at least one pass across three independent trials per task; strict production reliability Pass^3 requires consistent passes across every executed trial." data-zh="Pass@3 要求三轮独立运行至少成功一次；严苛生产稳健率 Pass^3 要求所有有效运行轮次全部成功，衡量生产可部署性。">Pass@3 requires at least one pass across three independent trials per task; strict production reliability Pass^3 requires consistent passes across every executed trial.</p></article>
+      </div>
+    </div></section>
+
+    <section class="section"><div class="reading-width">
+      <h2 data-en="Evaluation scope &amp; accounting" data-zh="评测范围与核算说明">Evaluation scope &amp; accounting</h2>
+      <p data-en="TwinEnv-Bench evaluates controlled micro-scale POSIX scripting, systems, and data-engineering tasks (median 22-line reference solution) across K = 3 repeats per cell (6,318 scheduled trials, 100% terminal completion). Primary rankings condition on non-refusal executed runs so provider gateway content-filter false positives are not conflated with sandbox errors, while the Refusal-as-0 selector scores all 351 target slots end-to-end." data-zh="TwinEnv-Bench 聚焦受控微尺度 POSIX 脚本、系统与数据工程任务（参考实现中位数 22 行），每单元独立运行 K = 3 轮（6,318 轮计划运行 100% 完结）。主口径基于非拒答有效运行以避免上游网关误拦截混同沙盒失误，同时可通过切换器实时查看将全部未执行拒答计为 0 分的端到端结果。">TwinEnv-Bench evaluates controlled micro-scale POSIX scripting, systems, and data-engineering tasks (median 22-line reference solution) across K = 3 repeats per cell (6,318 scheduled trials, 100% terminal completion). Primary rankings condition on non-refusal executed runs so provider gateway content-filter false positives are not conflated with sandbox errors, while the Refusal-as-0 selector scores all 351 target slots end-to-end.</p>
+      <p class="center"><a class="text-link" href="twinenv-bench.html#protocol"><span data-en="Read the full evaluation protocol →" data-zh="阅读完整评测与核算协议 →">Read the full evaluation protocol →</span></a></p>
+    </div></section>
+  </main>
+  <footer class="project-footer"><a class="footer-brand" href="/">TraceLite AI</a><p data-en="Trace the evolution of intelligence." data-zh="追踪演化，洞察智能。">Trace the evolution of intelligence.</p><p class="attribution"><a href="twinenv-bench.html" data-en="TwinEnv-Bench project page" data-zh="TwinEnv-Bench 项目主页">TwinEnv-Bench project page</a> · <a href="https://github.com/TraceLite-AI/TwinEnv-Bench" target="_blank" rel="noopener noreferrer">GitHub</a></p></footer>
+  <script type="application/json" id="leaderboardData"><!-- LEADERBOARD_DATA --></script>
+</body>
+</html>

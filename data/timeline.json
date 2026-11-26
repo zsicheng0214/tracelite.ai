@@ -1,5 +1,64 @@
 [
   {
+    "id": "twinenv-bench",
+    "type": "report",
+    "date": "2026-11-25",
+    "dateKind": "release",
+    "title": {
+      "en": "TwinEnv-Bench",
+      "zh": "TwinEnv-Bench"
+    },
+    "summary": {
+      "en": "Counterfactual evaluation of reactive and proactive environment adaptation in software agents across 117 paired tasks, five OS layers, nine frontier models, and 6,318 main runs.",
+      "zh": "面向软件与终端智能体的反事实双生环境适应评测基准，覆盖五层系统分类学共 117 道配对任务、9 个前沿模型与 6,318 次主实验运行。"
+    },
+    "venue": "Technical Report · TwinEnv-Bench",
+    "links": [
+      {
+        "href": "twinenv-bench.html",
+        "label": {
+          "en": "Report project page",
+          "zh": "报告项目页"
+        }
+      },
+      {
+        "href": "papers/TwinEnv-Bench.pdf",
+        "label": {
+          "en": "PDF (English)",
+          "zh": "英文 PDF"
+        }
+      },
+      {
+        "href": "papers/TwinEnv-Bench-ZH.pdf",
+        "label": {
+          "en": "PDF (Chinese)",
+          "zh": "中文 PDF"
+        }
+      },
+      {
+        "href": "twinenv-leaderboard.html",
+        "label": {
+          "en": "Leaderboard",
+          "zh": "排行榜"
+        }
+      },
+      {
+        "href": "https://github.com/TraceLite-AI/TwinEnv-Bench",
+        "label": {
+          "en": "GitHub code",
+          "zh": "GitHub 代码"
+        }
+      },
+      {
+        "href": "https://huggingface.co/spaces/TraceLite-AI/TwinEnv-Bench",
+        "label": {
+          "en": "Hugging Face Space",
+          "zh": "Hugging Face 展示页"
+        }
+      }
+    ]
+  },
+  {
     "id": "trial-by-trace",
     "type": "report",
     "date": "2026-10-23",
